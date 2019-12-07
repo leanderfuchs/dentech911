@@ -2,7 +2,7 @@
 cgi-bin
 *.code-workspace
 test.*
-/orders/files/*
+orders/files/*
 db_*.class.php
 # Whitelist files/folders in sub-directories
 
