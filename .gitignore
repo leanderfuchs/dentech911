@@ -5,8 +5,8 @@
 test.**
 cgi-bin
 
-/orders/files/**
-!/orders/files/
+orders/files/**
+!orders/files/
 
 # Whitelist files/folders in sub-directories
 
