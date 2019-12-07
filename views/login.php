@@ -52,7 +52,7 @@
 		<h3>Pas encore enregistré ?</h3>
 		
 		<div class="visual-form-builder-container">
-	<form id="register" class="visual-form-builder" method="post" action="">
+	<form id="register" class="visual-form-builder" method="post" action="?page=order_list">
 		<fieldset class="fieldset  commandexfset">
 			<ul class="section section-1">
 				<li class="item item-text left-half">

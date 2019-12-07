@@ -12,44 +12,29 @@ class user extends db_connect{
 
 	public function register ($company, $name, $address, $zip, $city, $tel, $email, $password, $user_ip){
 
+		$msg='';
 //------------------------------------ check if pseudo is not empty
-
 		if(!empty($company) AND !empty($name) AND !empty($address) AND !empty($zip) AND !empty($city) AND !empty($tel) AND !empty($email) AND !empty($password)){
-
 //------------------------------------ check if pseudo is available
-										
 			$pdostatement = $this->query('SELECT email FROM user WHERE email="' . $email . '";');
 			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-
 			if ($email == $result['email']) {	
-
 				$msg .= '<div class="error">Un compte à cette email: "'.$email.'" à déjà été crée</div>';
-			
 			}else{
-
 //------------------------------------ check if password is valid
-
 				$check_password = preg_match("/^[a-z0-9_-]{3,40}$/i", $password);
-
 				if ($check_password) {
-
 					$hashed_password = SHA1($password);
-
 //------------------------------------ stip spaces from telephone
 					$tel = trim($tel, " ");
-										
 //------------------------------------ save new member in DB and welcome message. 
-
 					$pdostatement = $this->query('INSERT INTO user (company, name, address, zip, city, tel, email, password, registration_date, type, user_ip) VALUES ("'.$company.'","'.$name.'","'.$address.'","'.$zip.'","'.$city.'","'.$tel.'","'.$email.'","'.$hashed_password.'", NOW(),"Client", "'.$user_ip.'");');
-
 
 					if (!$pdostatement) {
 					   $msg .= "\nPDO::errorInfo():\n";
 					   $msg = print_r($this->errorInfo());
 					}
-
 //------------------------------------ Send welcome email
-
 					$to      = $email;
 					$subject = 'www.opencfao.fr - Votre compte a été créé.';
 					$message = 'Bonjour, votre compte a été créé. Votre login est: '. $email .' et votre mot de passe est : '. $password;
@@ -59,9 +44,17 @@ class user extends db_connect{
 
 					mail($to, $subject, $message, $headers);
 
-//------------------------------------ Header Location
+//------------------------------------ find user ID
+					$dbquery = $this->query('SELECT id FROM user ORDER BY ID DESC LIMIT 1;');
+					$result_user_id = $dbquery->fetch(PDO::FETCH_ASSOC);
+					$user_id = $result_user_id['id'];
 
-					header("location: ?page=login");
+//------------------------------------ Create session and Header Location
+
+					$session = new session;
+					$session->Auth = TRUE;
+					$session->user_id = $user_id;
+					//setcookie('Auth', $user_id . '878544'. SHA1($user_id.$password), time()+3600*24*365);
 
 //------------------------------------ Mot de passe invalide
 
@@ -167,7 +160,6 @@ class user extends db_connect{
 
 		$pdostatement = $this->query('SELECT type FROM user WHERE id="' . $user_id . '";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-
 		$access = $result['type'];
 
 		return $access;

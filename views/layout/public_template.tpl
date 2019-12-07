@@ -48,6 +48,7 @@
 						<div class="heading"><?php //echo $page_slogan; ?> </div><!-- slogan -->
 
 						<!-- NAVBAR -->
+						<?if (isset($_SESSION['user_id'])){?>
 						<ul class="nav nav-pills nav-fill">
 							<?php foreach($page_menu_header as $value){
 								$active='';
@@ -58,6 +59,7 @@
 								</li>
 							<?}?>
 						</ul>
+						<?}?>
 
 					</div> <!-- header_container -->
 				</div> <!-- header -->
@@ -72,7 +74,7 @@
 	<div class="footer"> 
 
 		<div class="footer_container"> 
-			<ul class="nav justify-content-center">
+			<ul class="nav justify-content-center hidden">
 			<?php foreach($page_menu_footer as $value){?>
 				<li class="nav item"><?echo '<a class="nav link"href="?page='.$value['link'].'">'.$value['title']?></a></li>
 			<?}?>

@@ -13,6 +13,13 @@ $session = Session::getInstance();
 // Let's display datas
 //printf( '<p>My name is %s and I\'m %d years old.</p>' , $data->nickname , $data->age );
 
+if (isset($_POST['inscription'])) {
+	$user = new user;
+	$user_register = $user->register($_POST['company'],$_POST['name'], $_POST['adresse'], $_POST['zip'], $_POST['city'], $_POST['tel'], $_POST['email'], $_POST['password'], $_SERVER['REMOTE_ADDR']);
+	echo $user_register;
+}
+
+
 //------------------------------------ logout
 if (isset($_GET['logout']) AND $_GET['logout']=='log_me_out') {
 	$user->logout();
@@ -123,7 +130,7 @@ $alert = new alert;
 }
 
 
-$debug = 0;
+$debug = 1;
 $show_page_info = 0;
 if ($debug==TRUE) {
 
