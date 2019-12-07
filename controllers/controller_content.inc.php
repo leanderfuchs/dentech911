@@ -132,7 +132,7 @@ $alert = new alert;
 
 $debug = 1;
 $show_page_info = 0;
-if ($debug==TRUE) {
+if ($debug==TRUE AND $_SERVER['SERVER_NAME']=="192.168.33.10") {
 
 	print_r($session);
 
