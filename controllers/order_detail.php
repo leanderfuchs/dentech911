@@ -112,7 +112,7 @@ if (isset($_POST['add_file'])) {
 		}
 	}
 
-	echo $order_add_file;
+	//echo $order_add_file;
 } //end add_file
 
 // Liste des fichiers

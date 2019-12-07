@@ -74,9 +74,9 @@
 	<div class="footer"> 
 
 		<div class="footer_container"> 
-			<ul class="nav justify-content-center hidden">
+			<ul class="nav justify-content-center">
 			<?php foreach($page_menu_footer as $value){?>
-				<li class="nav item"><?echo '<a class="nav link"href="?page='.$value['link'].'">'.$value['title']?></a></li>
+				<li class="nav item"><?echo '<a class="nav link" target="blanc" href="https://'.$value['link'].'">'.$value['title']?></a></li>
 			<?}?>
 			</ul>
 		</div> <!-- footer_container -->

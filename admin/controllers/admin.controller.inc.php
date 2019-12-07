@@ -5,7 +5,9 @@ $user = new user;
 
 $website_base_url = $_SERVER['SERVER_NAME'];
 
-if ($_SESSION['loggedin']==TRUE AND $_SESSION['user_type']=="admin") {$loggedin=TRUE;}
+if ($_SESSION) {
+	if ($_SESSION['loggedin']==TRUE AND $_SESSION['user_type']=="admin") {$loggedin=TRUE;}
+}
 
 
 // affichages des elements de la page
@@ -30,20 +32,17 @@ if (empty($this->page)) {
 // affichage du contenu de la page en fonction de son exitence sois dans les fichiers, sois dans la bdd
 function affichage($page_controller_file, $page_view_file){
 
-	if($_SESSION['loggedin']==TRUE AND $_SESSION['user_type']=="admin") {
-		
-		include($page_controller_file);
-		include($page_view_file);
-	
+	if($_SESSION){
+		if($_SESSION['loggedin']==TRUE AND $_SESSION['user_type']=="admin") {
+			include($page_controller_file);
+			include($page_view_file);
+		}
 	} else {
-	
 		$page_controller_file = 'controllers/connexion_admin.php';
 		$page_view_file = 'views/connexion_admin.php';
 		include($page_controller_file);
 		include($page_view_file);
-		
 	}
-	
 }
 
 //------------------------------------ login
