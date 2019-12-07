@@ -1,7 +1,7 @@
 # Blacklist files/folders in same directory as the .gitignore file
 /admin/models/db_admin_class.php
 /models/db_connect_class.php
-/orders/files/*
+*/files/*
 *.code-workspace
 test.**
 cgi-bin
