@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="views/css/style.css"/>
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600" rel="stylesheet" type="text/css" />
-	<title><?php echo $page_title;?></title>
+	<title><?php echo $page_title;?> - DenTech911</title>
  		<link rel="stylesheet" href="views/css/jquery-ui.css" />
  		<link rel="stylesheet" href="views/css/cupertino/jquery-ui-custom.css" />
  		<link rel="stylesheet" href="views/css/cupertino/jquery-ui-custom.css" />

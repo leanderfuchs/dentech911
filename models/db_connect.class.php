@@ -25,20 +25,12 @@ class db_connect extends PDO{
 			$dns = $this->engine.':dbname='.$this->database.";host=".$this->host;
         	parent::__construct( $dns, $this->user, $this->pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
 
-       	} elseif ($_SERVER['SERVER_NAME']=="commande.opencfao.fr") {
+       	} elseif ($_SERVER['SERVER_NAME']=="dentech911.com") {
 			$this->engine = 'mysql';
-			$this->host = 'localhost';
-			$this->database = 'opencfao_orders';
-			$this->user = 'opencfao';
-			$this->pass = 'N2Sg8vUgOCseX56i'; 
-			$dns = $this->engine.':dbname='.$this->database.";host=".$this->host;
-        	parent::__construct( $dns, $this->user, $this->pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
-        } elseif ($_SERVER['SERVER_NAME']=="www.opencfao.fr") {
-			$this->engine = 'mysql';
-			$this->host = 'localhost';
-			$this->database = 'opencfao_orders';
-			$this->user = 'opencfao';
-			$this->pass = 'N2Sg8vUgOCseX56i'; 
+			$this->host = 'fl2yh.myd.infomaniak.com';
+			$this->database = 'fl2yh_dentech911';
+			$this->user = 'fl2yh_dentech911';
+			$this->pass = 'GZT_JPXohZLT'; 
 			$dns = $this->engine.':dbname='.$this->database.";host=".$this->host;
         	parent::__construct( $dns, $this->user, $this->pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
         }else {
