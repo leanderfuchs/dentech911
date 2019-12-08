@@ -146,9 +146,9 @@ class notification extends db_connect{
 
 		$pdostatement = $this->query('SELECT * FROM orders ORDER BY id DESC LIMIT 1;');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		
-		$email = 'whitegem.dental@gmail.com';
-		$order_id = $result['id']; 		
+
+		$email = $user->user_query($result['id'],'email');
+		$order_id = $result['id'];
 		$patient_id = $result['patient_id']; 
 		$product = $result['product_name']; 
 		$teeth_nbr = $result['teeth_nbr']; 
