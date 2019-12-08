@@ -10,7 +10,7 @@
 
 class order extends db_connect{
 
-	public function product($user_id, $patient, $teeth_nbr, $product, $vita_body, $vita3d_body, $implant_name, $implant_diam, $comment, $return_date, $unique_order_key){
+	public function product($user_id, $patient, $teeth_nbr, $product, $vita_body, $vita3d_body, $implant_name, $implant_diam, $comment, $return_date, $unique_order_key, $supplier_user_id){
 
 		if(empty($patient) || empty($product)){
 			return 'Vous devez reseigner les chanps "Nom" et "Produit"';
@@ -37,7 +37,7 @@ class order extends db_connect{
 			$return_date = date("Y-m-d", $return_date);
 		} 
 
-				//------------------------------------ trouver les infos du client
+				//------------------------------------ trouver les infos du user
 
 		$pdostatement = $this->query('SELECT email, name FROM user WHERE id = "' . $user_id . '";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
@@ -58,9 +58,9 @@ class order extends db_connect{
 		//------------------------------------ Ajouter la commande dans la DB
 
 		$pdostatement = $this->query('INSERT INTO orders (
-			arrival_date,return_date,user_ref_id,patient_id,status,paiment_status,comment,teeth_nbr,product_name,quantity,vita_body,vita3d_body,implant_name,implant_diam,unique_order_key) 
+			arrival_date,return_date,user_ref_id,patient_id,status,paiment_status,comment,teeth_nbr,product_name,quantity,vita_body,vita3d_body,implant_name,implant_diam,unique_order_key, supplier_ref_id) 
 		VALUES (
-			NOW(),"'.$return_date.'","'.$user_id.'","'.$patient.'","Commande envoyée","0","'.$comment .'","'.$teeth_nbr.'","'.$product.'","'.$quantity.'","'.$vita_body.'","'.$vita3d_body.'","'.$implant_name.'","'.$implant_diam.'","'. $unique_order_key .'");');
+			NOW(),"'.$return_date.'","'.$user_id.'","'.$patient.'","Commande envoyée","0","'.$comment .'","'.$teeth_nbr.'","'.$product.'","'.$quantity.'","'.$vita_body.'","'.$vita3d_body.'","'.$implant_name.'","'.$implant_diam.'","'. $unique_order_key .'", "'.$supplier_user_id.'");');
 
 
 		//------------------------------------ trouver le numero de la commande
@@ -106,7 +106,7 @@ class order extends db_connect{
 		$date_time = date('D_F_Y_H-i-s');
 		$date = date('D_M_Y');
 
-		//------------------------------------ find client's name
+		//------------------------------------ find user's name
 		$pdostatement = $this->query('SELECT name FROM user WHERE id="'.$client_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
@@ -152,11 +152,10 @@ class order extends db_connect{
 		$user_type = $result['type'];
 
 		//------------------------------------ trouver l'ID des dernieres commandes
-		
 		$opencfao ='0';
 		$supplier ='0';
 		$show_all ='0';
-		
+
 		if ($user_type=='admin' OR $user_type=='Open CFAO') {
 			$opencfao ='1';
 			$show_all = '1';
@@ -165,7 +164,6 @@ class order extends db_connect{
 		}
 
 		//------------------------------------ si aucune commande a ete trouve :
-		
 		if ($show_all=='0') {
 
 			$pdostatement = $this->query('SELECT id FROM orders WHERE user_ref_id = "' . $user_id . '" ;');
@@ -176,45 +174,39 @@ class order extends db_connect{
 			}
 
 		}
-				
 		//------------------------------------ retourner un tableau des dernieres commandes
 
 		if ($show_all=='1') {
-			
 			$dates = 'SELECT DISTINCT DATE(arrival_date) AS arrival_date FROM orders ORDER BY arrival_date DESC;';
-		
-		} elseif ($user_type=='Fournisseur') {
 
-			$dates = 'SELECT DISTINCT DATE(arrival_date) AS arrival_date FROM orders WHERE supplier_ref_id="' . $user_id . '" ORDER BY arrival_date DESC;';
-		}else {
+		} else {
 			$dates = 'SELECT DISTINCT DATE(arrival_date) AS arrival_date FROM orders WHERE user_ref_id="' . $user_id . '" ORDER BY arrival_date DESC;';
 		}
 
 		$output = "";
-		
 		if ($dates<1) {
 			foreach ($this->query($dates) as $arrival_date) {
 
 				$output .= '<span class="day-header">'. $Convert_Dates->longnames(date("l d F Y", strtotime($arrival_date["arrival_date"]))) .'</span><br/>';
-	
+
 					if ($opencfao=='1') {//open
-	
+
 						$orders = 'SELECT DISTINCT u.name, o.* FROM orders o, user u WHERE DATE(o.arrival_date)="' . $arrival_date['arrival_date'].'" AND u.id=o.user_ref_id ORDER BY o.id DESC;';
-					
+
 					} elseif ($user_type=='Fournisseur'){//supplier
-					
+
 						$orders = 'SELECT * FROM orders WHERE DATE(arrival_date)="' . $arrival_date['arrival_date'].'" AND supplier_ref_id='.$user_id.' ORDER BY id DESC;';
-					
+
 					} else {//clients
-					
+
 						$orders = 'SELECT * FROM orders WHERE user_ref_id="' . $user_id . '" AND DATE(arrival_date)="' . $arrival_date['arrival_date'].'" ORDER BY id DESC;';
 					}
-	
+
 				$output .= '<table class="table-striped font-90 centered" border=0>';	
 				$output .= '<tr>';
-	
+
 				foreach ($this->query($orders) as $order_details) {
-	
+
 					switch ($order_details['status']) {
 						case "Commande envoyée":
 							   $color = 'style="color:#0b7215;"';
@@ -236,15 +228,13 @@ class order extends db_connect{
 							break;
 						case "En cours de livraison":
 							   $color = 'style="color:#98000d;"';
-							break;			
+							break;
 						case "Livrée":
 							   $color = 'style="color:#7f7f7f;"';
-							break;	
+							break;
 						}
-	
-					if ($opencfao=='1') { //table width 1024px
-						$output .= '<td width="150px"><b>' . $order_details['name'] . '</b></td>';
-					}
+
+					$output .= '<td width="150px"><b>' . $order_details['name'] . '</b></td>';
 					$output .= '<td width="50px">[' . $order_details['id'] . ']</td>';
 					$output .= '<td width="50px">' . date("H:i", strtotime($order_details["arrival_date"])). '</td>';
 					$output .= '<td width="150px">' . ucwords($order_details['patient_id']) . '</td>';
@@ -252,22 +242,15 @@ class order extends db_connect{
 					$output .= '<td width="200px">' . $order_details['product_name'] . '</td>';
 					$output .= '<td width="50px">' . $order_details['vita_body']. $order_details['vita3d_body'] . '</td>';
 					$output .= '<td width="130px" '.$color.'><b>' . $order_details['status'] . '</b></td>';
-					if ($opencfao=='1' OR $supplier =='1') {
-						$output .= '<td width="120px">' . $order_details['tracking'] . '</td>';
-					}
-	
+					$output .= '<td width="120px">' . $order_details['tracking'] . '</td>';
 					$output .= '<td width="24px"> <a href="?page=order_detail&id='.$order_details['id'].'">Voir</a></td>';
-	
-				$output .= '</tr>';
-	
+					$output .= '</tr>';
 				}
-	
 				$output .= '</table>';	
 			}
-		} 
-		
-		return $output;
+		}
 
+		return $output;
 	} // end last_orders function
 
 
@@ -343,7 +326,7 @@ class order extends db_connect{
 		if ($status == "En retour de production") $localization = "Transporteur";
 		if ($status == "Prète à être livrée") $localization = "Open CFAO";
 		if ($status == "En cours de livraison") $localization = "Transporteur";
-		if ($status == "Livrée") $localization = "Client";
+		if ($status == "Livrée") $localization = "user";
 
 				//------------------------------------ Trouver le status actuelle
 
@@ -446,7 +429,7 @@ class order extends db_connect{
 				</select>
 				<input type="submit" name="submit" value="mettre à jour le statut"></form>';
 				
-		} elseif ($user_type == 'Client' AND ($current_status == $status['3'] OR $current_status == $status['6'])){
+		} elseif ($user_type == 'user' AND ($current_status == $status['3'] OR $current_status == $status['6'])){
 
 			$avalable_status .= '<div class="title"><h3>Changer de statut</h3></div>
 				<form id="status" method="post">
@@ -546,9 +529,9 @@ class order extends db_connect{
 
 		$message .= 'Merci,'."\r\n";
 		$message .= 'Open CFAO.'."\r\n"."\r\n";
-		$message .= 'www.opencfao.fr';
+		$message .= 'www.dentech911.com';
 
-		$headers = 'From: contact@opencfao.fr' . "\r\n" . 'Reply-To: contact@opencfao.fr' . "\r\n" .
+		$headers = 'From: contact@dentech911.com' . "\r\n" . 'Reply-To: contact@dentech911.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
 
 		mail($to, $subject, $message, $headers);

@@ -28,7 +28,7 @@ class user extends db_connect{
 //------------------------------------ stip spaces from telephone
 					$tel = trim($tel, " ");
 //------------------------------------ save new member in DB and welcome message. 
-					$pdostatement = $this->query('INSERT INTO user (company, name, address, zip, city, tel, email, password, registration_date, type, user_ip) VALUES ("'.$company.'","'.$name.'","'.$address.'","'.$zip.'","'.$city.'","'.$tel.'","'.$email.'","'.$hashed_password.'", NOW(),"Client", "'.$user_ip.'");');
+					$pdostatement = $this->query('INSERT INTO user (company, name, address, zip, city, tel, email, password, registration_date, type, user_ip) VALUES ("'.$company.'","'.$name.'","'.$address.'","'.$zip.'","'.$city.'","'.$tel.'","'.$email.'","'.$hashed_password.'", NOW(),"user", "'.$user_ip.'");');
 
 					if (!$pdostatement) {
 					   $msg .= "\nPDO::errorInfo():\n";
@@ -36,7 +36,7 @@ class user extends db_connect{
 					}
 //------------------------------------ Send welcome email
 					$to      = $email;
-					$subject = 'www.opencfao.fr - Votre compte a été créé.';
+					$subject = 'www.dentech911.com - Votre compte a été créé.';
 					$message = 'Bonjour, votre compte a été créé. Votre login est: '. $email .' et votre mot de passe est : '. $password;
 					$headers = 'From: donotreply@me.com' . "\r\n" .
 					'Reply-To: donotreply@order.cfao.fr.com' . "\r\n" .
@@ -216,6 +216,12 @@ class user extends db_connect{
 
 				mail($to, $subject, $message, $headers);
 
+				$dbquery = $this->query('SELECT id FROM user ORDER BY ID DESC LIMIT 1;');
+				$new_user_id = $dbquery->fetch(PDO::FETCH_ASSOC);
+				$new_user_id = $new_user_id['id'];
+
+				return $new_user_id;
+
 			} else { // si existe pas dans la base
 
 				$msg .= '<div class="error"> Cette email: ' . $email . ' est inconnu. Vérifiez son orthographe.</div>';
@@ -224,14 +230,13 @@ class user extends db_connect{
 
 		}
 
-	return $msg;	
-		
+	return $msg;
 	} // end of newpasswrd function
 
 	public function profil ($user_id){
 
 		//------------------------------------ return all infos
-																
+
 		$pdostatement = $this->query('SELECT * FROM user WHERE id="'.$user_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
@@ -245,7 +250,7 @@ class user extends db_connect{
 	public function name ($user_id){
 
 		//------------------------------------ return all infos
-																
+
 		$pdostatement = $this->query('SELECT name FROM user WHERE id="'.$user_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
@@ -275,36 +280,62 @@ class user extends db_connect{
 			$session->user_id = $user_id;
 			$session->Auth = TRUE;
 			$session->origin = 'Session Origin = Cookie';
-			//$_SESSION['user_id'] = $user_id;
-			//$_SESSION['Auth'] = TRUE;
-			//setcookie('Auth', $user_id . '878544'. SHA1($user_id.$password), time()+3600*24*365);
-
 		}
 
 		return 'user auto loggedin';
 		
 	} // end of remember_me function
 
+	public function new_email($email){
+		// check if email doesn't exists
+		$pdostatement = $this->query('SELECT id FROM user WHERE email="'.$email.'";');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$user_id = $result['id'];
 
-	public function supplier_list (){
+		if($user_id>0){
+			return $user_id;
+		} else {
+			// create a new user password
+			$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+			$pass = array(); //remember to declare $pass as an array
+			$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+			for ($i = 0; $i < 15; $i++) {
+				$n = rand(0, $alphaLength);
+				$pass[] = $alphabet[$n];
+			}
+			$generated_password = implode($pass); //turn the array into a string
+			$hashed_password = SHA1($generated_password);
 
-		$suppliers = "";
+			//------------------------------------ save new member in DB and welcome message. 
+			$pdostatement = $this->query('INSERT INTO user (email, password, registration_date, type) VALUES ("'.$email.'","'.$hashed_password.'", NOW(),"user");');
 
-		$pdostatement = $this->query('SELECT id, name FROM user WHERE type="Fournisseur";');
-		
-		while ($i = $pdostatement->fetch(PDO::FETCH_ASSOC)) {
-		
-			$suppliers .= '<option value="'.$i["id"].'">'.$i["name"].'</option>';
+			if (!$pdostatement) {
+			   $msg .= "\nPDO::errorInfo():\n";
+			   $msg = print_r($this->errorInfo());
+			}
 
+			//------------------------------------ find user ID
+			$dbquery = $this->query('SELECT id FROM user ORDER BY ID DESC LIMIT 1;');
+			$result_user_id = $dbquery->fetch(PDO::FETCH_ASSOC);
+			$new_user_id = $result_user_id['id'];
+
+//------------------------------------ Send welcome email
+			$to      = $email;
+			$subject = 'DenTech911 - Une nouvelle commande vous attend sur www.dentech911.com .';
+			$message = 'Bonjour, '. "\r\n" .'Félicitations, une nouvelle commande vous a été envoyée sur DenTech911 !'."\r\n\r\n";
+			$message .= 'Aussi, comme nous n\'avons pas trouvé votre email dans notre base de données, votre compte a été créé et vos déifiants sont votre adresse email et ce mot de passe que nous avons généré pour vous : '. $generated_password;
+			$headers = 'From: donotreply@me.com' . "\r\n" .
+			'Reply-To: donotreply@order.cfao.fr.com' . "\r\n" .
+			'X-Mailer: PHP/' . phpversion();
+			mail($to, $subject, $message, $headers);
+			
+			return $new_user_id;
 		}
-		
-		return $suppliers;
-
-	} // end of supplier_list function
+	}
 
 	public function user_query($user_id, $query) {
 		$pdostatement = $this->query('SELECT '.$query.' FROM user WHERE id="'.$user_id.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);		
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$result = $result[$query];
 		return $result;
 	}

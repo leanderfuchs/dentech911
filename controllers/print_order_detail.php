@@ -42,9 +42,6 @@ $order_files = $order->get_files($order_id);
 // var_dump($order_files);
 // echo "</pre>";
 
-//------------------------------------ determiner le type d'utilisateur.
-
-$supplierList = $user->supplier_list();
 
 //------------------------------------ return error if user trys to access pages from other users.
 
@@ -72,10 +69,12 @@ if(isset($unique_order_key)){
 	$order_lot = $order->order_query($unique_order_key, 'lot');
 	$order_tracking = $order->order_query($unique_order_key, 'tracking');
 	$order_status = $order->order_query($unique_order_key, 'status');
+	$order_supplier_id = $order->order_query($unique_order_key, 'supplier_ref_id');
 	$order_return_date = $Convert_Dates->shortnames(date("l d F Y", strtotime($order->order_query($unique_order_key, 'return_date'))));
 	$order_arrival_date = $Convert_Dates->shortnames(date("l d F Y", strtotime($order->order_query($unique_order_key, 'arrival_date'))));
+	//------------------------------------ Get all user details
+	$client_name = $user->name($order_client_id);
+	$supplier_email = $user->user_query($order_supplier_id, 'email');
 }
-//------------------------------------ Get all user details
-$client_name = $user->name($order_client_id);
 
 //echo $order_patient_name.'</br>'.$order_status.'</br>'.$order_teeth_nbr.'</br>'.$order_product_name.'</br>'.$order_teeth_nbr.'</br>'.$order_quantity.'</br>'.$order_vita_body.'</br>'.$order_vita3d_body.'</br>'.$order_return_date.'</br>'.$order_arrival_date.'</br>'.$order_localization.'</br>'.$order_paiment_status.'</br>'.$order_implant_name.'</br>'.$order_implant_diam.'</br>'.$order_file_path;

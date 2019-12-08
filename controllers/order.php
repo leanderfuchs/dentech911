@@ -15,3 +15,7 @@ if (isset($_GET['missing_patient']) && $_GET['missing_patient']=='missingpatient
 if (isset($_GET['missing_product']) && $_GET['missing_product']=='missingproduct') {
 	echo '<div class="error">Vous devez renseigner le champ Produit</div>';
 }
+
+if (isset($_GET['missing_email']) && $_GET['missing_email']=='missingemail') {
+	echo '<div class="error">Vous devez entrer l\'email du destinataire</div>';
+}

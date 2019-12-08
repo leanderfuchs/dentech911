@@ -26,6 +26,10 @@
 							Numero de suivi : <b>[<?php echo $order_id; ?>]</b>
 						</div>
 						<div>
+							Email du destinataire : <b><?php echo $supplier_email; ?></b>
+						</div>
+
+						<div>
 							Date de soumission : <b><?php echo $Convert_Dates->shortnames(date("l d F Y", strtotime($order_arrival_date))); ?></b>
 						</div>
 						<div>

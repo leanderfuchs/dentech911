@@ -29,7 +29,7 @@ class notification extends db_connect{
 		$return_date = $result['return_date'];
 		$client_id = $result['user_ref_id']; 
 
-		//------------------------------------ trouver le client
+		//------------------------------------ trouver le user
 		$pdostatement = $this->query('SELECT id FROM user WHERE id="'.$client_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$client_id = $result['id']; 
@@ -43,12 +43,12 @@ class notification extends db_connect{
 		//------------------------------------ email a open
 
 		$to      = $email;
-		$subject = 'www.opencfao.fr - Nouvelle commande ['.$order_id.']';
+		$subject = 'www.dentech911.com - Nouvelle commande ['.$order_id.']';
 		
 		$message = "";
 		$message .= 'Bonjour'."\r\n"."\r\n";
-		$message .= 'La commande #['.$order_id.'] à été passée sur www.opencfao.fr '."\r\n"."\r\n";
-		$message .= 'Client: '.$client_id."\r\n";
+		$message .= 'La commande #['.$order_id.'] à été passée sur www.dentech911.com '."\r\n"."\r\n";
+		$message .= 'user: '.$client_id."\r\n";
 		$message .= 'Patient: '.$patient_id."\r\n";
 		$message .= 'Produit: '.$product.', quantité:'.$quantity."\r\n";
 		$message .= 'Dents: '.$teeth_nbr."\r\n";
@@ -61,7 +61,7 @@ class notification extends db_connect{
 		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
 
 		$message .= 'Open CFAO.'."\r\n"."\r\n";
-		$message .= 'www.opencfao.fr';
+		$message .= 'www.dentech911.com';
 		$headers = 'From: donotreply@me.com' . "\r\n" .
 		'Reply-To: donotreply@me.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
@@ -107,14 +107,14 @@ class notification extends db_connect{
 		$return_date = $result['return_date']; 
 		$product = $result['product_name']; 
 
-		//------------------------------------ email au client
+		//------------------------------------ email au user
 
 		$to      = $email;
 		$subject = ' - Nouvelle commande ['.$order_id.']';
 		
 		$message = "";
 		$message .= 'Bonjour '. $username .','."\r\n"."\r\n";
-		$message .= 'Nous avons bien pris note de votre commande #['.$order_id.'] sur www.opencfao.fr et nous vous remercions de votre confiance.'."\r\n"."\r\n";
+		$message .= 'Nous avons bien pris note de votre commande #['.$order_id.'] sur www.dentech911.com et nous vous remercions de votre confiance.'."\r\n"."\r\n";
 		$message .= 'Patient: '.$patient_id."\r\n";
 		$message .= 'Dents: '.$teeth_nbr."\r\n";
 		$message .= 'Produit: '.$product.', quantité:'.$quantity."\r\n";		
@@ -129,7 +129,7 @@ class notification extends db_connect{
 
 		$message .= 'Cordialement,'."\r\n";
 		$message .= 'Open CFAO.'."\r\n"."\r\n";
-		$message .= 'www.opencfao.fr';
+		$message .= 'www.dentech911.com';
 		$headers = 'From: donotreply@me.com' . "\r\n" .
 		'Reply-To: donotreply@me.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
@@ -170,7 +170,7 @@ class notification extends db_connect{
 		
 		$message = "";
 		$message .= 'Bonjour'."\r\n"."\r\n";
-		$message .= 'Une nouvelle commande, #['.$order_id.'], à été passée sur www.opencfao.fr '."\r\n"."\r\n";
+		$message .= 'Une nouvelle commande, #['.$order_id.'], à été passée sur www.dentech911.com '."\r\n"."\r\n";
 		$message .= 'Patient: '.$patient_id."\r\n";
 		$message .= 'Produit: '.$product.', quantité:'.$quantity."\r\n";
 		$message .= 'Dents: '.$teeth_nbr."\r\n";
@@ -184,7 +184,7 @@ class notification extends db_connect{
 		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
 
 		$message .= 'Open CFAO.'."\r\n"."\r\n";
-		$message .= 'www.opencfao.fr';
+		$message .= 'www.dentech911.com';
 		$headers = 'From: donotreply@me.com' . "\r\n" .
 		'Reply-To: donotreply@me.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
@@ -209,7 +209,7 @@ class notification extends db_connect{
 		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
 
 		$message .= 'Open CFAO.'."\r\n"."\r\n";
-		$message .= 'www.opencfao.fr';
+		$message .= 'www.dentech911.com';
 		$headers = 'From: donotreply@me.com' . "\r\n" .
 		'Reply-To: donotreply@me.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();

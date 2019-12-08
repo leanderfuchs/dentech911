@@ -9,7 +9,7 @@
  			<ul class="section section-1">
  				<li class="item item-text left-half" id="patient">
  					<label for="patient" class="desc">N° de suivi ou Nom/Prénom du patient <span>*</span></label><input type="text" name="patient" id="patient" class="text large" value="<?php if(!empty($_POST['patient'])){ echo $_POST['patient']; }?>">
- 					<?php echo $missing_patient ?>
+ 					<?php echo $missing_patient ?><!--  Error message  -->
  				</li>
 
  				<li class="item item-text right-half" id="teeth_nbr">
@@ -28,9 +28,14 @@
 								}
 							 ?>
  					</select>
- 					 <?php echo $missing_product ?>
+ 					 <?php echo $missing_product ?><!--  Error message  -->
  				</li>
 
+				<li class="item item-text right-half" id="email-order-to">
+ 					<label for="email-order-to" class="desc">email du destinataire <span>*</span></label><input type="email" name="email-order-to" id="email-order-to" class="text large" value="<?php if(!empty($_POST['email-order-to'])){ echo $_POST['email-order-to']; }?>">
+					<? if(isset($missinemail)) echo $missinemail; ?>
+				</li>
+				 
  				<li class="item item-select left-half" id="vita_body2">
  					<label for="vita_body" class="desc">Teinte Vita</label>
  					<select name="vita_body" id="vita_body" class="select medium">

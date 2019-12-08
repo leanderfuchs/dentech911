@@ -5,7 +5,7 @@ $comment = new comment;
 $user = new user;
 
 
-//------------------------------------ si le message viens du client :
+//------------------------------------ si le message viens du user :
 if(isset($_POST['comment']) AND strlen(trim($_POST['comment'])) > 0){
 	$new_comment = $comment->new($_SESSION['user_id'], $_GET['id'], $_POST['comment']);
 	if ($new_comment) echo '<div class="valide">Votre message est bien envoyé</div>';

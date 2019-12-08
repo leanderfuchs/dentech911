@@ -8,7 +8,7 @@ class QRGenerator {
     protected $marginInRows;
     protected $debug;
  
-    public function __construct($data='http://www.opencfao.fr',$size='300',$encoding='UTF-8',$errorCorrectionLevel='L',$marginInRows=4,$debug=false) {
+    public function __construct($data='http://www.dentech911.com',$size='300',$encoding='UTF-8',$errorCorrectionLevel='L',$marginInRows=4,$debug=false) {
  
         $this->data=urlencode($data);
         $this->size=($size>100 && $size<800)? $size : 300;

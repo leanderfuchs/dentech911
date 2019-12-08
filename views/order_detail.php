@@ -1,5 +1,5 @@
 <div class="order_button">
-	<a href="?page=order"><button>Nouvelle commande</button></a>
+	<a href="?page=order"><button class="btn btn-primary btn-lg active">Nouvelle commande</button></a>
 </div>
 <br/>
 <h1>
@@ -28,7 +28,7 @@ if (!empty($user_restricted_pages)) {
 				<div class="frame-content">
 					<?php if ($page_access=="Open CFAO" OR $page_access=="admin"): ?>
 					<div>
-						Client : <b><?php echo $client_name; ?></b>
+						user : <b><?php echo $client_name; ?></b>
 					</div>						
 					<?php endif ?>
 					
@@ -38,9 +38,11 @@ if (!empty($user_restricted_pages)) {
 							echo "<img src=".$ex3->generate().">";
 						?>
 					</div>
-
 					<div>
 						Nom du patient : <b><?php echo $order_patient_name; ?></b>
+					</div>
+					<div>
+						Envoyé à : <b><?php echo $supplier_email; ?></b>
 					</div>
 					<div>
 						Numero de suivi : <b>[<?php echo $order_id; ?>]</b>
@@ -74,7 +76,7 @@ if (!empty($user_restricted_pages)) {
 				<?php if ($page_access=="Open CFAO" OR $page_access=="admin" OR $page_access=="Fournisseur"): ?>
 
 					<span class="title"><h3>Renseignement de production</h3></span>
-					<div class="frame-content font-90">
+					<div class="form">
 						<div id="next_status_wrap">
 							<form id="traceability" method="post">
 								<label for="lot">lot#</label><br/>

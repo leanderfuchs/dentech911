@@ -9,7 +9,7 @@
   <table class="table-striped font-90 centered" border=0>
   <? foreach($tracking_caselist as $key=>$value){ ?>
   <tr>
-    <td width=""><? echo $value['id']; ?></td>
+    <td width=""><b>[<? echo $value['id']; ?>]</b></td>
     <td width="10%"><? echo $Convert_Dates->longnames(date("d m Y", strtotime($value['arrival_date']))); ?></td>
     <td width="5%"><b><? echo $user->user_query($value['id'],'name'); ?></b></td>
     <td width="15%"><? echo ucwords($value['patient_id']); ?></td>
@@ -23,9 +23,12 @@
   </table>
 
   </div>
-  <input type="submit" value="valider" style="position:absolute; right: 23px;">
-  <!-- <input type="submit" value="valider" style="bottom:790px; left:430px; position:relative"> -->
-
+  <div class="container">
+    <div class="btn-block pull-right m-2">
+      <button class="btn btn-dark mx-auto" type="submit" value="valider">Envoyer</button>
+      <!-- <input type="submit" value="valider" style="bottom:790px; left:430px; position:relative"> -->
+    </div>
+  </div>
 </form>
 
 <script type="text/javascript">

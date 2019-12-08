@@ -366,7 +366,7 @@ width:1024px;
 
 }
 
-button,input[type="submit"],input[type="button"] {
+/* button,input[type="submit"],input[type="button"] {
 border:medium 1px;
 color:#000;
 font-size:.85em;
@@ -374,18 +374,18 @@ height:30px;
 margin-top:15px;
 padding-bottom:5px;
 width:201px;
-}
+} */
 
 .order_button{
-    border:medium 1px;
+    /* border:medium 1px;
     color:#000;
     font-size:.85em;
-    height:30px;
-    margin-top:15px;
-    padding-bottom:5px;
-    width:201px;
+    height:30px; */
+    /* margin-top:15px;
+    padding-bottom:5px; */
+    /* width:201px; */
     position: relative;
-    top: 15px;
+    top: 45px;
     float: right;
 }
 
@@ -510,7 +510,7 @@ width:inherit
     position: relative;
 }
 
-.framed label,.framed h1,.framed h2 {
+.framed h1,.framed h2 {
 color:#FFF;
 margin-top:0
 }

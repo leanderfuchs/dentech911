@@ -34,3 +34,5 @@ $order_vita = $order->order_query($order_unique_key, 'vita_body');
 $order_vita3d = $order->order_query($order_unique_key, 'vita3d_body');
 $order_lot = $order->order_query($order_unique_key, 'lot');
 $order_ref = $order->order_query($order_unique_key, 'ref');
+$supplier_ref_id = $order->order_query($order_unique_key, 'supplier_ref_id');
+$email_supplier = $user->user_query($supplier_ref_id, 'email');

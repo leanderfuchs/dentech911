@@ -144,7 +144,7 @@ class user extends db_admin{
 
 	public function nb_user (){
 
-		$pdostatement = $this->query('SELECT COUNT(id) FROM user WHERE type="Client" ;');
+		$pdostatement = $this->query('SELECT COUNT(id) FROM user WHERE type="user" ;');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		
 		$nb_user = $result['COUNT(id)'];

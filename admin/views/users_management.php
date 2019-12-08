@@ -31,8 +31,8 @@ if ($_GET['edit_user']==1) {
 		<label for ="type">Type :</label>
 		<select name="type" id="type">
 			<option value="<?php echo $user_info[9]; ?>"><?php echo $user_info[9]; ?></option>
-			<? if ($user_info[9]=='Client') echo '<option value="Fournisseur">Fournisseur</option>'; ?>
-			<? if ($user_info[9]=='Fournisseur') echo '<option value="Client">Client</option>'; ?>
+			<? if ($user_info[9]=='user') echo '<option value="Fournisseur">Fournisseur</option>'; ?>
+			<? if ($user_info[9]=='Fournisseur') echo '<option value="user">user</option>'; ?>
 		</select>					
 		<label for ="company">Entreprise :</label>
 		<input type="text" id="company"  name="company" value="<?php echo $user_info[10]; ?>">

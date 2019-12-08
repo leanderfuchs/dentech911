@@ -90,7 +90,7 @@ class order extends db_admin{
 			if ($status == "En retour de production") $localization = "Transporteur";
 			if ($status == "Prète à être livrée") $localization = "Open CFAO";
 			if ($status == "En cours de livraison") $localization = "Transporteur";
-			if ($status == "Livrée") $localization = "Client";
+			if ($status == "Livrée") $localization = "user";
 			//------------------------------------ Creer un evenement
 
 			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "admin", NOW(), "'.$localization.'" , "'.$status.'");');

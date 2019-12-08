@@ -32,7 +32,11 @@ if (isset($_POST['order']) && $_POST['order'] == "Commander") {
 
 	if (empty($_POST['product'])) {
 		header('location:?page=order&missing_product=missingproduct');
-	} 
+	}
+
+	if (empty($_POST['email-order-to'])) {
+		header('location:?page=order&missing_email=missingemail');
+	}
 }
 
 //------------------------------------ 
@@ -67,8 +71,11 @@ if (isset($_POST['order']) && $_POST['order']=='Commander') {
 	$shade = clean_string($_POST['vita_body'].$_POST['vita3d_body']);
 	$date = date("m").'-'.date("d").'-'.date("Y");
 
+	$session = new session();
+	$supplier_user_id = $user->new_email($_POST['email-order-to']);
+
 	// Ajout dans la base de donnee
-	$order_product = $order->product($user_id, $_POST['patient'], $_POST['teeth_nbr'], $_POST['product'], $_POST['vita_body'], $_POST['vita3d_body'], $_POST['implant_name'], $_POST['implant_diam'], $_POST['comment'], $_POST['datepicker'], $unique_order_key);	
+	$order_product = $order->product($user_id, $_POST['patient'], $_POST['teeth_nbr'], $_POST['product'], $_POST['vita_body'], $_POST['vita3d_body'], $_POST['implant_name'], $_POST['implant_diam'], $_POST['comment'], $_POST['datepicker'], $unique_order_key, $supplier_user_id, $supplier_user_id);	
 
 	//------------------------------------ Ajouter les fichiers a la BDD
 
@@ -186,11 +193,13 @@ if(isset($unique_order_key)){
 	$order_lot = $order->order_query($unique_order_key, 'lot');
 	$order_tracking = $order->order_query($unique_order_key, 'tracking');
 	$order_status = $order->order_query($unique_order_key, 'status');
+	$supplier_ref_id = $order->order_query($unique_order_key, 'supplier_ref_id');
 	$order_return_date = $Convert_Dates->shortnames(date("l d F Y", strtotime($order->order_query($unique_order_key, 'return_date'))));
 	$order_arrival_date = $Convert_Dates->shortnames(date("l d F Y", strtotime($order->order_query($unique_order_key, 'arrival_date'))));
 }
 //------------------------------------ Get all user details
 $client_name = $user->name($order_client_id);
+$supplier_email = $user->user_query($supplier_ref_id, 'email');
 
 //echo $order_patient_name.'</br>'.$order_status.'</br>'.$order_teeth_nbr.'</br>'.$order_product_name.'</br>'.$order_teeth_nbr.'</br>'.$order_quantity.'</br>'.$order_vita_body.'</br>'.$order_vita3d_body.'</br>'.$order_return_date.'</br>'.$order_arrival_date.'</br>'.$order_localization.'</br>'.$order_paiment_status.'</br>'.$order_implant_name.'</br>'.$order_implant_diam.'</br>'.$order_file_path;
 
