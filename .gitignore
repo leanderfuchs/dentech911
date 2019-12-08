@@ -5,6 +5,7 @@ test.*
 /orders/files/*
 !/orders/files/
 db_*.class.php
+db_search_results.php
 # Whitelist files/folders in sub-directories
 
 # Whitelist some files

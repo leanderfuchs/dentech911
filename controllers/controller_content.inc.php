@@ -31,7 +31,7 @@ if (isset($_GET['logout']) AND $_GET['logout']=='log_me_out') {
 //------------------------------------ Login
 if (isset($_POST['login'])) {
 	if (!isset($_POST['remember'])) $_POST['remember']='';
-	echo $_POST['remember'];
+	//echo $_POST['remember'];
 	$user_login = $user->login($_POST['login-email'],$_POST['login-password'], $_POST['remember']);
 	echo $user_login;
 }

@@ -17,7 +17,7 @@ $(document).ready(function(){
 
 		/* Send the data using post */
 		
-		$.post("views/js/affichage.php",{query:query, from:from, to:to, user_id:user_id},function(result){	
+		$.post("views/js/db_search_results.php",{query:query, from:from, to:to, user_id:user_id},function(result){	
 			$("#autoupdate").html(result);
     	});
 
