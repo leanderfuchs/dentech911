@@ -1,4 +1,3 @@
-<br/>
 <h1>
 	Certificat de conformité
 </h1>

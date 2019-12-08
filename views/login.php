@@ -1,7 +1,6 @@
 <?php 
 	if (!empty ($msg)){echo $msg;}
 ?>
-<br/>
 <div class="visual-form-builder-container">
 	<div class="inlinetitle">
 		<h1>

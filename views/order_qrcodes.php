@@ -1,4 +1,3 @@
-<br/>
 <h1 class="inlinetitle">Mise à jour des status</h1>
 
 <div class="info">

@@ -30,9 +30,13 @@
 					<div class="header_container">
 						<div id="misc-top">
 							<div id="sess-status">
+								<span class="badge badge-pill badge-dark">Fichiers restants 4</span>
+
+							<button type="button" class="btn">
 								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1) {
-									echo ' | <a href="?logout=log_me_out">Déconnection</a>';
+									echo '<a href="?logout=log_me_out">Déconnection</a>';
 								}?>
+								</button>
 							</div> <!-- sess-status -->
 						</div> <!-- misc-top -->
 
@@ -49,7 +53,7 @@
 						<?}?>
 
 						<!-- SLOGAN -->
-						<div class="heading"><?php //echo $page_slogan; ?> </div><!-- slogan -->
+						<div class="lead"><?php echo $page_slogan; ?> </div><!-- slogan -->
 
 						<!-- NAVBAR -->
 						<?if (isset($_SESSION['user_id'])){?>
@@ -69,6 +73,7 @@
 				</div> <!-- header -->
 			</header>
 			<?php endif ?> <!-- if print page -->
+				</br>
 				<?php affichage($page_controller_file, $page_view_file);?>
 				<p><?php if(!empty($page_content)) echo $page_content;?></p>
 			</div>
@@ -80,7 +85,7 @@
 		<div class="footer_container"> 
 			<ul class="nav justify-content-center">
 			<?php foreach($page_menu_footer as $value){?>
-				<li class="nav item"><?echo '<a class="nav link" target="blanc" href="https://'.$value['link'].'">'.$value['title']?></a></li>
+				<li class="nav-item"><?echo '<a class="nav-link" target="blanc" href="'.$value['link'].'"> '.$value['title']?> </a></li>
 			<?}?>
 			</ul>
 		</div> <!-- footer_container -->

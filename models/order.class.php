@@ -234,9 +234,7 @@ class order extends db_connect{
 							break;
 						}
 
-					$output .= '<td width="150px"><b>' . $order_details['name'] . '</b></td>';
-					$output .= '<td width="50px">[' . $order_details['id'] . ']</td>';
-					$output .= '<td width="50px">' . date("H:i", strtotime($order_details["arrival_date"])). '</td>';
+					$output .= '<td width="50px"><b>[' . $order_details['id'] . ']</b></td>';
 					$output .= '<td width="150px">' . ucwords($order_details['patient_id']) . '</td>';
 					$output .= '<td width="100px">' . $order_details['teeth_nbr'] . '</td>';
 					$output .= '<td width="200px">' . $order_details['product_name'] . '</td>';

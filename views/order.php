@@ -1,10 +1,6 @@
+<h1>Commander</h1>
 <div class="visual-form-builder-container">
  	<form id="order" enctype="multipart/form-data" class="visual-form-builder" method="post" action="?page=order_detail">
- 			<div class="inlinetitle">
- 				<h1>
- 					Commander
- 				</h1>
- 			</div>
  			<fieldset class="fieldset  commandexfset">
  			<ul class="section section-1">
  				<li class="item item-text left-half" id="patient">

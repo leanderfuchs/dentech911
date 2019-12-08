@@ -1,7 +1,3 @@
-<div class="order_button">
-	<a href="?page=order"><button class="btn btn-primary btn-lg active">Nouvelle commande</button></a>
-</div>
-<br/>
 <h1>
 	Cas - <?php echo $order_patient_name; ?>
 </h1>

@@ -1,4 +1,3 @@
-<br/>
 <h1 class="inlinetitle">Liste des numéros des suivis</h1>
 <div class="info">
   info: Remplire les cases rapidement en appuyant sur la touche ENTER ou TAB ou avec un <u>lecteur de codebar</u>.

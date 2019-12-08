@@ -84,7 +84,7 @@ if (isset($_POST['order']) && $_POST['order']=='Commander') {
 			$tmp_name = $_FILES[$file_nbr]["tmp_name"];
 			$file_name = $_FILES[$file_nbr]['name'];
 			$file_clean_name = clean_string($file_name);
-			echo '<br>fileNBR = '.$file_nbr.' <br>TMP_name = '. $tmp_name.' <br>File CLean Name = ' . $file_clean_name . '</br>';
+			//echo '<br>fileNBR = '.$file_nbr.' <br>TMP_name = '. $tmp_name.' <br>File CLean Name = ' . $file_clean_name . '</br>';
 			//------------------------------------ Nouvelle commande.
 			$order->add_file($unique_order_key, $file_nbr, $tmp_name, $file_clean_name);
 		}
@@ -113,7 +113,7 @@ if (isset($_POST['add_file'])) {
 			$tmp_name = $_FILES[$file_nbr]["tmp_name"];
 			$file_name = $_FILES[$file_nbr]['name'];
 			$file_clean_name = clean_string($file_name);
-			echo '<br>fileNBR = '.$file_nbr.' <br>TMP_name = '. $tmp_name.' <br>File CLean Name = ' . $file_clean_name . '</br>';
+			//echo '<br>fileNBR = '.$file_nbr.' <br>TMP_name = '. $tmp_name.' <br>File CLean Name = ' . $file_clean_name . '</br>';
 			//------------------------------------ Nouvelle commande.
 			$order_add_file = $order->add_file($unique_order_key, $file_nbr, $tmp_name, $file_clean_name);
 		}

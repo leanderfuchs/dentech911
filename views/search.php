@@ -25,13 +25,7 @@ $(document).ready(function(){
 });
 
 </script>
-
-<div class="order_button">
-	<a href="?page=order"><button class="btn btn-primary btn-lg active">Nouvelle commande</button></a>
-</div>
-<br/>
 <h1 class="inlinetitle">Recherche</h1>
-
 <div class="query">
 
 	<form action="" name="form" id="form" method="post" class="visual-form-builder">

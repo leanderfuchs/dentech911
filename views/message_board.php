@@ -1,4 +1,3 @@
-<br/>
 <h1>
 	Commentaires - <?php echo $order_patient_name; ?>
 </h1>

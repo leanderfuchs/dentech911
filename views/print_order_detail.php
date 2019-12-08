@@ -1,7 +1,6 @@
 <div id="pagetitle">
-	<a href="?page=order_list"><img src="views/images/Logo_open_cfao_header.png" alt="" /></a><br/>
+	<a href="?page=order_list"><img src="views/images/dentech911-logo-320px.svg" alt="" /></a><br/>
 </div> <!-- pagetitle -->
-<br/>
 <h1>
 	Cas - <?php echo $order_id; ?>
 </h1>

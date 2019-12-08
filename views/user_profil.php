@@ -1,7 +1,3 @@
-<div class="order_button">
-	<a href="?page=order"><button class="btn btn-primary btn-lg active">Nouvelle commande</button></a>
-</div>
-</br>
 <div class="title">
 	<h1>
 		Mon profil
