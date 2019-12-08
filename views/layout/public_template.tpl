@@ -15,6 +15,10 @@
 
 </head>
 <body>
+
+	<div class="alert alert-info" role="alert">
+		Site en cours de dévelopment. Il est utilisable mais des mises à jours régulières sont faites
+	</div>
 	<div id="wrap">
 		<div id="main">
 			<div class="framed frame-main">

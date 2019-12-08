@@ -31,7 +31,7 @@
 			<label for ="status">status :</label>
 			<select name="status" id="status">
 				<option value="Commande envoyée" <?php if($order_info['5']=="Commande envoyée") echo "selected"; ?>>Commande envoyée</option>
-				<option value="Reçu chez Open CFAO" <?php if($order_info['5']=="Reçu chez Open CFAO") echo "selected"; ?>>Reçu chez Open CFAO</option>
+				<option value="Reçu chez DenTech911" <?php if($order_info['5']=="Reçu chez DenTech911") echo "selected"; ?>>Reçu chez DenTech911</option>
 				<option value="Envoyée en production" <?php if($order_info['5']=="Envoyée en production") echo "selected"; ?>>Envoyée en production</option>
 				<option value="En cours de production" <?php if($order_info['5']=="En cours de production") echo "selected"; ?>>En cours de production</option>
 				<option value="En retour de production" <?php if($order_info['5']=="En retour de production") echo "selected"; ?>>En retour de production</option>

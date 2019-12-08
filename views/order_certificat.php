@@ -29,7 +29,7 @@ if ($user_restricted_page == 1) {
 	
 		<span><h4>FICHE DE SUIVI</h4></span>
 
-		<span><h3>OPEN CFAO</h3></span>
+		<span><h3>DenTech911</h3></span>
 		<p>Pour DHR (Device History Record)</p>
 	
 	</div>

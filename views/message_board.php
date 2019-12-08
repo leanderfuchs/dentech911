@@ -33,7 +33,7 @@
 							Ref# : <b><?php echo $order_ref; ?></b>
 						</div>
 						
-						<?php if ($page_access=="Open CFAO" OR $page_access=="admin" OR $page_access=="Fournisseur"): ?>
+						<?php if ($page_access=="DenTech911" OR $page_access=="admin" OR $page_access=="Fournisseur"): ?>
 						<div>
 							Tracking# : <b><?php echo $order_tracking; ?></b>
 						</div>

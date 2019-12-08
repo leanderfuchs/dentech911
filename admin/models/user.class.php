@@ -100,7 +100,7 @@ class user extends db_admin{
 		
 		while ($i = $pdostatement->fetch(PDO::FETCH_ASSOC)) {
 
-			if ($i['type']=="admin" OR $i['type']=="Open CFAO") {
+			if ($i['type']=="admin" OR $i['type']=="DenTech911") {
 				$edit = "";
 				$delete = "";
 			} else {

@@ -156,7 +156,7 @@ class order extends db_connect{
 		$supplier ='0';
 		$show_all ='0';
 
-		if ($user_type=='admin' OR $user_type=='Open CFAO') {
+		if ($user_type=='admin' OR $user_type=='DenTech911') {
 			$opencfao ='1';
 			$show_all = '1';
 		} elseif ($user_type=='Fournisseur'){
@@ -211,7 +211,7 @@ class order extends db_connect{
 						case "Commande envoyée":
 							   $color = 'style="color:#0b7215;"';
 							break;
-						case "Reçu chez Open CFAO":
+						case "Reçu chez DenTech911":
 							   $color = 'style="color:#1cb236;"';
 							break;
 						case "Envoyée en production":
@@ -320,11 +320,11 @@ class order extends db_connect{
 		$msg = '';
 
 		if ($status == "Commande envoyée") $localization = "Transporteur";
-		if ($status == "Reçu chez Open CFAO") $localization = "Open CFAO";
+		if ($status == "Reçu chez DenTech911") $localization = "DenTech911";
 		if ($status == "Envoyée en production") $localization = "Centre de Fraisage";
 		if ($status == "En cours de production") $localization = "Centre de Fraisage";
 		if ($status == "En retour de production") $localization = "Transporteur";
-		if ($status == "Prète à être livrée") $localization = "Open CFAO";
+		if ($status == "Prète à être livrée") $localization = "DenTech911";
 		if ($status == "En cours de livraison") $localization = "Transporteur";
 		if ($status == "Livrée") $localization = "user";
 
@@ -400,7 +400,7 @@ class order extends db_connect{
 
 		//------------------------------------ Creation ses differents status
 
-		$status = array('Commande envoyée', 'Reçu chez Open CFAO', 'Envoyée en production', 'En cours de production','En retour de production', 'Prète à être livrée', 'En cours de livraison', 'Livrée');
+		$status = array('Commande envoyée', 'Reçu chez DenTech911', 'Envoyée en production', 'En cours de production','En retour de production', 'Prète à être livrée', 'En cours de livraison', 'Livrée');
 
 		//------------------------------------ Trouver la clef qui correspond au status actuel
 	
@@ -518,7 +518,7 @@ class order extends db_connect{
 		//------------------------------------ email de notification pour le supplier
 		
 		$to     = $supplier_email;
-		$subject = 'Open CFAO: Commande ['.$order_id.'] prête à être usinée.';
+		$subject = 'DenTech911: Commande ['.$order_id.'] prête à être usinée.';
 
 		$message .= 'Patient: '.$patient."\r\n";
 
@@ -528,7 +528,7 @@ class order extends db_connect{
 		$message .= ''. $_SERVER['SERVER_NAME'] .'/?page=order_detail&id='.$order_id.'"> Lien vers la fiche de la commande'."\r\n"."\r\n";
 
 		$message .= 'Merci,'."\r\n";
-		$message .= 'Open CFAO.'."\r\n"."\r\n";
+		$message .= 'DenTech911.'."\r\n"."\r\n";
 		$message .= 'www.dentech911.com';
 
 		$headers = 'From: contact@dentech911.com' . "\r\n" . 'Reply-To: contact@dentech911.com' . "\r\n" .
@@ -542,7 +542,7 @@ class order extends db_connect{
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$current_status = $result['status'];
 
-		if ($current_status =="Reçu chez Open CFAO" OR $current_status =="Commande envoyée") {
+		if ($current_status =="Reçu chez DenTech911" OR $current_status =="Commande envoyée") {
 		
 			//------------------------------------ Mise a jour du status
 
@@ -554,7 +554,7 @@ class order extends db_connect{
 			
 			//------------------------------------ Creer un evenement
 
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "Open CFAO", NOW(), "Centre de Fraisage", "Envoyée en production");');
+			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "DenTech911", NOW(), "Centre de Fraisage", "Envoyée en production");');
 		}
 
 
@@ -610,15 +610,15 @@ class order extends db_connect{
 			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "Centre d\'usingage", NOW(), "Centre de Fraisage", "En cours de production");');
 		}
 
-		if ($user_type == 'Open CFAO' AND $current_status == "Commande envoyée" AND $havefile==1){
+		if ($user_type == 'DenTech911' AND $current_status == "Commande envoyée" AND $havefile==1){
 			
 			//------------------------------------ Mise a jour du status
 
-			$pdostatement = $this->query('UPDATE orders SET status = "Reçu chez Open CFAO" WHERE id="' . $order_id . '";');
+			$pdostatement = $this->query('UPDATE orders SET status = "Reçu chez DenTech911" WHERE id="' . $order_id . '";');
 
 			//------------------------------------ Creer un evenement
 
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "Open CFAO", NOW(), "Open CFAO", "Reçu chez Open CFAO");');
+			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "DenTech911", NOW(), "DenTech911", "Reçu chez DenTech911");');
 		}
 
 	} // end auto_update_status function

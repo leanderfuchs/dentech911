@@ -140,7 +140,7 @@ public function caselist($user_id){
 			$msg .= '<div class="valide"> Le status du cas [<b>' . $order_id . '</b>] a été changé pour "<b>Prète à être livrée</b>"</div>';
 			
 					//------------------------------------ Creer un evenement
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "Open CFAO", NOW(), "Open CFAO", "Prète à être livrée");');
+			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "DenTech911", NOW(), "DenTech911", "Prète à être livrée");');
 			
 		}
 

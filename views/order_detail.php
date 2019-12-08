@@ -26,7 +26,7 @@ if (!empty($user_restricted_pages)) {
 			<div class="cell cell-33">
 				<span class="title"><h3>Détails du Cas</h3></span>
 				<div class="frame-content">
-					<?php if ($page_access=="Open CFAO" OR $page_access=="admin"): ?>
+					<?php if ($page_access=="DenTech911" OR $page_access=="admin"): ?>
 					<div>
 						user : <b><?php echo $client_name; ?></b>
 					</div>						
@@ -60,7 +60,7 @@ if (!empty($user_restricted_pages)) {
 						Ref# : <b><?php echo $order_ref; ?></b>
 					</div>
 
-					<?php if ($page_access=="Open CFAO" OR $page_access=="admin" OR $page_access=="Fournisseur"): ?>
+					<?php if ($page_access=="DenTech911" OR $page_access=="admin" OR $page_access=="Fournisseur"): ?>
 					<div>
 						Tracking# : <a href="https://www.fedex.com/fedextrack/?tracknumbers=<?php echo $order_tracking; ?>" target="blanc"><b><?php echo $order_tracking; ?></b></a>
 					</div>
@@ -73,7 +73,7 @@ if (!empty($user_restricted_pages)) {
 
 				<?php if (isset($order_update_status)){echo $order_update_status;} ?>
 
-				<?php if ($page_access=="Open CFAO" OR $page_access=="admin" OR $page_access=="Fournisseur"): ?>
+				<?php if ($page_access=="DenTech911" OR $page_access=="admin" OR $page_access=="Fournisseur"): ?>
 
 					<span class="title"><h3>Renseignement de production</h3></span>
 					<div class="form">
@@ -176,7 +176,7 @@ if (!empty($user_restricted_pages)) {
 	<?php if (isset($order_track)) {echo $order_track;} ?>
 </table>
 
-<?php if ($page_access=="Open CFAO" OR $page_access=="admin"): ?>
+<?php if ($page_access=="DenTech911" OR $page_access=="admin"): ?>
 	<br/>
 	<br/>
 	<br/>

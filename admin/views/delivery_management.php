@@ -19,7 +19,7 @@ if ($_GET['edit_delivery']==1) {
 		<label for ="track_supplier">No de suivi fournisseur :</label>
 		<input type="text" id="track_supplier"  name="track_supplier" value="<?php echo $delivery_info[2]; ?>">
 		
-		<label for ="track_open">No de suivi transporteur Open CFAO :</label>
+		<label for ="track_open">No de suivi transporteur DenTech911 :</label>
 		<input type="text" id="track_open" name="track_open" value="<?php echo $delivery_info[3]; ?>">
 		
 		<input type="submit" name="edit" value="Metre a jour" class="button">
@@ -38,7 +38,7 @@ if ($_GET['edit_delivery']==1) {
 	    <tr>
 	        <th>ID de la commande</th>
 	        <th>Numero de suivi fournisseur</th>
-	        <th>Numero de suivi Transporteur Open CFAO</th>
+	        <th>Numero de suivi Transporteur DenTech911</th>
 	        <th>Editer</th>
 		</tr>
 

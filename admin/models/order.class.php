@@ -84,11 +84,11 @@ class order extends db_admin{
 		if ($current_status != $status) {
 
 			if ($status == "Commande envoyée") $localization = "Transporteur";
-			if ($status == "Reçu chez Open CFAO") $localization = "Open CFAO";
+			if ($status == "Reçu chez DenTech911") $localization = "DenTech911";
 			if ($status == "Envoyée en production") $localization = "Centre de Fraisage";
 			if ($status == "En cours de production") $localization = "Centre de Fraisage";
 			if ($status == "En retour de production") $localization = "Transporteur";
-			if ($status == "Prète à être livrée") $localization = "Open CFAO";
+			if ($status == "Prète à être livrée") $localization = "DenTech911";
 			if ($status == "En cours de livraison") $localization = "Transporteur";
 			if ($status == "Livrée") $localization = "user";
 			//------------------------------------ Creer un evenement

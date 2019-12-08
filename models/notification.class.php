@@ -17,8 +17,7 @@ class notification extends db_connect{
 
 		$pdostatement = $this->query('SELECT * FROM orders ORDER BY id DESC LIMIT 1;');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		
-		$email = 'leanderfuchs@protonmail.com';
+
 		$order_id = $result['id']; 		
 		$patient_id = $result['patient_id']; 
 		$product = $result['product_name']; 
@@ -27,12 +26,17 @@ class notification extends db_connect{
 		$vita_body = $result['vita_body']; 
 		$vita3d_body = $result['vita3d_body']; 
 		$return_date = $result['return_date'];
-		$client_id = $result['user_ref_id']; 
+		$client_id = $result['user_ref_id'];
+		$supplier_id = $result['supplier_ref_id'];
 
 		//------------------------------------ trouver le user
-		$pdostatement = $this->query('SELECT id FROM user WHERE id="'.$client_id.'";');
+		$pdostatement = $this->query('SELECT name FROM user WHERE id="'.$client_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$client_id = $result['id']; 
+		$client_name = $result['name']; 
+		//------------------------------------ trouver le supplier
+		$pdostatement = $this->query('SELECT email FROM user WHERE id="'.$supplier_id.'";');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$email = $result['email'];
 
 		//------------------------------------ trouver les commantaires
 
@@ -45,10 +49,9 @@ class notification extends db_connect{
 		$to      = $email;
 		$subject = 'www.dentech911.com - Nouvelle commande ['.$order_id.']';
 		
-		$message = "";
-		$message .= 'Bonjour'."\r\n"."\r\n";
-		$message .= 'La commande #['.$order_id.'] à été passée sur www.dentech911.com '."\r\n"."\r\n";
-		$message .= 'user: '.$client_id."\r\n";
+		$message = 'Bonjour,'."\r\n\r\n";
+		$message .= 'La commande #['.$order_id.'] à été passée sur www.dentech911.com'."\r\n\r\n";
+		$message .= 'De: '.$client_name."\r\n";
 		$message .= 'Patient: '.$patient_id."\r\n";
 		$message .= 'Produit: '.$product.', quantité:'.$quantity."\r\n";
 		$message .= 'Dents: '.$teeth_nbr."\r\n";
@@ -60,7 +63,7 @@ class notification extends db_connect{
 		
 		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
 
-		$message .= 'Open CFAO.'."\r\n"."\r\n";
+		$message .= 'DenTech911.'."\r\n"."\r\n";
 		$message .= 'www.dentech911.com';
 		$headers = 'From: donotreply@me.com' . "\r\n" .
 		'Reply-To: donotreply@me.com' . "\r\n" .
@@ -128,7 +131,7 @@ class notification extends db_connect{
 		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
 
 		$message .= 'Cordialement,'."\r\n";
-		$message .= 'Open CFAO.'."\r\n"."\r\n";
+		$message .= 'DenTech911.'."\r\n"."\r\n";
 		$message .= 'www.dentech911.com';
 		$headers = 'From: donotreply@me.com' . "\r\n" .
 		'Reply-To: donotreply@me.com' . "\r\n" .
@@ -183,7 +186,7 @@ class notification extends db_connect{
 
 		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
 
-		$message .= 'Open CFAO.'."\r\n"."\r\n";
+		$message .= 'DenTech911.'."\r\n"."\r\n";
 		$message .= 'www.dentech911.com';
 		$headers = 'From: donotreply@me.com' . "\r\n" .
 		'Reply-To: donotreply@me.com' . "\r\n" .
@@ -208,7 +211,7 @@ class notification extends db_connect{
 		
 		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
 
-		$message .= 'Open CFAO.'."\r\n"."\r\n";
+		$message .= 'DenTech911.'."\r\n"."\r\n";
 		$message .= 'www.dentech911.com';
 		$headers = 'From: donotreply@me.com' . "\r\n" .
 		'Reply-To: donotreply@me.com' . "\r\n" .

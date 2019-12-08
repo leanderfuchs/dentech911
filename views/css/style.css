@@ -874,7 +874,7 @@ display:none
 margin-top:40px
 }
 
-.alert {
+/*.alert {
     background-color: #fdffd2;
     border: 1px solid #b5b725;
     color: #b5b725;
@@ -888,7 +888,7 @@ margin-top:40px
 .alert_link a{
     font-size:14px;
     color:red;
-}
+}*/
 
 .info {
 position: absolute;
