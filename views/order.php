@@ -1,5 +1,5 @@
-<h1>Commander</h1>
-<div class="visual-form-builder-container">
+<? if($_SESSION['balance']<1) $hidden="none";?>
+<div class="visual-form-builder-container" style="display:<?echo $hidden;?>">
  	<form id="order" enctype="multipart/form-data" class="visual-form-builder" method="post" action="?page=order_detail">
  			<fieldset class="fieldset  commandexfset">
  			<ul class="section section-1">
@@ -216,26 +216,48 @@
  		</li>
 
  		<li class="item item-textarea" id="item-vfb-596-596">
+			 <label for="comment" class="desc">Commentaire</label>
  			<textarea name="comment" id="comment" class="textarea small"><?php if(!empty($_POST['comment'])){ echo $_POST['comment']; }?></textarea>
- 		</li>
+		 </li>
+
+		 <? if($_SESSION['balance']>0 && $_SESSION['balance']<6){?>
+			 <div class="container mt-5">
+				 <div class="alert alert-info mt-5" role="alert">
+					 Vous avez encore <b><? echo $_SESSION['balance'];?> point(s)</b> de crédit. Si vous désirez envoyer plus de fichiers vous devez en acheter.<a href="?page=buy_points"><span class="btn btn-primary ml-3">acheter des points</span></a>
+				 </div>
+			 </div>
+		 <?}?>
+
+		 <?if($_SESSION['balance']>=1){?>
  		<li class="item item-file-upload left-third" id="file1">
  			<input type="file" size="35" name="file1" id="file12" value="" class="text small">
- 		</li>
- 		<li class="item item-file-upload middle-third" id="file2">
+		 </li>
+		 <?}?>
+		 <?if($_SESSION['balance']>=2){?>
+		 <li class="item item-file-upload middle-third" id="file2">
  			<input type="file" size="35" name="file2" id="file22" value="" class="text small">
- 		</li>
+		 </li>
+		<?}?>
+		<?if($_SESSION['balance']>=3){?>
  		<li class="item item-file-upload right-third" id="file3">
  			<input type="file" size="35" name="file3" id="file32" value="" class="text small">
  		</li>
+		 <?}?>
+		<?if($_SESSION['balance']>=4){?>
  		<li class="item item-file-upload left-third" id="file4">
  			<input type="file" size="35" name="file4" id="file42" value="" class="text small">
  		</li>
+		 <?}?>
+		<?if($_SESSION['balance']>=5){?>
  		<li class="item item-file-upload middle-third" id="file5">
  			<input type="file" size="35" name="file5" id="file52" value="" class="text small">
  		</li>
+		 <?}?>
+		 <?if($_SESSION['balance']>=6){?>
  		<li class="item item-file-upload right-third" id="file6">
  			<input type="file" size="35" name="file6" id="file62" value="" class="text small">
  		</li>
+		 <?}?>
 
  		<div class="center">
  			<li class="item item-text ">
@@ -252,3 +274,15 @@
  </fieldset>
 </form>
 </div>
+
+<? if($_SESSION['balance']<1){ ?>
+
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<div class="display-4">Vous avez besoin d'un point pour envoyer un ficher.</div>
+			<p class="lead">Aujourd'hui un point = <?echo $page_point_price;?>€ </p>
+			<a href="?page=buy_points"><span class="btn btn-primary float-right">Veuillez en acheter ici</span></a>
+		</div>
+	</div>
+
+<?}?>

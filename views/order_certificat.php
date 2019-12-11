@@ -1,7 +1,3 @@
-<h1>
-	Certificat de conformité
-</h1>
-
 <div id="tabs-nav-div">
 	<ul class="tab-nav">
 		<li class="tab-nav"> <a onclick="goBack()" id="back" href="?page=order_detail&id=<?php echo $_GET['id']; ?>" data-icon="arrow-l">Revenir à la page détails</a>

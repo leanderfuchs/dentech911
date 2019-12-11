@@ -106,7 +106,6 @@ function affichage($page_controller_file, $page_view_file){
 $page_slogan = $ibdd->options_query('slogan');
 $page_menu_header = $ibdd->page_menu('header');
 $page_menu_footer = $ibdd->page_menu('footer');
-
 // Page specific content
 if (isset($_GET['page'])){
 	$page_title = $ibdd->page_query($_GET['page'], 'title');

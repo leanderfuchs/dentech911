@@ -1,7 +1,4 @@
 <?php echo $user_register; ?>
-<h1>
-	Créer un nouveau compte
-</h1>
 <i><a href="?page=login" style="color:#7f7f7f;">Vous avez déjà un compte ?</a></i>
 <div class="visual-form-builder-container">
 	<form id="register" class="visual-form-builder" method="post" action="">

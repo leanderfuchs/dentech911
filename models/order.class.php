@@ -11,12 +11,7 @@
 class order extends db_connect{
 
 	public function product($user_id, $patient, $teeth_nbr, $product, $vita_body, $vita3d_body, $implant_name, $implant_diam, $comment, $return_date, $unique_order_key, $supplier_user_id){
-
-		if(empty($patient) || empty($product)){
-			return 'Vous devez reseigner les chanps "Nom" et "Produit"';
-			exit;
-		}
-
+		
 		$msg = '';
 		$username = $_SESSION['Auth'];
 
@@ -264,7 +259,7 @@ class order extends db_connect{
 			$order_details = implode("|", $order_details);
 		}
 		//------------------------------------ Retrouver les id des produits de la commande
-		
+
 		return $order_details;
 
 	} // end details_commande function

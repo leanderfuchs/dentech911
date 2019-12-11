@@ -16,7 +16,7 @@ $(document).ready(function(){
 		user_id = $form.find( 'input[name="user_id"]' ).val();
 
 		/* Send the data using post */
-		
+
 		$.post("views/js/db_search_results.php",{query:query, from:from, to:to, user_id:user_id},function(result){	
 			$("#autoupdate").html(result);
     	});
@@ -25,7 +25,6 @@ $(document).ready(function(){
 });
 
 </script>
-<h1 class="inlinetitle">Recherche</h1>
 <div class="query">
 
 	<form action="" name="form" id="form" method="post" class="visual-form-builder">
@@ -53,27 +52,3 @@ $(document).ready(function(){
 <div class='listing'>
 	<div class="full_width_panel_short" name="autoupdate" id="autoupdate"> </div> 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

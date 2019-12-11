@@ -63,14 +63,14 @@ if (isset($_POST['order']) && $_POST['order']=='Commander') {
 	    return $str; 
 	}
 
-	if ($_POST['product'] == 'Choisir une option') $_POST['product'] = '';
-
+	// clean entries
 	$patient = clean_string($_POST['patient']);
 	$teeth = clean_string($_POST['teeth_nbr']);
 	$product = clean_string($_POST['product']);
 	$shade = clean_string($_POST['vita_body'].$_POST['vita3d_body']);
 	$date = date("m").'-'.date("d").'-'.date("Y");
 
+	// email notification to supplier
 	$session = new session();
 	$supplier_user_id = $user->new_email($_POST['email-order-to']);
 
@@ -78,7 +78,6 @@ if (isset($_POST['order']) && $_POST['order']=='Commander') {
 	$order_product = $order->product($user_id, $_POST['patient'], $_POST['teeth_nbr'], $_POST['product'], $_POST['vita_body'], $_POST['vita3d_body'], $_POST['implant_name'], $_POST['implant_diam'], $_POST['comment'], $_POST['datepicker'], $unique_order_key, $supplier_user_id, $supplier_user_id);	
 
 	//------------------------------------ Ajouter les fichiers a la BDD
-
 	foreach ($_FILES as $file_nbr => $value) {
 		if (($_FILES[$file_nbr]['error'] == 0)){
 			$tmp_name = $_FILES[$file_nbr]["tmp_name"];
@@ -147,27 +146,6 @@ if (isset($_POST['traceability'])) {
 if (isset($_POST['status'])) {
 	$order_status = $order->status($_POST['status'], $unique_order_key);
 	echo $order_status;
-}
-
-//------------------------------------ Envoie en production au fournisseur
-if (isset($_POST['send_prod'])) {
-	if (!empty($_POST['supplier'])) {
-			$order_send_prod = $order->send_prod($_GET['id'], $_POST['supplier']);
-	} else {
-	echo '<div class="error">Vous avez oublié(e) de séléctionner un Fournisseur</div>';
-	}
-	echo $order_send_prod;
-}
-
-
-
-//------------------------------------ determiner le type d'utilisateur.
-
-
-//------------------------------------ return error if user trys to access pages from other users.
-
-if (!empty($_SESSION['user_id']) AND empty($_SESSION['opencfao_id'])){
-	$user_id = $_SESSION['user_id'];
 }
 
 $page_access = $user->access($user_id);

@@ -54,6 +54,7 @@ class user extends db_connect{
 					$session = new session;
 					$session->Auth = TRUE;
 					$session->user_id = $user_id;
+					$session->balance = 0;
 					//setcookie('Auth', $user_id . '878544'. SHA1($user_id.$password), time()+3600*24*365);
 
 //------------------------------------ Mot de passe invalide
@@ -133,6 +134,7 @@ class user extends db_connect{
 				$session = new session;
 				$session->user_id = $user_id;
 				$session->Auth = TRUE;
+				$this->check_balance($user_id);
 				if($remember == 'remember')	{
 					setcookie('Auth', $user_id . '878544'. SHA1($user_id.$password), time()+3600*24*365);
 				}
@@ -338,6 +340,26 @@ class user extends db_connect{
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$result = $result[$query];
 		return $result;
+	}
+
+	public function check_balance($user_id){
+		$pdostatement = $this->query('SELECT balance FROM user WHERE id='.$user_id.';');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$actual_balance = $result['balance'];
+		
+		$session = new session;
+		$session->balance = $actual_balance;
+		}
+
+	public function add_credit($user_id, $add_credit) {
+		$pdostatement = $this->query('SELECT balance FROM user WHERE id='.$user_id.';');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$actual_balance = $result['balance'];
+		$new_balance = $actual_balance+$add_credit;
+		$pdostatement = $this->query('UPDATE user SET balance='.$new_balance.' WHERE id='.$user_id.';');
+		
+		$this->check_balance($user_id);
+		header('location:?page=order');
 	}
 
 } // end of user class

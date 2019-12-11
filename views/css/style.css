@@ -1035,12 +1035,12 @@ form.visual-form-builder li {
 width:auto!important
 }
 
-.visual-form-builder ul {
+/* .visual-form-builder ul {
 list-style:none;
 margin:0 14px;
 padding:0;
 font-size:12px
-}
+} */
 
 .visual-form-builder li {
 list-style:none;

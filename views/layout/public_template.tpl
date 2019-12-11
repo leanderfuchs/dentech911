@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr-FR">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="views/css/style.css"/>
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="views/css/jquery-ui.css" />
+	<link rel="stylesheet" href="views/css/cupertino/jquery-ui-custom.css" />
+	<link rel="stylesheet" href="views/css/cupertino/jquery-ui-custom.css" />
+	<script src="views/js/jquery.js"></script>
+	<script src="views/js/jquery-ui.js"></script>
+	<script src="views/js/datepicker.js"></script>
+
+	<link href="views/css/horizontal_selector.css" rel="stylesheet">
+	<script src="views/js/horizontal_selector.js"></script>
+
+
 	<title><?php echo $page_title;?> - DenTech911</title>
- 		<link rel="stylesheet" href="views/css/jquery-ui.css" />
- 		<link rel="stylesheet" href="views/css/cupertino/jquery-ui-custom.css" />
- 		<link rel="stylesheet" href="views/css/cupertino/jquery-ui-custom.css" />
-		<script src="views/js/jquery.js"></script>
-		<script src="views/js/jquery-ui.js"></script>
-		<script src="views/js/datepicker.js"></script>
-
-
 </head>
 <body>
-
 	<div class="alert alert-info" role="alert">
 		Site en cours de développement. Il est utilisable mais des mises à jour régulières sont faites
 	</div>
@@ -30,13 +33,22 @@
 					<div class="header_container">
 						<div id="misc-top">
 							<div id="sess-status">
-								<span class="badge badge-pill badge-dark">Fichiers restants 4</span>
-
+								<span class="badge badge-pill badge-dark"><?if ($_SESSION){?>Fichiers transferable: <?echo $_SESSION['balance'];}?></span>
+							<button type="button" class="btn">
+								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1) {
+									echo '<a href="?page=user_profil">Mon Compte</a>';
+								}?>
+							</button>
+							<button type="button" class="btn">
+								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1) {
+									echo '<a href="?page=user_contacts">Mes contacts</a>';
+								}?>
+							</button>
 							<button type="button" class="btn">
 								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1) {
 									echo '<a href="?logout=log_me_out">Déconnection</a>';
 								}?>
-								</button>
+							</button>
 							</div> <!-- sess-status -->
 						</div> <!-- misc-top -->
 
@@ -53,7 +65,9 @@
 						<?}?>
 
 						<!-- SLOGAN -->
-						<div class="lead"><?php echo $page_slogan; ?> </div><!-- slogan -->
+						<div class="container p-4">
+							<div class="lead"><?php echo $page_slogan; ?> </div><!-- slogan -->
+						</div>
 
 						<!-- NAVBAR -->
 						<?if (isset($_SESSION['user_id'])){?>
@@ -73,7 +87,7 @@
 				</div> <!-- header -->
 			</header>
 			<?php endif ?> <!-- if print page -->
-				</br>
+				<h1><? if (!empty($page_title)) echo $page_title;?></h1>
 				<?php affichage($page_controller_file, $page_view_file);?>
 				<p><?php if(!empty($page_content)) echo $page_content;?></p>
 			</div>

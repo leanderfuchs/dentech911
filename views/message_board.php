@@ -1,7 +1,3 @@
-<h1>
-	Commentaires - <?php echo $order_patient_name; ?>
-</h1>
-
 <div id="tabs-nav-div">
 	<ul class="nav justify-content-end">
 		<li class="nav item"> <a class="nav link" id="followup2" href="?page=order_detail&id=<?php echo $order_id; ?>">Retour à la page détails</a>

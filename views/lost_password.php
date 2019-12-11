@@ -1,9 +1,4 @@
 <div class="visual-form-builder-container">
-	<div class="inlinetitle">
-		<h1>
-			Réinitialiser votre mot de passe
-		</h1>
-	</div>
 	<form id="lostpassword" class="visual-form-builder" method="post" action="">
 
 			<fieldset class="fieldset  commandexfset">

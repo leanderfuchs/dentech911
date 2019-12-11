@@ -1,11 +1,13 @@
-<div class="title">
-	<h1>
-		Mon profil
-	</h1>
-	<p>
-		<span class="asterisk">*</span> Champ requis.
-	</p>
-</div>
+<ul class="nav nav-pills justify-content-end mb-5">
+	<li class="nav-item"> <a class="nav-link active" href="?page=user_profil">Mon profile</a></li>
+	<li class="nav-item"> <a class="nav-link" href="?page=purchased_credit_table">Mes achats</a></li>
+	<li class="nav-item"> <a class="nav-link" href="?page=user_used_credit_table">Mes téléchargements</a></li>
+	<li class="nav-item"> <a class="nav-link" href="?page=user_invoices">Mes factures</a></li>
+</ul>
+
+<p>
+	<span class="asterisk">*</span> Champ requis.
+</p>
 
 <form id="update_profil" class="visual-form-builder" method="post" action="">
 

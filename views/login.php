@@ -2,11 +2,6 @@
 	if (!empty ($msg)){echo $msg;}
 ?>
 <div class="visual-form-builder-container">
-	<div class="inlinetitle">
-		<h1>
-			Se connecter
-		</h1>
-	</div>
 	<form id="login" class="visual-form-builder" method="post" action="?page=order_list">
 
 		<fieldset class="fieldset  commandexfset">

@@ -1,9 +1,7 @@
 <div id="pagetitle">
 	<a href="?page=order_list"><img src="views/images/dentech911-logo-320px.svg" alt="" /></a><br/>
 </div> <!-- pagetitle -->
-<h1>
-	Cas - <?php echo $order_id; ?>
-</h1>
+
 	<div id="tabs-wrapper">
 		<div class="table" style="width: 100%;">
 				<div class="cell cell-33">
