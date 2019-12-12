@@ -172,7 +172,6 @@ if ($debug==TRUE AND $_SERVER['SERVER_NAME']=="192.168.33.10") {
 		echo '<br/>$user_id: '.$user_id;
 		$session_status = session_status();
 		echo '<br/>$session_status: '.$session_status.'</br>';
-		echo 'Point Price = '.$point_price;
 	}
 	
 	if($show_page_info == TRUE){

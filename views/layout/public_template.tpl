@@ -19,7 +19,7 @@
 	<title><?php echo $page_title;?> - DenTech911</title>
 </head>
 <body>
-	<div class="alert alert-info" role="alert">
+	<div class="alert alert-info mt-5" role="alert">
 		Site en cours de développement. Il est utilisable mais des mises à jour régulières sont faites
 	</div>
 	<div id="wrap">
@@ -33,7 +33,7 @@
 					<div class="header_container">
 						<div id="misc-top">
 							<div id="sess-status">
-								<span class="badge badge-pill badge-dark"><?if ($_SESSION){?>Fichiers transferable: <?echo $_SESSION['balance'];}?></span>
+								<span class="badge badge-pill badge-dark"><?if (isset($_SESSION['user_id'])){?>Fichiers transferable: <?echo $_SESSION['balance'];}?></span>
 							<button type="button" class="btn">
 								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1) {
 									echo '<a href="?page=user_profil">Mon Compte</a>';
