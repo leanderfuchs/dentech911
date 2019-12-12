@@ -1,7 +1,7 @@
 <div class="container">
 <? if (isset($_SESSION['balance']) && $_SESSION['balance']>0) {?>
     <div class="alert alert-primary" role="alert">
-        Vous avez <b><? echo $_SESSION['balance'] ?></b> points correspondant à <b><? echo floor($_SESSION['balance']/$_SESSION['point_value'])*100;?></b> fichiers.
+        Vous avez <b><? echo $_SESSION['balance'] ?></b> points correspondant à <b><? echo floor($_SESSION['balance']/$_SESSION['point_value']);?></b> fichiers.
     </div>
 <?} elseif ((isset($_SESSION['balance']) && $_SESSION['balance']==0)) {?>
     <div class="alert alert-primary" role="alert">

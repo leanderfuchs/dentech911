@@ -110,7 +110,7 @@ $page_menu_footer = $ibdd->page_menu('footer');
 
 // add point value in the session
 if (!empty($point_value)) {
-	$session->point_value = $point_value;
+	$session->point_value = $point_value/100;
 }
 
 // Page specific content
