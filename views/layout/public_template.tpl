@@ -87,7 +87,7 @@
 				</div> <!-- header -->
 			</header>
 			<?php endif ?> <!-- if print page -->
-				<h1><? if (!empty($page_title)) echo $page_title;?></h1>
+				<h1 class="mt-3"><? if (!empty($page_title)) echo $page_title;?></h1>
 				<?php affichage($page_controller_file, $page_view_file);?>
 				<p><?php if(!empty($page_content)) echo $page_content;?></p>
 			</div>

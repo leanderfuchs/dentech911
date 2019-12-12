@@ -104,8 +104,15 @@ function affichage($page_controller_file, $page_view_file){
 
 // Commmon to the whole website
 $page_slogan = $ibdd->options_query('slogan');
+$point_value = $ibdd->options_query('point_value');
 $page_menu_header = $ibdd->page_menu('header');
 $page_menu_footer = $ibdd->page_menu('footer');
+
+// add point value in the session
+if (!empty($point_value)) {
+	$session->point_value = $point_value;
+}
+
 // Page specific content
 if (isset($_GET['page'])){
 	$page_title = $ibdd->page_query($_GET['page'], 'title');
@@ -165,6 +172,7 @@ if ($debug==TRUE AND $_SERVER['SERVER_NAME']=="192.168.33.10") {
 		echo '<br/>$user_id: '.$user_id;
 		$session_status = session_status();
 		echo '<br/>$session_status: '.$session_status.'</br>';
+		echo 'Point Price = '.$point_price;
 	}
 	
 	if($show_page_info == TRUE){
