@@ -1,3 +1,5 @@
+
+
 <div class="container">
 <? if (isset($_SESSION['balance']) && $_SESSION['balance']>0) {?>
     <div class="alert alert-primary" role="alert">
@@ -8,16 +10,21 @@
         Vous avez devez avoir au moins un point pour envoyer ou recevoir un fichier.
     </div>
 <?}?>
-
 <h4><span class="badge badge-secondary">Aujourd'hui 1 point = <? echo $_SESSION['point_value'] ?>€</span></h4>
 <form action="../controllers/charge.php" method="post" id="payment-form">
       <div class="form-row mt-5">
-      <input type="text" name="point" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Combien de points avez-vous besoin ?">
+      <input type="text" id="qty" name="qty" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Combien de points avez-vous besoin ?" onkeyup="calculate_total()">
+      <div id="show_billable"></div>
        <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Nom">
        <input type="text" name="last_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Prenom">
        <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Email">
-        <input type="hidden" name="user_id" value="<? echo $_SESSION['user_id']; ?>">
-        <div id="card-element" class="form-control">
+        <input class="hidden" name="user_id" value="<? echo $_SESSION['user_id']; ?>">
+        <input type="text" class="hidden" name="point_val" id="point_val" value="<? echo $_SESSION['point_value']; ?>">
+        <input class="hidden" name="amount" type="text" id="amount">
+        <div class="container mx-auto">
+            <h3> Le total de votre commande est de <span class="badge badge-secondary"><span id="show_total">€</span></h3>
+        </div>
+        <div id="card-element mx-auto" class="form-control">
           <!-- a Stripe Element will be inserted here. -->
         </div>
 
@@ -26,7 +33,7 @@
       </div>
     <div class="row justify-content-md-center">
         <div class="col-lg-3">
-            <button>Acheter</button>
+            <button">Acheter</button>
         </div>
     </div>
     </form>
@@ -45,3 +52,12 @@
   <script src="https://js.stripe.com/v3/"></script>
   <script src="./views/js/charge.js"></script>
 
+  <script>
+  function calculate_total(){
+          var qty = document.getElementById("qty").value;
+          var point_val = document.getElementById("point_val").value;
+          var total_amount = qty*point_val;
+          var show_amount = document.getElementById("show_total").innerHTML = total_amount.toFixed(2);
+          document.getElementById("amount").value = total_amount.toFixed(2);
+    }
+</script>
