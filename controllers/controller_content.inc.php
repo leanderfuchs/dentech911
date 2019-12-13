@@ -19,7 +19,6 @@ if (isset($_POST['inscription'])) {
 	echo $user_register;
 }
 
-
 //------------------------------------ logout
 if (isset($_GET['logout']) AND $_GET['logout']=='log_me_out') {
 	$user->logout();
@@ -33,7 +32,7 @@ if (isset($_POST['login'])) {
 	if (!isset($_POST['remember'])) $_POST['remember']='';
 	//echo $_POST['remember'];
 	$user_login = $user->login($_POST['login-email'],$_POST['login-password'], $_POST['remember']);
-	echo $user_login;
+	//echo $user_login;
 }
 
 if (isset($_SESSION['user_id'])) {
@@ -48,7 +47,6 @@ if (!isset($_SESSION['Auth']) && isset($_COOKIE['Auth'])){
 	$auth = explode('878544', $_COOKIE['Auth']);
 	$user_remember_me = $user->remember_me($auth['0'], $auth['1']);
 }
-
 
 //------------------------------------ 
 //------------------------------------ affichages des elements de la page
@@ -105,12 +103,14 @@ function affichage($page_controller_file, $page_view_file){
 // Commmon to the whole website
 $page_slogan = $ibdd->options_query('slogan');
 $point_value = $ibdd->options_query('point_value');
+$min_point = $ibdd->options_query('min_point');
 $page_menu_header = $ibdd->page_menu('header');
 $page_menu_footer = $ibdd->page_menu('footer');
 
 // add point value in the session
 if (!empty($point_value)) {
 	$session->point_value = $point_value/100;
+	$session->min_point = $min_point;
 }
 
 // Page specific content
