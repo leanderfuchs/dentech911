@@ -1,7 +1,11 @@
 <div class="container mt-4">
-    <h2>Vous avez ajouté de nouveaux points à votre compte</h2>
+    <div class="lead">Félicitation</div>
     <hr>
-    <p>L'identifiant de votre commande est : <?php echo $tid; ?></p>
+
+    <div class="alert alert-success" role="alert">
+        Vous avez maintenant <strong><? echo $_SESSION['balance'];?></strong> points dans votre compte
+    </div>
+
+    <p>L'identifiant de votre commande est : <strong><?php echo $tid; ?></strong></p>
     <p>Vous allez recevoir un email de confirmation dans quelques minutes</p>
-    <p><a href="/?page=user_profil" class="btn btn-light mt-2">Retour à votre profile</a></p>
 </div>

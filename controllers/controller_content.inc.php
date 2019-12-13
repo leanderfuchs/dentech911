@@ -6,6 +6,8 @@ $Convert_Dates = new Convert_Dates;
 
 // inscrpition de donnés dans la session:
 $session = Session::getInstance();
+$user_balance = $user->check_balance($_SESSION['user_id']);
+echo $user_balance;
 // Exemples: 
 // $data = Session::getInstance();
 // $data->nickname = 'Someone';

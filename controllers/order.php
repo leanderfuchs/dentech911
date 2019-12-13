@@ -2,7 +2,7 @@
 $product = new product;
 $ibdd = new db_connect;
 
-$page_point_price = $ibdd->options_query('point_price');
+$page_point_price = $ibdd->options_query('point_value');
 
 $user_id = $_SESSION['user_id'];
 $missing_patient = "";

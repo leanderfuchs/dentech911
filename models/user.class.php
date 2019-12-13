@@ -330,7 +330,7 @@ class user extends db_connect{
 			'Reply-To: donotreply@order.cfao.fr.com' . "\r\n" .
 			'X-Mailer: PHP/' . phpversion();
 			mail($to, $subject, $message, $headers);
-			
+
 			return $new_user_id;
 		}
 	}
@@ -346,20 +346,10 @@ class user extends db_connect{
 		$pdostatement = $this->query('SELECT balance FROM user WHERE id='.$user_id.';');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$actual_balance = $result['balance'];
-		
+
 		$session = new session;
 		$session->balance = $actual_balance;
-		}
-
-	public function add_credit($user_id, $add_credit) {
-		$pdostatement = $this->query('SELECT balance FROM user WHERE id='.$user_id.';');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$actual_balance = $result['balance'];
-		$new_balance = $actual_balance+$add_credit;
-		$pdostatement = $this->query('UPDATE user SET balance='.$new_balance.' WHERE id='.$user_id.';');
-		
-		$this->check_balance($user_id);
-		header('location:?page=order');
+		return $actual_balance;
 	}
 
 } // end of user class

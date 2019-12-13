@@ -16,7 +16,7 @@
 	<script src="views/js/horizontal_selector.js"></script>
 
 
-	<title><?php echo $page_title;?> - DenTech911</title>
+	<title><?php if(isset($page_title)) echo $page_title;?> - DenTech911</title>
 </head>
 <body>
 	<div class="alert alert-info mt-5" role="alert">

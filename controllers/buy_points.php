@@ -30,3 +30,4 @@ if (isset($_GET['missing-last-name']) && $_GET['missing-last-name']==1){
 if (isset($_GET['missing-email']) && $_GET['missing-email']==1){
     $missing_email = 'Vous devez entrer votre email';
 }
+

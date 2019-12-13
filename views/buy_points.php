@@ -16,21 +16,21 @@
         <div class="form-row mt-1">
 
             <!-- inputs -->
-            <input type="text" id="qty" name="qty" class="form-control mt-3 StripeElement StripeElement--empty" placeholder="Combien de points avez-vous besoin* ?" onkeyup="calculate_total()">
+            <input type="text" id="qty" name="qty" class="form-control mt-3 StripeElement StripeElement--empty" placeholder="Combien de points avez-vous besoin* ?" value="<? if(isset($_GET['low-amount']) && $_GET['low-amount']!=='1') echo $_GET['low-amount']; ?>" onkeyup="calculate_total()">
             <div class="small ml-1" style="color:red" id="low_point"><? echo $point_error_message?></div>
 
-            <input type="text" name="first_name" id="first_name" class="form-control mt-3 StripeElement StripeElement--empty" placeholder="Nom">
+            <input type="text" name="first_name" id="first_name" class="form-control mt-3 StripeElement StripeElement--empty" placeholder="Nom" value="<? if(isset($_GET['missing-first-name']) && $_GET['missing-first-name']!=='1') echo $_GET['missing-first-name']; ?>">
             <div class="small ml-1" style="color:red" id="missing_first_name"><? echo $missing_first_name?></div>
 
-           <input type="text" name="last_name" id="last_name" class="form-control mt-3 StripeElement StripeElement--empty" placeholder="Prenom">
+           <input type="text" name="last_name" id="last_name" class="form-control mt-3 StripeElement StripeElement--empty" placeholder="Prenom" value="<? if(isset($_GET['missing-last-name']) && $_GET['missing-last-name']!=='1') echo $_GET['missing-last-name']; ?>" >
            <div class="small ml-1" style="color:red" id="missing_last_name"><? echo $missing_last_name?></div>
 
-            <input type="email" name="email" id="email" class="form-control mt-3 StripeElement StripeElement--empty" placeholder="Email">
+            <input type="email" name="email" id="email" class="form-control mt-3 StripeElement StripeElement--empty" placeholder="Email" value="<? if(isset($_GET['missing-email']) && $_GET['missing-email']!=='1') echo $_GET['missing-email']; ?>" >
             <div class="small ml-1" style="color:red" id="missing_email"><? echo $missing_email?></div>
 
             <input class="hidden" name="user_id" type="text" value="<? echo $_SESSION['user_id']; ?>">
             <input class="hidden" id="point_val" type="text" value="<? echo $_SESSION['point_value']; ?>">
-            <input class="hidden" id="min-point" type="text" value="<? echo $_SESSION['min_point']; ?>">
+            <input class="hidden" name="min-point" id="min-point" type="text" value="<? echo $_SESSION['min_point']; ?>">
             <input class="hidden" name="amount" type="text" id="amount">
 
             <!-- total -->
@@ -85,32 +85,6 @@
         if (isNaN(point) || point < 5) {
             document.getElementById("low_point").innerHTML = "Le nombre de points n'est pas suffisant";
             return false;
-        } else {
-            document.getElementById("low_point").innerHTML = "";
-        }
-       // nom
-        var first_name = document.getElementById("first_name").value; 
-        if (isNaN(first_name) || first_name == "") {
-            document.getElementById("missing_first_name").innerHTML = "Vous devez entrer votre nom";
-            return false;
-        } else {
-            document.getElementById("missing_first_name").innerHTML = " ";
-        }
-       // prénom
-        var last_name = document.getElementById("last_name").value; 
-        if (isNaN(last_name) || last_name == "") {
-            document.getElementById("missing_last_name").innerHTML = "Vous devez entrer votre prénom";
-            return false;
-        } else {
-            document.getElementById("missing_last_name").innerHTML = "";
-        }
-       // email
-        var email = document.getElementById("email").value; 
-        if (isNaN(email) || email == "") {
-            document.getElementById("email").innerHTML = "Vous devez entrer votre email";
-            return false;
-        } else {
-            document.getElementById("email").innerHTML = "";
         }
     } 
 </script>
