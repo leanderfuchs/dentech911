@@ -1,7 +1,6 @@
 <ul class="nav nav-pills justify-content-end mb-5">
 	<li class="nav-item"> <a class="nav-link " href="?page=user_profil">Mon profile</a></li>
 	<li class="nav-item"> <a class="nav-link active" href="?page=purchased_credit_table">Mes achats</a></li>
-	<li class="nav-item"> <a class="nav-link" href="?page=user_used_credit_table">Mes téléchargements</a></li>
 	<li class="nav-item"> <a class="nav-link" href="?page=user_invoices">Mes factures</a></li>
 </ul>
 
