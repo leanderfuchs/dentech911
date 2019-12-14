@@ -8,30 +8,20 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Facture #</th>
+      <th scope="col">Date</th>
+      <th scope="col">Montant</th>
+      <th scope="col">Recevoir par email</th>
     </tr>
   </thead>
   <tbody>
+    <? foreach ($transactions as $transaction) :?>
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th scope="row"><? echo $transaction['invoice_nbr']; ?></th>
+      <td><? echo $transaction['created_at']; ?></td>
+      <td><? echo $transaction['amount']; ?></td>
+      <td><? echo '<a href="sendinvoice.php?inv-nbr='. $transaction['invoice_nbr'] .'" target="blanc">email</a>'; ?></td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    <? endforeach ?>
   </tbody>
 </table>

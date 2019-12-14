@@ -63,7 +63,7 @@
         <img src="../views/images/bitcoin-logo-color.svg" class="col-lg-1" style="height:30px">
     </div>
 </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js/jquery.min.js"></script>
   <script src="https://js.stripe.com/v3/"></script>
   <script src="./views/js/charge.js"></script>
 

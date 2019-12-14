@@ -1,6 +1,6 @@
 <?php
 require_once('vendor/autoload.php');
-require_once('models/transactions.class.php');
+require_once('models/transaction.class.php');
 
 $transaction = new transaction;
 
@@ -63,6 +63,8 @@ $charge = \Stripe\Charge::create(array(
   "customer" => $customer->id
 ));
 
+
+
 // Transaction Data
 $transData = [
   'id' => $charge->customer,
@@ -77,18 +79,40 @@ $transData = [
   'status' => $charge->status,
 ];
 
+\Stripe\InvoiceItem::create([
+  'amount' => $charge->amount,
+  'currency' => $charge->currency,
+  'customer' => $charge->customer,
+  'description' => $charge->description,
+]);
+
+$invoice = \Stripe\Invoice::create([
+  'customer' => $charge->customer,
+  'collection_method' => 'send_invoice',
+  'days_until_due' => 1,
+]);
+
+echo 'POST<br><pre>';
+  //print_r($invoice);
+echo '</pre>';
+
+$invoice = \Stripe\Invoice::retrieve($invoice['id']);
+$invoice->pay();
+$invoice->sendInvoice();
+
+
 // Add Transaction To DB
 if (isset($transData['status']) && $transData['status'] == 'succeeded'){
-  $stripe_new_transaction = $transaction->stripeNewTransaction($user_id, $transData['id'], $first_name, $last_name, $email, $transData['customer_id'], $transData['product'], $amount, $qty, $transData['currency'], $transData['status']);
+  $stripe_new_transaction = $transaction->stripeNewTransaction($user_id, $transData['id'], $first_name, $last_name, $email, $transData['customer_id'], $transData['product'], $amount, $qty, $transData['currency'], $transData['status'], $invoice['id']);
 }
 
 // echo 'stripe_new_transaction : '.$stripe_new_transaction;
-// echo 'POST<br><pre>';
+echo '<pre>';
 //   print_r($_POST);
-// echo '</pre>';
-// echo 'transData<br><pre>';
+//echo '</pre>';
+//echo 'transData<br><pre>';
 //   print_r($transData);
-// echo '</pre>';
+echo '</pre>';
 
 // Redirect to success
 $host = $_SERVER['HTTP_HOST'];

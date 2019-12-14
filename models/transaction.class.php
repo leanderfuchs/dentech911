@@ -10,9 +10,9 @@ require_once('Session.class.php');
 
 class transaction extends db_connect{
 
-    public function stripeNewTransaction($user_id, $txn_id, $first_name, $last_name, $email, $customer_id, $product, $amount, $qty, $currency_code, $payment_status){
+    public function stripeNewTransaction($user_id, $txn_id, $first_name, $last_name, $email, $customer_id, $product, $amount, $qty, $currency_code, $payment_status, $invoice_nbr){
 
-        $pdostatement = $this->query('INSERT INTO tbl_payment(user_id, txn_id, first_name, last_name, email, customer_id, product, amount, qty, currency_code, payment_status, created_at) VALUE('.$user_id.', "'.$txn_id.'", "'.$first_name.'", "'.$last_name.'", "'.$email.'", "'.$customer_id.'", "'.$product.'", "'.$amount.'", "'.$qty.'", "'.$currency_code.'", "'.$payment_status.'", NOW())  ;');
+        $pdostatement = $this->query('INSERT INTO tbl_payment(user_id, txn_id, first_name, last_name, email, customer_id, product, amount, qty, currency_code, payment_status, created_at, invoice_nbr) VALUE('.$user_id.', "'.$txn_id.'", "'.$first_name.'", "'.$last_name.'", "'.$email.'", "'.$customer_id.'", "'.$product.'", "'.$amount.'", "'.$qty.'", "'.$currency_code.'", "'.$payment_status.'", NOW(),"'.$invoice_nbr.'");');
 
         if (!$pdostatement) {
             $msg = "\nPDO::errorInfo():\n";
@@ -40,6 +40,11 @@ class transaction extends db_connect{
 
 		$session = new session;
 		    $session->balance = $actual_balance;
-        }
+    }
 
+    public function get_transactions ($user_id){
+        $pdostatement = $this->query('SELECT * FROM tbl_payment WHERE user_id='.$user_id.';');
+        $result = $pdostatement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
