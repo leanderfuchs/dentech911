@@ -7,6 +7,7 @@ test.*
 db_*.class.php
 db_search_results.php
 charge.php
+sendinvoice.php
 # Whitelist files/folders in sub-directories
 
 # Whitelist some files
