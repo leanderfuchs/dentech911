@@ -524,7 +524,7 @@ class order extends db_connect{
 		$message .= 'DenTech911.'."\r\n"."\r\n";
 		$message .= 'www.dentech911.com';
 
-		$headers = 'From: contact@dentech911.com' . "\r\n" . 'Reply-To: contact@dentech911.com' . "\r\n" .
+		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" . 'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
 
 		mail($to, $subject, $message, $headers);

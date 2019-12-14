@@ -37,9 +37,22 @@ class user extends db_connect{
 //------------------------------------ Send welcome email
 					$to      = $email;
 					$subject = 'www.dentech911.com - Votre compte a été créé.';
-					$message = 'Bonjour, votre compte a été créé. Votre login est: '. $email .' et votre mot de passe est : '. $password;
-					$headers = 'From: donotreply@me.com' . "\r\n" .
-					'Reply-To: donotreply@order.cfao.fr.com' . "\r\n" .
+					$message = 'Bonjour '.$name.','."\r\n".
+					'Bienvenue et merci d\'être devenu membre de DenTech911! Je suis tellement heureux que vous ayez rejoint notre réseau'."\r\n".
+					'J\'ai inclus tous les détails de votre adhésion ci-dessous, ainsi qu\'une question que j\'ai à vous poser. Mais d\'abord, voici quelques excellents avantages que vous obtenez pour en temp que membre:'."\r\n".
+					'50 points vous sont offerts en cadeau de bienvenue. De plus, vous aurez accès au système d\'échanges de fichiers le plus simple et intuitif possible et bien d\'autres choses encore à venir ... '."\r\n".
+					'Maintenant, voici les détails importants de votre adhésion:'."\r\n".
+					'Nom d\'utilisateur: [USERNAME]'."\r\n".
+					'Niveau d\'adhésion: [LEVEL]'."\r\n".
+					'Et voici ma question:'."\r\n".
+					'Quelle est la première raison pour laquelle vous vous êtes inscrit?'."\r\n".
+					'Si vous pouviez répondre à cet e-mail avec votre réponse, cela m\'aiderait à créer une application plus personnalié et à vous diriger vers le bon endroit.'."\r\n".
+					'En attendant, si vous souhaitez commencer à accéder à certaines de nos ressources exclusives, visitez notre espace réservé aux membres ici <a hef="https://www.dentech911.com">DenTech911</a>.'."\r\n".
+					'Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message sur <a hef="https://t.me/dentech911">Telegram</a>.'."\r\n".
+					'Meilleurs succès et j\'espère vous voir à notre prochain événement!'."\r\n".
+					'Leander';
+					$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
+					'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
 					'X-Mailer: PHP/' . phpversion();
 
 					mail($to, $subject, $message, $headers);
@@ -212,8 +225,8 @@ class user extends db_connect{
 				$to      = $result['email'];
 				$subject = ' - nouveau mot de passe';
 				$message = 'Bonjour, votre nouveau mot de passe est: '. $newpasswrd;
-				$headers = 'From: donotreply@me.com' . "\r\n" .
-				'Reply-To: donotreply@me.com' . "\r\n" .
+				$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
+				'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
 				'X-Mailer: PHP/' . phpversion();
 
 				mail($to, $subject, $message, $headers);
@@ -326,8 +339,8 @@ class user extends db_connect{
 			$subject = 'DenTech911 - Une nouvelle commande vous attend sur www.dentech911.com .';
 			$message = 'Bonjour, '. "\r\n" .'Félicitations, une nouvelle commande vous a été envoyée sur DenTech911 !'."\r\n\r\n";
 			$message .= 'Aussi, comme nous n\'avons pas trouvé votre email dans notre base de données, votre compte a été créé et vos déifiants sont votre adresse email et ce mot de passe que nous avons généré pour vous : '. $generated_password;
-			$headers = 'From: donotreply@me.com' . "\r\n" .
-			'Reply-To: donotreply@order.cfao.fr.com' . "\r\n" .
+			$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
+			'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
 			'X-Mailer: PHP/' . phpversion();
 			mail($to, $subject, $message, $headers);
 

@@ -166,7 +166,7 @@ class user extends db_admin{
 				$subject = $sujet;
 				$message = $message;
 				$from = $expediteur;
-				$headers = "From: order.cfao.fr";
+				$headers = "From: leanderfuchs@protonmail.com";
 				mail($to,$subject,$message,$headers);
 				
 				$msg = '<div class="valide">La newsletter a bien été envoyée</div>';

@@ -23,7 +23,7 @@ class comment extends db_connect{
 		$message = 'Message: '."\r\n". $comment."\r\n"."\r\n";
 		$message .= 'Lien: '. $_SERVER['SERVER_NAME'] .'?page=message_board&id='.$order_id;
 		$headers = 'From: leanderfuchs@protonmail.com'."\r\n" .
-		'Reply-To: donotreply@me.com' . "\r\n" .
+		'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
 
 		mail($to, $subject, $message, $headers);
