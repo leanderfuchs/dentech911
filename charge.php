@@ -86,6 +86,7 @@ $transData = [
   'description' => $charge->description,
 ]);
 
+// Invoicing
 $invoice = \Stripe\Invoice::create([
   'customer' => $charge->customer,
   'collection_method' => 'send_invoice',

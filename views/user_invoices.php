@@ -18,7 +18,7 @@
     <tr>
       <th scope="row"><? echo $transaction['invoice_nbr']; ?></th>
       <td><? echo $transaction['created_at']; ?></td>
-      <td><? echo $transaction['amount']; ?></td>
+      <td><? echo $transaction['amount']/100; ?>€</td>
       <td><? echo '<a href="sendinvoice.php?inv-nbr='. $transaction['invoice_nbr'] .'" target="blanc">email</a>'; ?></td>
     </tr>
     <? endforeach ?>
