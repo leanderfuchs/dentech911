@@ -113,10 +113,10 @@ if (!empty($user_restricted_pages)) {
 					?>
 					<?php } ?>
 				</div>
+
+				<?if ($_SESSION['balance']>0) : ?>
 				<div class='sep'></div>
-
 				<span class="title"><h3>Ajouter un fichier</h3></span>
-
 				<div class="visual-form-builder-container">
 					<form id="add_file" enctype="multipart/form-data" class="visual-form-builder" method="post" action="">
 					<fieldset class="fieldset  commandexfset">
@@ -127,7 +127,7 @@ if (!empty($user_restricted_pages)) {
 					</fieldset>
 					</form>
 				</div>
-
+				<? endif ?>
 				<?php if (!empty($comment_first_comment)): ?>
 					<div class='sep'></div>
 

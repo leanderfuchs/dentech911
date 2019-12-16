@@ -28,7 +28,9 @@
  				</li>
 
 				<li class="item item-text right-half" id="email-order-to">
- 					<label for="email-order-to" class="desc">email du destinataire <span>*</span></label><input type="email" name="email-order-to" id="email-order-to" class="text large" value="<?php if(!empty($_POST['email-order-to'])){ echo $_POST['email-order-to']; }?>">
+ 					<label for="email-order-to" class="desc">email du destinataire <span>*</span></label><input type="email" name="email-order-to" id="email-order-to" class="text large" value="
+					 <?php if(!empty($_GET['email-order-to'])){ echo $_GET['email-order-to']; };
+						if(!empty($_POST['email-order-to'])){ echo $_POST['email-order-to']; }?>">
 					<? if(isset($missinemail)) echo $missinemail; ?>
 				</li>
 				 
@@ -280,7 +282,7 @@
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
 			<div class="display-4">Vous avez besoin d'un point pour envoyer un ficher.</div>
-			<p class="lead">Aujourd'hui un point = <?echo $page_point_price;?>€ </p>
+			<p class="lead">Aujourd'hui un point = <?echo $_SESSION['point_value'];?>€ </p>
 			<a href="?page=buy_points"><span class="btn btn-primary float-right">Veuillez en acheter ici</span></a>
 		</div>
 	</div>

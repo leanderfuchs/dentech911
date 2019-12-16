@@ -365,4 +365,41 @@ class user extends db_connect{
 		return $actual_balance;
 	}
 
+	public function contacts($user_id){
+		$contact_list = array();
+		$pdostatement = $this->query('SELECT DISTINCT supplier_ref_id FROM orders WHERE user_ref_id = '.$user_id.';');
+		$contact_ids = $pdostatement->fetchAll(PDO::FETCH_ASSOC);
+		if (!empty($contact_ids)){
+			foreach($contact_ids as $contact){
+				$pdostatement = $this->query('SELECT id, email, name, company FROM user WHERE id='.$contact['supplier_ref_id'].';');
+				$contact_list[] = $pdostatement->fetch(PDO::FETCH_ASSOC);
+			}
+		}
+		return $contact_list;
+	}
+
+	public function add_points($user_id, $points) {
+		$pdostatement = $this->query('UPDATE user SET balance = balance + '.$points.' WHERE id='.$user_id.';');	
+	}
+
+	public function remove_points($user_id, $points) {
+		$pdostatement = $this->query('UPDATE user SET balance = balance - '.$points.' WHERE id='.$user_id.';');	
+	}
+
+	public function send_points($user_id, $points, $email){
+		//find recipient id with email or FALSE
+		$pdostatement = $this->query('SELECT id FROM user WHERE email="'.$email.'";');
+		$recipients = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$recipient_id = $recipients['id'];
+
+		//Check result
+		if (empty($recipient_id)){
+			return FALSE;
+		} else {
+		// If email fund, add / remove points
+			$this->add_points($recipient_id, $points);
+			$this->remove_points($user_id, $points);
+			return TRUE;
+		}
+	}
 } // end of user class

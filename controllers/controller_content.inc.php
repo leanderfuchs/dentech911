@@ -52,6 +52,23 @@ if (!isset($_SESSION['Auth']) && isset($_COOKIE['Auth'])){
 }
 
 //------------------------------------ 
+//------------------------------------ Send Points beetween users
+//------------------------------------ 
+
+if(isset($_POST['points']) && isset($_POST['to-email'])){
+    // check if user has enough points first
+    if ($_POST['points'] > $_SESSION['balance']){
+        $not_enough_funds = TRUE;
+    } else {
+        $user_id= $_SESSION['user_id'];
+        $points = $_POST['points'];
+        $email = $_POST['to-email'];
+		$user_send_points = $user->send_points($user_id, $points, $email);
+		$_POST['successfull-point-transfer'] = $user_send_points;
+    }
+}
+
+//------------------------------------ 
 //------------------------------------ affichages des elements de la page
 //------------------------------------ 
 

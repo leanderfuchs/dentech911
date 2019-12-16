@@ -82,8 +82,6 @@ class order extends db_connect{
 		$notification->client_new_order($_SESSION['user_id']);
 		$notification->new_order();
 		
-		header("Location: /?page=order_detail&id=".$order_id);
-
 	} // end add function
 
 	public function add_file($unique_order_key, $file_nbr, $tmp_name, $file_clean_name){
@@ -117,7 +115,6 @@ class order extends db_connect{
 
 		if (!file_exists($file_path)) mkdir($file_path, 0777, TRUE);
 		$file_url = $file_path . $save_file;
-		$msg .= $tmp_name;
 
 		move_uploaded_file($tmp_name, $file_url);
 
@@ -130,9 +127,10 @@ class order extends db_connect{
 		   $msg = print_r($this->errorInfo());
 		}
 
-		//$msg .= '<div class="valide">Les fichiers ont bien été ajoutés.</div>';
-
-		return $msg;
+		// remove one point from user
+		$pdostatement = $this->query('UPDATE user SET balance = balance-1 WHERE id="' . $client_id . '";');
+		$session = new session;
+		$session->balance = $session->balance -1;
 	} // end add function
 
 	public function caselist($user_id){
