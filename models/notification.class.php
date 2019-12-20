@@ -198,21 +198,37 @@ class notification extends db_connect{
 
 	public function reminderEmail($order_id){
 		$server_name = $_SERVER['SERVER_NAME'];
-		$email = 'contact@missintooth.com';
+		$email = 'leanderfuchs@protonmail.com';
 				
 		//------------------------------------ email a fournisseur
 
 		$to      = $email;
 		$subject = ' - Demande d\'information suplémentaire. ['.$order_id.']';
 		
-		$message = "";
-		$message .= 'Bonjour'."\r\n"."\r\n";
+		$message = 'Bonjour'."\r\n"."\r\n";
 		$message .= 'La commande #['.$order_id.'] nécessite l\'ajoute d\'informations complémentaires '."\r\n"."\r\n";
-		
 		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
-
 		$message .= 'DenTech911.'."\r\n"."\r\n";
 		$message .= 'www.dentech911.com';
+
+		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
+		'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
+		'X-Mailer: PHP/' . phpversion();
+
+		mail($to, $subject, $message, $headers);
+
+	} // end reminderEmail function
+
+	//------------------------------------ If user send points to an unknown email address
+	public function send_points_new_email($email){
+		$server_name = $_SERVER['SERVER_NAME'];
+		$to      = $email;
+		$subject = 'DenTech911 - Une nouvelle commande vous attend sur www.dentech911.com .';
+		
+		$message = 'Bonjour, '. "\r\n" .
+		$message .= 'Félicitations, une nouvelle commande vous a été envoyée sur DenTech911 !'."\r\n\r\n";
+		$message .= 'Aussi, comme nous n\'avons pas trouvé votre email dans notre base de données, votre compte a été créé et vos déifiants sont votre adresse email et ce mot de passe que nous avons généré pour vous : '. $generated_password;
+		
 		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
 		'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
