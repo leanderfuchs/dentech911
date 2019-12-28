@@ -9,21 +9,13 @@
  				</li>
 
  				<li class="item item-text right-half" id="teeth_nbr">
- 					<label for="teeth_nbr" class="desc">N° des dents</label><input type="text" name="teeth_nbr" id="teeth_nbr" class="text large" value="<?php if(!empty($_POST['teeth_nbr'])){ echo $_POST['teeth_nbr']; }?>">
+ 					<label for="teeth_nbr" class="desc">N° des dents</label>
+					 <input type="text" name="teeth_nbr" id="teeth_nbr" class="text large" value="<?php if(!empty($_POST['teeth_nbr'])){ echo $_POST['teeth_nbr']; }?>">
  				</li>
  				
  				<li class="item item-select left-half">
- 					<label for="product">Nom du produit <span>*</span></label> 
- 					<select name="product" id="product" class="select medium">
- 						<option value="<?php if(!empty($_POST['product'])){ echo $_POST['product']; }?>"> <?php if(!empty($_POST['product'])){ echo $_POST['product']; }?>
-							 <?php 
-							 	foreach ($product_list as $i => $value) {
-									echo "<option>";
-									echo $product_list[$i]['name'];
-									echo "</option>";
-								}
-							 ?>
- 					</select>
+ 					<label for="product">Nom du matériau <span>*</span></label>
+					<input type="text" name="product" id="product" class="text large" value="<?php if(!empty($_POST['product'])){ echo $_POST['product']; }?>">
  					 <?php echo $missing_product ?><!--  Error message  -->
  				</li>
 
@@ -175,41 +167,9 @@
  				</select>
  			</li>
 
- 			<li class="item item-select left-half" id="implant_name">
- 				<label for="implant_name" class="desc">Type de pilier implantaire </label><select name="implant_name" id="implant_name" class="select medium">
- 				<option value="<?php if(!empty($_POST['implant_name'])){ echo $_POST['implant_name']; }?>"><?php if(!empty($_POST['implant_name'])){ echo $_POST['implant_name']; }?>
- 				</option>
- 				<option value="3i External®">
- 					3i External®
- 				</option>
- 				<option value="3i Certain®">
- 					3i Certain®
- 				</option>
- 				<option value="NobelBiocare Branemark®">
- 					NobelBiocare Branemark®
- 				</option>
- 				<option value="NobelBiocare Replace®">
- 					NobelBiocare Replace®
- 				</option>
- 				<option value="Straumann Bone Level®">
- 					Straumann Bone Level®
- 				</option>
- 				<option value="Straumann Synocta®">
- 					Straumann Synocta®
- 				</option>
- 				<option value="Sweden &amp; Martina - Pilot®">
- 					Sweden &amp; Martina - Pilot®
- 				</option>
- 				<option value="Zimmer - Screw vent®">
- 					Zimmer - Screw vent®
- 				</option>
- 				<option value="Dentsply - Frialit®">
- 					Dentsply - Frialit®
- 				</option>
- 				<option value="Astra - Astratech®">
- 					Astra - Astratech®
- 				</option>
- 			</select>
+		<li class="item item-select left-half" id="implant_name">
+			<label for="implant_name" class="desc">Type de pilier implantaire </label>
+			<input type="text" name="implant_name" id="implant_name" class="text medium" value="<?php if(!empty($_POST['implant_name'])){ echo $_POST['implant_name']; }?>">
  		</li>
 
  		<li class="item item-text right-half" id="implant_diam">
@@ -230,43 +190,31 @@
 			 </div>
 		 <?}?>
 
-		 <?if($_SESSION['balance']>=1){?>
  		<li class="item item-file-upload left-third" id="file1">
- 			<input type="file" size="35" name="file1" id="file12" value="" class="text small">
+ 			<input type="file" size="35" name="file1" id="file12" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
 		 </li>
-		 <?}?>
-		 <?if($_SESSION['balance']>=2){?>
 		 <li class="item item-file-upload middle-third" id="file2">
- 			<input type="file" size="35" name="file2" id="file22" value="" class="text small">
+ 			<input type="file" size="35" name="file2" id="file22" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
 		 </li>
-		<?}?>
-		<?if($_SESSION['balance']>=3){?>
  		<li class="item item-file-upload right-third" id="file3">
- 			<input type="file" size="35" name="file3" id="file32" value="" class="text small">
+ 			<input type="file" size="35" name="file3" id="file32" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
  		</li>
-		 <?}?>
-		<?if($_SESSION['balance']>=4){?>
  		<li class="item item-file-upload left-third" id="file4">
- 			<input type="file" size="35" name="file4" id="file42" value="" class="text small">
+ 			<input type="file" size="35" name="file4" id="file42" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
  		</li>
-		 <?}?>
-		<?if($_SESSION['balance']>=5){?>
  		<li class="item item-file-upload middle-third" id="file5">
- 			<input type="file" size="35" name="file5" id="file52" value="" class="text small">
+ 			<input type="file" size="35" name="file5" id="file52" accept=".doc,.docx,.pdf,.stl,.ply,.obj,image/*,video/*" class="text small">
  		</li>
-		 <?}?>
-		 <?if($_SESSION['balance']>=6){?>
  		<li class="item item-file-upload right-third" id="file6">
- 			<input type="file" size="35" name="file6" id="file62" value="" class="text small">
+ 			<input type="file" size="35" name="file6" id="file62" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
  		</li>
-		 <?}?>
 
  		<div class="center">
  			<li class="item item-text ">
  				<label for="datepicker" class="desc">Date de retour</label>
  				<input type="hidden" name"format" id="format" value="Y-m-d">
  				<input type="text" name="datepicker" id="datepicker" value="<?php if(!empty($_POST['datepicker'])){ echo $_POST['datepicker']; }?>" class="text small ">
- 			</li>						
+ 			</li>
  		</div>
 
  		<li class="item item-submit">

@@ -654,4 +654,5 @@ class order extends db_connect{
 		}
 	}
 
+	
 } // end order class

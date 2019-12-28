@@ -105,6 +105,7 @@ if (!empty($user_restricted_pages)) {
 				</div>
 					<div class='sep'></div>
 
+				<?if ($_SESSION['balance']>0) : ?>
 				<div >
 					<span class="title"><h3>Fichiers</h3></span>
 					<?php
@@ -113,21 +114,21 @@ if (!empty($user_restricted_pages)) {
 					?>
 					<?php } ?>
 				</div>
+				<? endif ?>
 
-				<?if ($_SESSION['balance']>0) : ?>
 				<div class='sep'></div>
 				<span class="title"><h3>Ajouter un fichier</h3></span>
 				<div class="visual-form-builder-container">
 					<form id="add_file" enctype="multipart/form-data" class="visual-form-builder" method="post" action="">
 					<fieldset class="fieldset  commandexfset">
 						<ul class="section section-1">
-								<input type="file" name="file" id="file" value="" class="text large"></br></br>								
+								<input type="file" name="file" id="file" value="" class="text large" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj"></br></br>								
 								<input type="submit" name="add_file" value="Ajouter" class="submit">
 						</ul>
 					</fieldset>
 					</form>
 				</div>
-				<? endif ?>
+
 				<?php if (!empty($comment_first_comment)): ?>
 					<div class='sep'></div>
 

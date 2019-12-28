@@ -4,6 +4,7 @@ $order = new order;
 $user = new user;
 $Convert_Dates = new Convert_Dates;
 
+
 // inscrpition de donnés dans la session:
 $session = Session::getInstance();
 if(isset($_SESSION['user_id'])){
@@ -35,7 +36,7 @@ if (isset($_POST['login'])) {
 	if (!isset($_POST['remember'])) $_POST['remember']='';
 	//echo $_POST['remember'];
 	$user_login = $user->login($_POST['login-email'],$_POST['login-password'], $_POST['remember']);
-	//echo $user_login;
+	 $user_login;
 }
 
 if (isset($_SESSION['user_id'])) {
@@ -67,6 +68,18 @@ if(isset($_POST['points']) && isset($_POST['to-email'])){
 		$_POST['successfull-point-transfer'] = $user_send_points;
     }
 }
+
+// Ajout de fichier(s) a la commande
+if (isset($_POST['add_file'])) {
+	foreach ($_FILES as $file_nbr => $value) {
+		// Use
+		if ($_FILES[$file_nbr]['error'] === UPLOAD_ERR_OK) {
+			//uploading successfully done
+		} else {
+			echo new UploadException($_FILES[$file_nbr]['error']);
+		}
+	}
+} //end add_file
 
 //------------------------------------ 
 //------------------------------------ affichages des elements de la page
