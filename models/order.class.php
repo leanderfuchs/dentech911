@@ -127,11 +127,6 @@ class order extends db_connect{
 		   $msg .= "\nPDO::errorInfo():\n";
 		   $msg = print_r($this->errorInfo());
 		}
-
-		// remove one point from user
-		$pdostatement = $this->query('UPDATE user SET balance = balance-1 WHERE id="' . $client_id . '";');
-		$session = new session;
-		$session->balance = $session->balance -1;
 	} // end add function
 
 	public function download_file($file_hash, $user_id){
