@@ -105,16 +105,20 @@ if (!empty($user_restricted_pages)) {
 				</div>
 					<div class='sep'></div>
 
-				<?if ($_SESSION['balance']>0) : ?>
 				<div >
 					<span class="title"><h3>Fichiers</h3></span>
-					<?php
-					foreach ($order_files as $value){
-						echo '<a href="'.$value['file_url'].'">'.$value['file_url'].'</a></br></br>';
-					?>
-					<?php } ?>
+					<?php foreach ($order_files as $value){
+						echo '<a class="btn btn-outline-info" href="?page=order_detail&id='.$order_id.'&file_hash='.$value['file_hash'].'">'.$value['order_file_name'].'</a></br></br>';
+					} ?>
 				</div>
-				<? endif ?>
+
+				<? if (isset($_GET['file_hash'])) {
+					if ($_SESSION['balance']>0 || (isset($file_lock) && $file_lock == 1)){
+						echo '<a class="btn btn-success" href="'. $file_url .'">Téléchager :'. $file_name . $file_lock.'</a>';
+					} elseif( $insuficient_credit == TRUE ) {
+						echo '<div class="alert alert-danger">Vous n\'avez pas assez de crédits pour télécharger ce fichier.</div>';
+					}
+				}?>
 
 				<div class='sep'></div>
 				<span class="title"><h3>Ajouter un fichier</h3></span>

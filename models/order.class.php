@@ -111,16 +111,17 @@ class order extends db_connect{
 		$shade = strtolower(str_replace($unwanted, "_", $shade));
 
 		$save_file = $client_name.'-'.$patient.'-'.$teeth.'_'.$product.'_'.$shade.'_'.$date_time.'-'.$file_clean_name;
+		$sha1_save_file = SHA1($save_file);
 		$file_path = 'orders/files/'.$client_name.'/'.$date.'/';
 
 		if (!file_exists($file_path)) mkdir($file_path, 0777, TRUE);
-		$file_url = $file_path . $save_file;
+		$file_url = $file_path . $sha1_save_file;
 
 		move_uploaded_file($tmp_name, $file_url);
 
 		//------------------------------------ Ajouter les fichiers dans la DB
 
-		$pdostatement = $this->query('INSERT INTO files (file_url, order_ref_id) VALUES ("'. $file_url .'", "'.$order_id.'") ;');
+		$pdostatement = $this->query('INSERT INTO files (file_url, order_ref_id, order_file_name, file_hash) VALUES ("'. $file_url .'", "'.$order_id.'", "'.$save_file.'", "'.$sha1_save_file.'") ;');
 
 		if (!$pdostatement) {
 		   $msg .= "\nPDO::errorInfo():\n";
@@ -132,6 +133,26 @@ class order extends db_connect{
 		$session = new session;
 		$session->balance = $session->balance -1;
 	} // end add function
+
+	public function download_file($file_hash, $user_id){
+		
+		// check if file is locked
+		$pdostatement = $this->query('SELECT unlocked from files WHERE file_hash="'.$file_hash.'"');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$file_lock_status = $result['unlocked'];
+		
+		// if the file is locked
+		if ($file_lock_status == 0){
+			//remove one point from user
+			$this->query('UPDATE user SET balance = balance - 1 WHERE id='.$user_id.';');	
+			//unlock the file
+			$this->query('UPDATE files SET unlocked = 1;');
+		} 
+		//return the file download URL
+		$pdostatement = $this->query('SELECT * from files WHERE file_hash="'.$file_hash.'"');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		return $result;
+	}
 
 	public function caselist($user_id){
 
@@ -634,12 +655,19 @@ class order extends db_connect{
 		return $result;
 	}
 
-	public function get_files($order_id) {
-	$files = [];
+	public function file_query($file_hash, $query) {
+		$pdostatement = $this->query('SELECT '.$query.' FROM files WHERE file_hash="'.$file_hash.'";');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);		
+		$result = $result[$query];
+		return $result;
+	}
 
-	$pdostatement = $this->query('SELECT * from files WHERE order_ref_id='. $order_id .';');
-	$pdostatement->execute();
-	return $all_files = $pdostatement->fetchAll();
+	public function get_files($order_id) {
+		$files = [];
+
+		$pdostatement = $this->query('SELECT * from files WHERE order_ref_id='. $order_id .';');
+		$pdostatement->execute();
+		return $all_files = $pdostatement->fetchAll();
 	}
 
 	public function restricted_page($user_id, $order_id){

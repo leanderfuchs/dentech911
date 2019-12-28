@@ -1,5 +1,4 @@
-<? if($_SESSION['balance']<1) $hidden="none";?>
-<div class="visual-form-builder-container" style="display:<?echo $hidden;?>">
+<div class="visual-form-builder-container">
  	<form id="order" enctype="multipart/form-data" class="visual-form-builder" method="post" action="?page=order_detail">
  			<fieldset class="fieldset  commandexfset">
  			<ul class="section section-1">
@@ -224,15 +223,3 @@
  </fieldset>
 </form>
 </div>
-
-<? if($_SESSION['balance']<1){ ?>
-
-	<div class="jumbotron jumbotron-fluid">
-		<div class="container">
-			<div class="display-4">Vous avez besoin d'un point pour envoyer un ficher.</div>
-			<p class="lead">Aujourd'hui un point = <?echo $_SESSION['point_value'];?>€ </p>
-			<a href="?page=buy_points"><span class="btn btn-primary float-right">Veuillez en acheter ici</span></a>
-		</div>
-	</div>
-
-<?}?>

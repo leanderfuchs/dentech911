@@ -122,6 +122,26 @@ if (isset($_POST['add_file'])) {
 	//echo $order_add_file;
 } //end add_file
 
+// download file and pay one point
+if (isset($_GET['file_hash'])){
+	if($_SESSION['balance']>0){	
+		$order_download_file = $order->download_file($_GET['file_hash'], $_SESSION['user_id']);
+		$file_name = $order_download_file['order_file_name'];
+		$file_url = $order_download_file['file_url'];
+		$file_lock = $order_download_file['unlocked'];
+	} else {
+		// fetch file status
+		$file_lock = $order->file_query($_GET['file_hash'], 'unlocked');
+		// fetch file name
+		$file_name = $order->file_query($_GET['file_hash'], 'order_file_name');
+		// fetch file url
+		$file_url = $order->file_query($_GET['file_hash'], 'file_url');
+
+		$insuficient_credit = TRUE;
+	}
+}
+
+
 // Liste des fichiers
 if (isset($_GET['id'])){
 	$order_id = $_GET['id'];
@@ -129,9 +149,9 @@ if (isset($_GET['id'])){
 	$order_id = $order->order_query($unique_order_key, 'id');
 }
 $order_files = $order->get_files($order_id);
-// echo "<pre>";
-// var_dump($order_files);
-// echo "</pre>";
+//	echo "<pre>";
+//	var_dump($order_files);
+//	echo "</pre>";
 
 //------------------------------------ MISE A JOUR AUTOMATIQUE DES STATUS
 if (isset($order_id)){
