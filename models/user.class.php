@@ -229,6 +229,19 @@ class user extends db_connect{
 
 				mail($to, $subject, $message, $headers);
 
+				// SEND EMAIL TEMPALTE
+				$mail = new mail;
+
+				$from = "contact@dentech911.com";
+				$from_name = "DenTech911";
+				$to_email = $result['email'];
+				$main_title = "Votre comtpte à été créé";
+				$short_description = "Bonjour et bienvenu chez DenTech911";
+				$subject = "Ce que vous avez droit en temps que membre DenTech911";
+				$body = "Grace à votre compte vous pourrez envoyer des fichers à votre partenaire sans encombrer votre boite mail et en gardant une traçabilié sur le long therme";
+
+				$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+
 				$msg = '<div class="alert alert-success"> Merci, nous venons de vous envoyer votre nouveau mot de passe dons votre boite mail. (vérifiez les spams)</div>';
 
 			} else { // si existe pas dans la base

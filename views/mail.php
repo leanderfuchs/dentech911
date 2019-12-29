@@ -13,10 +13,8 @@ $mail->Host       = 'smtp.gmail.com';
 $mail->Port       = 465; 
 $mail->Username   = 'osmose.one.int';
 $mail->Password   = 'K7!11O6Sj^7vQxvvkCiy';
-// <<-- UPDATED CODE
-
-// French characteres
 $mail->CharSet = 'UTF-8';
+// <<-- UPDATED CODE
 
 //Email address to send from
 $mail->From = "contact@dentech911.com";
@@ -39,7 +37,7 @@ $mail->IsHTML(true);
 function build_email_template($main_title, $short_description, $subject, $body, $apropos_title, $apropos_body) {
     // Get email template as string
 
-    $email_template_string = file_get_contents('views/email_template.html', true);
+    $email_template_string = file_get_contents('email_template.html', true);
     
     // Fill email template with message and relevant banner image
     // $email_template = sprintf($email_template_string,'URL_to_Banner_Images/banner_' . $email_subject_image. '.png', $main_title, $short_description, $subject, $body, $apropos_title, $apropos_body );

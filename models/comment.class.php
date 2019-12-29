@@ -19,7 +19,7 @@ class comment extends db_connect{
 		//------------------------------------ email
 
 		$to      = 'leanderfuchs@protonmail.com';
-		$subject = ' - Nouveau message concernant la commande ['.$order_id.'].';
+		$subject = 'Dentech911 - Nouveau message concernant la commande ['.$order_id.'].';
 		$message = 'Message: '."\r\n". $comment."\r\n"."\r\n";
 		$message .= 'Lien: '. $_SERVER['SERVER_NAME'] .'?page=message_board&id='.$order_id;
 		$headers = 'From: leanderfuchs@protonmail.com'."\r\n" .
