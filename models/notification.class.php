@@ -10,6 +10,30 @@
 
 class notification extends db_connect{
 
+	public function from_dentech911($user_id, $message_body, $message_subject) {
+
+		$pdostatement = $this->query('SELECT * FROM user WHERE id='.$user_id.' ;');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+
+		$user_email = $result['email'];
+		$user_name = $result['name'];
+		$user_company = $result['company'];
+
+		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
+		'Reply-To: ' .$user_email. "\r\n" .
+		'X-Mailer: PHP/' . phpversion();
+
+		$to      = $user_email;
+		$subject = 'DenTech911 - '. $message_subject;
+		
+		$message_head = 'Bonjour,'."\r\n\r\n";
+
+		$message_footer = 'DenTech911.'."\r\n"."\r\n";
+		$message_footer .= '<a href="https://www.dentech911.com">www.DenTech911.com</a>';
+		$message = $message_head.$message_body.$message_footer;
+		mail($to, $subject, $message, $headers);
+	}
+
 	public function new_order(){
 		$server_name = $_SERVER['SERVER_NAME'];
 
@@ -239,29 +263,3 @@ class notification extends db_connect{
 
 
 } // end cart class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

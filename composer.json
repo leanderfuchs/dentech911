@@ -1,7 +1,13 @@
 {
+    "name": "leanderfuchs/debian",
     "require": {
-        "stripe/stripe-php": "^7.14",
-        "league/omnipay": "^3.0",
-        "omnipay/stripe": "^3.1"
-    }
+        "phpmailer/phpmailer": "^6.1",
+        "stripe/stripe-php": "^7.14"
+    },
+    "authors": [
+        {
+            "name": "Leander",
+            "email": "leanderfuchs@gmail.com"
+        }
+    ]
 }
