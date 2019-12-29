@@ -1,5 +1,5 @@
 <div id="pagetitle">
-	<a href="?page=order_list"><img src="views/images/dentech911-logo-320px.svg" alt="" /></a><br/>
+	<a href="?page=order_list"><img src="views/images/dentech911-logo-320px.svg" alt="dentech911 logo" style="width:150px; margin:30px"/></a><br/>
 </div> <!-- pagetitle -->
 
 	<div id="tabs-wrapper">
@@ -68,7 +68,7 @@
 					<span class="title"><h3>Fichiers</h3></span>
 					<?php
 					foreach ($order_files as $value){
-						echo $value['file_url'];
+						echo $value['order_file_name'];
 						echo '</br><hr></br>';
 				 	} ?>
 			</div>
@@ -108,6 +108,6 @@ $("#back")
 <hr>
 <div class="center">
 
-	<a onclick="goBack()" id="back" href="?page=order_detail&id=<?php echo $_GET['id']; ?>" data-icon="arrow-l">Revenir à la page détails</a>
+	<a onclick="goBack()" id="back" href="?page=order_detail&id=<?php echo $_GET['id']; ?>" class="btn btn-secondary">Revenir à la page détails</a>
 
 </div>

@@ -202,11 +202,11 @@ class user extends db_connect{
 
 		if (empty($email)) { // Si aucun pseudo est entre
 
-			$msg .= '<div class="error">Veuillez entrer votre email.</div>';
+			$msg = '<div class="alert alert-danger">Veuillez entrer votre email</div>';
 
 		} else { // Si l'email est entree
 
-			$pdostatement = $this->query('SELECT id, email, name FROM user WHERE email="' . $email . '";');
+			$pdostatement = $this->query('SELECT * FROM user WHERE email="' . $email . '";');
 			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
 			if ($result) { // si existe dans la base de donnee
@@ -214,16 +214,14 @@ class user extends db_connect{
 				//------------------------------------ creation d'un nouveau mot de passe
 				
 				$length = 10;
-
 				$newpasswrd = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
-				
 				$hashed_newpasswrd = SHA1($newpasswrd);
 				//------------------------------------ envoie du nouveau mot de passe.
 				
 				$pdostatement = $this->query('UPDATE user SET password = "'.$hashed_newpasswrd.'" WHERE id="' . $result['id'] . '";');
 
 				$to      = $result['email'];
-				$subject = ' - nouveau mot de passe';
+				$subject = 'Dentech911 - Votre nouveau mot de passe';
 				$message = 'Bonjour, votre nouveau mot de passe est: '. $newpasswrd;
 				$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
 				'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
@@ -231,15 +229,11 @@ class user extends db_connect{
 
 				mail($to, $subject, $message, $headers);
 
-				$dbquery = $this->query('SELECT id FROM user ORDER BY ID DESC LIMIT 1;');
-				$new_user_id = $dbquery->fetch(PDO::FETCH_ASSOC);
-				$new_user_id = $new_user_id['id'];
-
-				return $new_user_id;
+				$msg = '<div class="alert alert-success"> Merci, nous venons de vous envoyer votre nouveau mot de passe dons votre boite mail. (vérifiez les spams)</div>';
 
 			} else { // si existe pas dans la base
 
-				$msg .= '<div class="error"> Cette email: ' . $email . ' est inconnu. Vérifiez son orthographe.</div>';
+				$msg = '<div class="alert alert-danger"> Cette email: ' . $email . ' est inconnu. Vérifiez son orthographe</div>';
 
 			}
 

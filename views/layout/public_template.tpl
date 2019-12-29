@@ -89,7 +89,11 @@
 			</header>
 			<?php endif ?> <!-- if print page -->
 				<h1 class="mt-3"><? if (!empty($page_title)) echo $page_title;?></h1>
-				<?php affichage($page_controller_file, $page_view_file);?>
+				<?php 
+					if(isset($_GET['page'])) $page_name = $_GET['page'];
+					if(!isset($_GET['page'])) $page_name = 'login';
+					affichage($page_controller_file, $page_view_file, $page_name);
+				?>
 				<p><?php if(!empty($page_content)) echo $page_content;?></p>
 			</div>
 		</div>

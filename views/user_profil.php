@@ -17,6 +17,7 @@
 			<li class="item item-text">
 				<label for="name" class="desc">Nom</label>
 				<h3><?php echo $user_name; ?></h3>
+				<h5><?php echo 'Nb de point(s): '.$_SESSION['balance']; ?></h5>
 			</li>
 
 			<li class="item item-email">

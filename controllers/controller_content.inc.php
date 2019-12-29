@@ -104,29 +104,25 @@ if (empty($this->page)) {
 }
 
 // affichage du contenu de la page en fonction de son exitence dans les fichiers
-function affichage($page_controller_file, $page_view_file){
+function affichage($page_controller_file, $page_view_file, $url){
 //------------------------------------ Si page member:
 	if (isset($_SESSION['Auth'])) { // For loggedin users
-		if(file_exists($page_controller_file) AND file_exists($page_view_file)){
-			include($page_controller_file);
-			include($page_view_file);
-		} else { // If file not fund
-			$page_controller_file = 'views/404.php';
+		if(!file_exists($page_controller_file) AND !file_exists($page_view_file)){
 			$page_view_file = 'controllers/404.php';
-			include($page_controller_file);
-			include($page_view_file);
+			$page_controller_file = 'views/404.php';
 		}
 	} elseif(isset($_COOKIE['Auth'])){ // Logged out users with cookie
-		$page_controller_file = 'views/order_list.php';
 		$page_view_file = 'controllers/order_list.php';
-		include($page_controller_file);
-		include($page_view_file);
-	}else { // if user not logged in
-		$page_controller_file = 'views/login.php';
+		$page_controller_file = 'views/order_list.php';
+	} elseif ($url == 'lost_password'){
+		$page_view_file = 'controllers/lost_password.php';
+		$page_controller_file = 'views/lost_password.php';
+	} else { // if user not logged in
 		$page_view_file = 'controllers/login.php';
-		include($page_controller_file);
-		include($page_view_file);
+		$page_controller_file = 'views/login.php';
 	}
+	include($page_controller_file);
+	include($page_view_file);	
 }
 
 //------------------------------------
@@ -141,10 +137,8 @@ $page_menu_header = $ibdd->page_menu('header');
 $page_menu_footer = $ibdd->page_menu('footer');
 
 // add point value in the session
-if (!empty($point_value)) {
-	$session->point_value = $point_value/100;
-	$session->min_point = $min_point;
-}
+$session->point_value = $point_value/100;
+$session->min_point = $min_point;
 
 // Page specific content
 if (isset($_GET['page'])){

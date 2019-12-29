@@ -108,13 +108,15 @@ if (!empty($user_restricted_pages)) {
 				<div >
 					<span class="title"><h3>Fichiers</h3></span>
 					<?php foreach ($order_files as $value){
-						echo '<a class="btn btn-outline-info" href="?page=order_detail&id='.$order_id.'&file_hash='.$value['file_hash'].'">'.$value['order_file_name'].'</a></br></br>';
+						$button_stye = 'alert-info';
+						if($value['unlocked']==1){$button_stye = 'alert-secondary';}
+						echo '<a class="btn '. $button_stye .'" href="?page=order_detail&id='.$order_id.'&file_hash='.$value['file_hash'].'">'.$value['order_file_name'].'</a></br></br>';
 					} ?>
 				</div>
 
 				<? if (isset($_GET['file_hash'])) {
 					if ($_SESSION['balance']>0 || (isset($file_lock) && $file_lock == 1)){
-						echo '<a class="btn btn-success" href="'. $file_url .'">Téléchager :'. $file_name . $file_lock.'</a>';
+						echo '<a class="btn btn-success" href="'. $file_url .'">Téléchager :'. $file_name .'</a>';
 					} elseif( $insuficient_credit == TRUE ) {
 						echo '<div class="alert alert-danger">Vous n\'avez pas assez de crédits pour télécharger ce fichier.</div>';
 					}
@@ -147,7 +149,7 @@ if (!empty($user_restricted_pages)) {
 					<div class='sep'></div>
 
 					<a href="?page=message_board&id=<?php echo $order_id; ?>" class="center">
-						<button name="send_prod" type="submit" value="send_prod">Ajouter un message</button></a>
+						<button name="send_prod" type="submit" class="btn btn-secondary" value="send_prod">Ajouter un message</button></a>
 						<br/>
 			</div><!-- cell -->
 		</div><!-- row -->
