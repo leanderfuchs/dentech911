@@ -12,7 +12,7 @@ class tracking extends db_connect{
 
 public function caselist($user_id){
 
-		$pdostatement = $this->query('SELECT * FROM orders WHERE user_ref_id='.$user_id.' AND status!="Prète à être livrée" AND status!="En cours de livraison" AND status!="Livrée" ORDER BY id DESC;');
+		$pdostatement = $this->query('SELECT * FROM orders WHERE (user_ref_id='.$user_id.' OR supplier_ref_id='.$user_id.') ORDER BY id DESC;');
 		$pdostatement->execute();
 		return $pdostatement->fetchAll();
 } // end last_orders function
@@ -74,52 +74,6 @@ public function caselist($user_id){
 		return $msg;
 
 	} // end of edit function
-
-
-
-
-	public function qrlist(){
-
-		$Convert_Dates = new Convert_Dates;
-
-		$output = '';
-		//------------------------------------ retourner un tableau des dernieres commandes
-
-			
-		$dates = 'SELECT DISTINCT DATE(arrival_date) AS arrival_date FROM orders  WHERE status!="Prète à être livrée" AND status!="En cours de livraison" AND status!="Livrée" ORDER BY arrival_date DESC;';
-		
-		foreach ($this->query($dates) as $arrival_date) {
-
-			$output .= '<span class="day-header">'. $Convert_Dates->longnames(date("l d F Y", strtotime($arrival_date["arrival_date"]))) .'</span><br/>';
-
-			$orders = 'SELECT DISTINCT u.name, o.* FROM orders o, user u WHERE DATE(o.arrival_date)="' . $arrival_date['arrival_date'].'" AND u.id=o.user_ref_id AND o.status!="Prète à être livrée" AND o.status!="En cours de livraison" AND o.status!="Livrée" ORDER BY o.id DESC;';
-
-			$output .= '<table class="table-striped font-90 centered" border=0>';	
-			$output .= '<tr>';
-
-			foreach ($this->query($orders) as $order_details) {
-								
-				$output .= '<td width="55px">[' . $order_details['id'] . ']</td>';
-				
-				$output .= '<td width="170px"><b>' . $order_details['name'] . '</b></td>';
-				
-				$output .= '<td width="170px">' . ucwords($order_details['patient_id']) . '</td>';
-
-				$ex3 = new QRGenerator(''. $_SERVER['SERVER_NAME'] .'/?page=order_qrcodes&id='.$order_details['id'].'&open=received',200,'ISO-8859-1'); 
-				$output .= '<td><img src='.$ex3->generate().'></td>';
-
-				$output .= '<td>' . $order_details['status'] . '</td>';
-				
-				$output .= '</tr>';
-			}
-
-			$output .= '</table>';	
-		}
-		
-		return $output;
-
-	} // end last_orders function
-
 
 	public function open_received_status ($order_id){
 

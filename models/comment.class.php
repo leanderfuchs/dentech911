@@ -30,12 +30,12 @@ class comment extends db_connect{
 
 		// Check who is the sender of the message and who is the recipient
 		if ($user_id == $user_ref_id) {
-			$pdostatement = $this->query('SELECT email FROM user WHERE id='.$user_ref_id.';');
+			$pdostatement = $this->query('SELECT email FROM user WHERE id='.$supplier_ref_id.';');
 			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 			$to_user_email = $result['email'];
 
 		} elseif ($user_id == $supplier_ref_id) {
-			$pdostatement = $this->query('SELECT email FROM user WHERE id='.$supplier_ref_id.';');
+			$pdostatement = $this->query('SELECT email FROM user WHERE id='.$user_ref_id.';');
 			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 			$to_user_email = $result['email'];
 		}

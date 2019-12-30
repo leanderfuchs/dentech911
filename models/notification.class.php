@@ -93,13 +93,14 @@ class notification extends db_connect{
 		$from = "contact@dentech911.com";
 		$from_name = $from_user_name;
 
-		$main_title = "Message pour la commande: ". $patient_id;
-		$short_description = $from_user_name .' viens de vous envoyer un message';
+		$main_title = "Commande: ". $patient_id;
+		$short_description = '	Notre messagerie est le plus simple système d\'échange pour les professionnels du dentaire car chaque message 						corréspond à un cas particulier.</br>
+								Vous n\'avez plus à rechercher dans votre boite mail le méssage correspondant à tel ou tel cas';
 
-		$subject = 'Nouveau message de '.$from_user_name.' concernant la commande : '.$patient_id;
+		$subject = 'Nouveau message de <b>'.$from_user_name.'</b> concernant la commande : <b>'.$patient_id.'</b>';
 		$body = '	Message: </br></br>
-					<p>'. $comment.'</p></br></br>
-					Lien vers la commande: '. $_SERVER['SERVER_NAME'] .'?page=message_board&id='.$order_id;
+					<p><b>'. $comment.'</b></p></br></br>
+					Lien vers ce message: https://www.dentech911.com/?page=order_detail&id='.$order_id;
 
 		$this->mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
 	}
@@ -155,7 +156,7 @@ class notification extends db_connect{
 			$message .= 'Commentaire: '.$comment."\r\n"."\r\n";
 		} 
 		
-		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
+		$message .= 'Lien vers ce message: https://www.dentech911.com/?page=order_detail&id='.$order_id."\r\n"."\r\n";
 
 		$message .= 'DenTech911.'."\r\n"."\r\n";
 		$message .= 'www.dentech911.com';
