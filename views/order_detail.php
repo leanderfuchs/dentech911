@@ -25,7 +25,7 @@ if (!empty($user_restricted_pages)) {
 					<?php endif ?>
 					<div>
 						<?php
-							$ex3 = new QRGenerator($_SERVER['SERVER_NAME'].'/commande/?page=order_detail&id='.$order_id.'&qr=true',150,'ISO-8859-1'); 
+							$ex3 = new QRGenerator($_SERVER['SERVER_NAME'].'/?page=order_detail&id='.$order_id.'&qr=true',150,'ISO-8859-1'); 
 							echo "<img src=".$ex3->generate().">";
 						?>
 					</div>

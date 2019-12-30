@@ -15,8 +15,8 @@
         <td width="55px">[<? echo $order_details['id'] ?>]</td>
         <td width="50%"><? echo ucwords($order_details['patient_id']) ?></td>
         <td width="50%"><? echo $order_details['status']; ?></td>
-        <? $qr_link = $_SERVER['SERVER_NAME'] .'/?page=order_qrcodes&id=' .$order_details['id']. '&open=received';
-        echo '<td><img width="100px" src="'. $ex3->generate($qr_link,200,'ISO-8859-1') .'"></td>' ?>
+        <td><? $ex3 = new QRGenerator($_SERVER['SERVER_NAME'].'/?page=order_qrcodes&id='.$order_details['id'].'&qr=true',150,'ISO-8859-1'); 
+							echo '<img style="width:150px" src='.$ex3->generate().'>' ;?></td>
       </tr>
     </table>	
   <? endforeach ?>

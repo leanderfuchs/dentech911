@@ -9,8 +9,7 @@
   <tr>
     <td width=""><b>[<? echo $value['id']; ?>]</b></td>
     <td width="10%"><? echo $Convert_Dates->longnames(date("d m Y", strtotime($value['arrival_date']))); ?></td>
-    <td width="5%"><b><? echo $user->user_query($value['id'],'name'); ?></b></td>
-    <td width="15%"><? echo ucwords($value['patient_id']); ?></td>
+    <td width="30%"><? echo ucwords($value['patient_id']); ?></td>
     <td width="15%"><? echo $value['product_name']; ?></td>
     <? echo '<td width="150px">Lot #:<input type="text" size=12  name="lot-'.$value['id'].'" value="'.$value['lot'].'"></td> '; ?>
     <? echo '<td width="150px">ref #:<input type="text" size=12  name="ref-'.$value['id'].'" value="'.$value['ref'].'"></td> '; ?>
