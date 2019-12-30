@@ -2,7 +2,6 @@
 
 /**  
 * @desc    
-* examples 
 * @author leander Fuchs leanderfuchs@gmail.com 
 * @required db_connect.class
 */  
