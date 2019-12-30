@@ -153,126 +153,49 @@ class order extends db_connect{
 
 		$Convert_Dates = new Convert_Dates;
 
-		//------------------------------------ trouver l'ID du membre
-
+		//------------------------------------ trouver le type du membre
 		$pdostatement = $this->query('SELECT type FROM user WHERE id = "' . $user_id . '";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
 		$user_type = $result['type'];
 
-		//------------------------------------ trouver l'ID des dernieres commandes
-		$opencfao ='0';
-		$supplier ='0';
-		$show_all ='0';
-
-		if ($user_type=='admin' OR $user_type=='DenTech911') {
-			$opencfao ='1';
-			$show_all = '1';
-		} elseif ($user_type=='Fournisseur'){
-			$supplier ='1';
+		// If no order exists
+		$pdostatement = $this->query('SELECT id FROM orders WHERE user_ref_id = "' . $user_id . '" ;');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		if ($result['id']==NULL){
+			//return '<span class=""><i>Vous n\'avez pas encore passé(e) de commande</i></span><br/>';
 		}
+		
+		// Create orders table for the user
+		$caselist = array();
+		$pdostatement = $this->query('SELECT DISTINCT DATE(arrival_date) AS arrival_date FROM orders WHERE user_ref_id='.$user_id.' OR supplier_ref_id='.$user_id.' ORDER BY arrival_date DESC;');
+		$caselist = $pdostatement->fetchAll();
 
-		//------------------------------------ si aucune commande a ete trouve :
-		if ($show_all=='0') {
-
-			$pdostatement = $this->query('SELECT id FROM orders WHERE user_ref_id = "' . $user_id . '" ;');
-			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-
-			if ($result['id']==NULL AND !$user_type=='Fournisseur'){
-				$output .= '<span class=""><i>Vous n\'avez pas encore passé(e) de commande</i></span><br/>';
-			}
-
+		$count = 0;
+		foreach ( $caselist as $arrival_date => $val) {
+			
+			$pdostatement = $this->query('SELECT * FROM orders WHERE (user_ref_id="'.$user_id . '" OR  supplier_ref_id='.$user_id.' ) AND DATE(arrival_date)="' . $val['arrival_date'].'" ORDER BY id DESC;');
+			$order_details = $pdostatement->fetchAll();
+			
+			// add cases within each date
+			$caselist[$arrival_date][] = $order_details;
+			
+			// Convert dates			
+			$caselist[$arrival_date]['arrival_date'] = $Convert_Dates->longnames(date("l d F Y", strtotime($val["arrival_date"])));
 		}
-		//------------------------------------ retourner un tableau des dernieres commandes
-
-		if ($show_all=='1') {
-			$dates = 'SELECT DISTINCT DATE(arrival_date) AS arrival_date FROM orders ORDER BY arrival_date DESC;';
-
-		} else {
-			$dates = 'SELECT DISTINCT DATE(arrival_date) AS arrival_date FROM orders WHERE user_ref_id="' . $user_id . '" ORDER BY arrival_date DESC;';
-		}
-
-		$output = "";
-		if ($dates<1) {
-			foreach ($this->query($dates) as $arrival_date) {
-
-				$output .= '<span class="day-header">'. $Convert_Dates->longnames(date("l d F Y", strtotime($arrival_date["arrival_date"]))) .'</span><br/>';
-
-					if ($opencfao=='1') {//open
-
-						$orders = 'SELECT DISTINCT u.name, o.* FROM orders o, user u WHERE DATE(o.arrival_date)="' . $arrival_date['arrival_date'].'" AND u.id=o.user_ref_id ORDER BY o.id DESC;';
-
-					} elseif ($user_type=='Fournisseur'){//supplier
-
-						$orders = 'SELECT * FROM orders WHERE DATE(arrival_date)="' . $arrival_date['arrival_date'].'" AND supplier_ref_id='.$user_id.' ORDER BY id DESC;';
-
-					} else {//clients
-
-						$orders = 'SELECT * FROM orders WHERE user_ref_id="' . $user_id . '" AND DATE(arrival_date)="' . $arrival_date['arrival_date'].'" ORDER BY id DESC;';
-					}
-
-				$output .= '<table class="table-striped font-90 centered" border=0>';	
-				$output .= '<tr>';
-
-				foreach ($this->query($orders) as $order_details) {
-
-					switch ($order_details['status']) {
-						case "Commande envoyée":
-							   $color = 'style="color:#0b7215;"';
-							break;
-						case "Reçu chez DenTech911":
-							   $color = 'style="color:#1cb236;"';
-							break;
-						case "Envoyée en production":
-							   $color = 'style="color:#1eec41;"';
-							break;
-						case "En cours de production":
-							   $color = 'style="color:#f6bb1c;"';
-							break;
-						case "En retour de production":
-							   $color = 'style="color:#fc852a;"';
-							break;
-						case "Prète à être livrée":
-							   $color = 'style="color:#fb0015;"';
-							break;
-						case "En cours de livraison":
-							   $color = 'style="color:#98000d;"';
-							break;
-						case "Livrée":
-							   $color = 'style="color:#7f7f7f;"';
-							break;
-						}
-
-					$output .= '<td width="50px"><b>[' . $order_details['id'] . ']</b></td>';
-					$output .= '<td width="150px">' . ucwords($order_details['patient_id']) . '</td>';
-					$output .= '<td width="100px">' . $order_details['teeth_nbr'] . '</td>';
-					$output .= '<td width="200px">' . $order_details['product_name'] . '</td>';
-					$output .= '<td width="50px">' . $order_details['vita_body']. $order_details['vita3d_body'] . '</td>';
-					$output .= '<td width="130px" '.$color.'><b>' . $order_details['status'] . '</b></td>';
-					$output .= '<td width="120px">' . $order_details['tracking'] . '</td>';
-					$output .= '<td width="24px"> <a href="?page=order_detail&id='.$order_details['id'].'">Voir</a></td>';
-					$output .= '</tr>';
-				}
-				$output .= '</table>';	
-			}
-		}
-
-		return $output;
+		return $caselist;
 	} // end last_orders function
 
 
 	public function details($order_id){
 
 		//------------------------------------ textraire les detailles de la commande
-
 		$pdostatement = $this->query('SELECT * FROM orders WHERE id="'.$order_id.'";');
 		$order_details = $pdostatement->fetch(PDO::FETCH_ASSOC);
-
 
 		if (!empty($order_details)) {
 			$order_details = implode("|", $order_details);
 		}
-		//------------------------------------ Retrouver les id des produits de la commande
 
 		return $order_details;
 
@@ -645,7 +568,7 @@ class order extends db_connect{
 
 	public function order_query($unique_order_key, $query) {
 		$pdostatement = $this->query('SELECT '.$query.' FROM orders WHERE unique_order_key="'.$unique_order_key.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);		
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$result = $result[$query];
 		return $result;
 	}

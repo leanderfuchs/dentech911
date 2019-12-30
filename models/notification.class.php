@@ -10,28 +10,98 @@
 
 class notification extends db_connect{
 
-	public function from_dentech911($user_id, $message_body, $message_subject) {
+	private	$mail;
 
-		$pdostatement = $this->query('SELECT * FROM user WHERE id='.$user_id.' ;');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+    public function __CONSTRUCT() {
+        $this->mail = new mail;
+    }
 
-		$user_email = $result['email'];
-		$user_name = $result['name'];
-		$user_company = $result['company'];
+	public function register ($email, $name){
 
-		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
-		'Reply-To: ' .$user_email. "\r\n" .
-		'X-Mailer: PHP/' . phpversion();
+		$to_email = $email;
+		$from = "contact@dentech911.com";
+		$from_name = "DenTech911.com";
 
-		$to      = $user_email;
-		$subject = 'DenTech911 - '. $message_subject;
+		$main_title = "Votre compte a été créé";
+		$short_description = "Félicitation, votre compte est activé et vous pouvez dors et déjà l'utiliser";
+
+		$subject = "Bienvenue et merci d'être devenu membre de DenTech911!";
+		$body = '	Bonjour '.$name.',</br>
+					Je suis tellement heureux que vous ayez rejoint notre réseau.</br>
+					J\'ai inclus tous les détails de votre adhésion ci-dessous, ainsi qu\'une question que j\'ai à vous poser.</br></br>
+					Mais d\'abord, voici quelques excellents avantages que vous obtenez en temp que membre: <b>50 points de téléchargement</b> vous sont offerts en cadeau de bienvenue. De plus, vous aurez accès au système d\'échanges de fichiers le plus simple et intuitif possible et bien d\'autres choses encore à venir ... </br>
+					Maintenant, voici les détails importants de votre adhésion:</br></br>
+					Nom d\'utilisateur: <b>'.$email.'</b></br>
+					Niveau d\'adhésion: <b>Utilisateur</b></br>
+					Mot de passe : celui que vous avez créé</br></br>
+					<h3>Et voici ma question:</h3>
+					<b>Quelle est la première raison pour laquelle vous vous êtes inscrit?</b></br>
+					Si vous pouviez répondre à cet e-mail avec votre réponse, cela m\'aiderait à créer une application plus personnalié et à vous diriger vers le bon endroit.</br></br>
+					En attendant, si vous souhaitez commencer à accéder à certaines de nos ressources exclusives, visitez notre espace réservé aux membres ici https://www.dentech911.com.</br></br>
+					Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message Telegram : https://t.me/dentech911.</br></br>
+					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidienement!</br>
+					Leander';
+
+		$this->mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+	}
+	
+	public function newpasswrd($to_email, $newpasswrd) {
+
+		$from = "contact@dentech911.com";
+		$from_name = "DenTech911.com";
+
+		$main_title = "Votre nouveau mot de passe à été créé";
+		$short_description = "Afin de guarantir la securité de notre système, nous avons créé votre mot de passe";
+
+		$subject = "Ceci est votre nouveau mot de passe : <b>" . $newpasswrd . '</b>';
+		$body = '	Votre mot de passe sert à protéger les informations que vous laissez sur DenTech911.</br></br>
+					il est donc important pour vous de le garder, soit dans un carnet papier, soit dans la mémoire de votre navigateur favorit, soit dans un système de sauvgarde décentralisé tel <a href="https://lastpass.com/">lastpass</a> que nous recommandons fortemant</br></br>
+					Vous souhaitant une excellente journée</br>
+					Leander';
+
+		$this->mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+	}
+
+	public function new_email($email, $generated_password){
 		
-		$message_head = 'Bonjour,'."\r\n\r\n";
+		$to_email = $email;
+		$from = "contact@dentech911.com";
+		$from_name = "DenTech911.com";
 
-		$message_footer = 'DenTech911.'."\r\n"."\r\n";
-		$message_footer .= '<a href="https://www.dentech911.com">www.DenTech911.com</a>';
-		$message = $message_head.$message_body.$message_footer;
-		mail($to, $subject, $message, $headers);
+		$main_title = "Félicitation, vous venez de recevoir une nouvvelle commande !";
+		$short_description = "Un membre de DenTech911 vient de vous envoyer une commande avec des scans 3D";
+
+		$subject = 'Bienvenue sur DenTech911, la platforme d\'échange de fichiers numérique entre proffessionels du dentaire';
+		$body = '	Bonjour, </br>
+					Félicitations, une nouvelle commande vous a été envoyée sur DenTech911 !</br>
+					Voici quelques excellents avantages que vous obtenez en temp que membre: <b>50 points de téléchargement</b> vous sont offerts en cadeau de bienvenue. De plus, vous aurez accès au système d\'échanges de fichiers le plus simple et intuitif possible et bien d\'autres choses encore à venir ... </br>
+					Maintenant, voici les détails importants de votre adhésion:</br></br>
+					<h3>Comme nous n\'avons pas trouvé votre email dans notre base de données, votre compte a été créé et vos identifiants sont :</h3>
+					Nom d\'utilisateur: <b>'. $email. '</b></br>
+					Niveau d\'adhésion: <b>Utilisateur</b></br>
+					Mot de passe : <b>'. $generated_password .'</b></br></br>
+					Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message sur Telegram : https://t.me/dentech911.</br></br>
+					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidienement!</br>
+					Leander';
+
+		$this->mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+	}
+
+	public function new_comment($from_user_name, $to_user_email, $comment, $order_id, $patient_id){
+
+		$to_email = $to_user_email;
+		$from = "contact@dentech911.com";
+		$from_name = $from_user_name;
+
+		$main_title = "Message pour la commande: ". $patient_id;
+		$short_description = $from_user_name .' viens de vous envoyer un message';
+
+		$subject = 'Nouveau message de '.$from_user_name.' concernant la commande : '.$patient_id;
+		$body = '	Message: </br></br>
+					<p>'. $comment.'</p></br></br>
+					Lien vers la commande: '. $_SERVER['SERVER_NAME'] .'?page=message_board&id='.$order_id;
+
+		$this->mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
 	}
 
 	public function new_order(){

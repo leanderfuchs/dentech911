@@ -35,27 +35,8 @@ class user extends db_connect{
 					   $msg = print_r($this->errorInfo());
 					}
 //------------------------------------ Send welcome email
-					$to      = $email;
-					$subject = 'www.dentech911.com - Votre compte a été créé.';
-					$message = 'Bonjour '.$name.','."\r\n".
-					'Bienvenue et merci d\'être devenu membre de DenTech911! Je suis tellement heureux que vous ayez rejoint notre réseau'."\r\n".
-					'J\'ai inclus tous les détails de votre adhésion ci-dessous, ainsi qu\'une question que j\'ai à vous poser. Mais d\'abord, voici quelques excellents avantages que vous obtenez pour en temp que membre:'."\r\n".
-					'50 points vous sont offerts en cadeau de bienvenue. De plus, vous aurez accès au système d\'échanges de fichiers le plus simple et intuitif possible et bien d\'autres choses encore à venir ... '."\r\n".
-					'Maintenant, voici les détails importants de votre adhésion:'."\r\n".
-					'Nom d\'utilisateur: [USERNAME]'."\r\n".
-					'Niveau d\'adhésion: [LEVEL]'."\r\n".
-					'Et voici ma question:'."\r\n".
-					'Quelle est la première raison pour laquelle vous vous êtes inscrit?'."\r\n".
-					'Si vous pouviez répondre à cet e-mail avec votre réponse, cela m\'aiderait à créer une application plus personnalié et à vous diriger vers le bon endroit.'."\r\n".
-					'En attendant, si vous souhaitez commencer à accéder à certaines de nos ressources exclusives, visitez notre espace réservé aux membres ici <a hef="https://www.dentech911.com">DenTech911</a>.'."\r\n".
-					'Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message sur <a hef="https://t.me/dentech911">Telegram</a>.'."\r\n".
-					'Meilleurs succès et j\'espère vous voir à notre prochain événement!'."\r\n".
-					'Leander';
-					$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
-					'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-					'X-Mailer: PHP/' . phpversion();
-
-					mail($to, $subject, $message, $headers);
+					$notification = new notification;
+					$this->notification->register($email, $name);
 
 //------------------------------------ find user ID
 					$dbquery = $this->query('SELECT id FROM user ORDER BY ID DESC LIMIT 1;');
@@ -212,35 +193,19 @@ class user extends db_connect{
 			if ($result) { // si existe dans la base de donnee
 
 				//------------------------------------ creation d'un nouveau mot de passe
-				
+
 				$length = 10;
 				$newpasswrd = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
 				$hashed_newpasswrd = SHA1($newpasswrd);
+
 				//------------------------------------ envoie du nouveau mot de passe.
-				
 				$pdostatement = $this->query('UPDATE user SET password = "'.$hashed_newpasswrd.'" WHERE id="' . $result['id'] . '";');
 
-				$to      = $result['email'];
-				$subject = 'Dentech911 - Votre nouveau mot de passe';
-				$message = 'Bonjour, votre nouveau mot de passe est: '. $newpasswrd;
-				$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
-				'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-				'X-Mailer: PHP/' . phpversion();
+				// SEND EMAIL 
 
-				mail($to, $subject, $message, $headers);
-
-				// SEND EMAIL TEMPALTE
-				$mail = new mail;
-
-				$from = "contact@dentech911.com";
-				$from_name = "DenTech911";
 				$to_email = $result['email'];
-				$main_title = "Votre comtpte à été créé";
-				$short_description = "Bonjour et bienvenu chez DenTech911";
-				$subject = "Ce que vous avez droit en temps que membre DenTech911";
-				$body = "Grace à votre compte vous pourrez envoyer des fichers à votre partenaire sans encombrer votre boite mail et en gardant une traçabilié sur le long therme";
-
-				$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+				$notification = new notification;
+				$this->notification->newpasswrd($to_email, $newpasswrd);
 
 				$msg = '<div class="alert alert-success"> Merci, nous venons de vous envoyer votre nouveau mot de passe dons votre boite mail. (vérifiez les spams)</div>';
 
@@ -336,20 +301,14 @@ class user extends db_connect{
 			   $msg = print_r($this->errorInfo());
 			}
 
+			//------------------------------------ Send welcome email
+			$notification = new notification;
+			$this->notification->new_email($email, $generated_password);
+
 			//------------------------------------ find user ID
 			$dbquery = $this->query('SELECT id FROM user ORDER BY ID DESC LIMIT 1;');
 			$result_user_id = $dbquery->fetch(PDO::FETCH_ASSOC);
 			$new_user_id = $result_user_id['id'];
-
-//------------------------------------ Send welcome email
-			$to      = $email;
-			$subject = 'DenTech911 - Une nouvelle commande vous attend sur www.dentech911.com .';
-			$message = 'Bonjour, '. "\r\n" .'Félicitations, une nouvelle commande vous a été envoyée sur DenTech911 !'."\r\n\r\n";
-			$message .= 'Aussi, comme nous n\'avons pas trouvé votre email dans notre base de données, votre compte a été créé et vos déifiants sont votre adresse email et ce mot de passe que nous avons généré pour vous : '. $generated_password;
-			$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
-			'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-			'X-Mailer: PHP/' . phpversion();
-			mail($to, $subject, $message, $headers);
 
 			return $new_user_id;
 		}

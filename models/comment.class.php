@@ -16,17 +16,33 @@ class comment extends db_connect{
 		//------------------------------------ enregistrement
 		$pdostatement = $this->query('INSERT INTO comment (date, user_ref_id, order_ref_id, comment) VALUES (NOW(), "'.$user_id.'", "'.$order_id.'","'.$comment.'");');
 
+		// Find the sender's name
+		$pdostatement = $this-query('SELECT name FROM user WHERE id='.$user_id.';');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$from_user_name = $result['name'];
+
+		// fetch order's details 
+		$pdostatement = $this-query('SELECT * FROM orders WHERE id='.$order_id.';');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$patient_id = $result['patient_id'];
+		$user_ref_id = $result['user_ref_id'];
+		$supplier_ref_id = $result['supplier_ref_id'];
+
+		// Check who is the sender of the message and who is the recipient
+		if ($user_id == $user_ref_id) {
+			$pdostatement = $this-query('SELECT email FROM user WHERE id='.$user_ref_id.';');
+			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+			$to_user_email = $result['email'];
+
+		} elseif ($user_id == $supplier_ref_id) {
+			$pdostatement = $this-query('SELECT email FROM user WHERE id='.$supplier_ref_id.';');
+			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+			$to_user_email = $result['email'];
+		}
+
 		//------------------------------------ email
-
-		$to      = 'leanderfuchs@protonmail.com';
-		$subject = 'Dentech911 - Nouveau message concernant la commande ['.$order_id.'].';
-		$message = 'Message: '."\r\n". $comment."\r\n"."\r\n";
-		$message .= 'Lien: '. $_SERVER['SERVER_NAME'] .'?page=message_board&id='.$order_id;
-		$headers = 'From: leanderfuchs@protonmail.com'."\r\n" .
-		'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-		'X-Mailer: PHP/' . phpversion();
-
-		mail($to, $subject, $message, $headers);
+		$notification = new notification;
+		$this->notification->new_comment($from_user_name, $to_user_email, $comment, $order_id, $patient_id);
 
 		return TRUE;
 
