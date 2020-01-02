@@ -209,17 +209,12 @@ class user extends db_connect{
 
 				$msg = '<div class="alert alert-success"> Merci, nous venons de vous envoyer votre nouveau mot de passe dons votre boite mail. (vérifiez les spams)</div>';
 
-				$msg .= $notification;
-
 			} else { // si existe pas dans la base
 
 				$msg = '<div class="alert alert-danger"> Cette email: ' . $email . ' est inconnu. Vérifiez son orthographe</div>';
-
 			}
-
 		}
-
-	return $msg;
+		return $msg;
 	} // end of newpasswrd function
 
 	public function profil ($user_id){
@@ -269,6 +264,7 @@ class user extends db_connect{
 			$session->user_id = $user_id;
 			$session->Auth = TRUE;
 			$session->origin = 'Session Origin = Cookie';
+			
 		}
 
 		return 'user auto loggedin';
