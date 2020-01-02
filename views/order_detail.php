@@ -25,66 +25,51 @@ if (!empty($user_restricted_pages)) {
 					<?php endif ?>
 					<div>
 						<?php
-							$ex3 = new QRGenerator($_SERVER['SERVER_NAME'].'/?page=order_detail&id='.$order_id.'&qr=true',150,'ISO-8859-1'); 
+							$ex3 = new QRGenerator($_SERVER['SERVER_NAME'].'/?page=order_detail&id='.$order_id,150,'ISO-8859-1'); 
 							echo "<img src=".$ex3->generate().">";
 						?>
 					</div>
-					<div>
-						Nom du patient : <b><?php echo $order_patient_name; ?></b>
-					</div>
-					<div>
-						Envoyé à : <b><?php echo $supplier_email; ?></b>
-					</div>
-					<div>
-						Numero de suivi : <b>[<?php echo $order_id; ?>]</b>
-					</div>
-					<div>
-						Date de soumission : <b><?php echo $order_arrival_date; ?></b>
-					</div>
-					<div>
-						Retour souhaité le : <b><?php echo $order_return_date; ?></b>
-					</div>
-					<div>
-						Lot# : <b><?php echo $order_lot; ?></b>
-					</div>
-					<div>
-						Ref# : <b><?php echo $order_ref; ?></b>
-					</div>
-
-					<?php if ($page_access=="DenTech911" OR $page_access=="admin" OR $page_access=="Fournisseur"): ?>
-					<div>
-						Tracking# : <a href="https://www.fedex.com/fedextrack/?tracknumbers=<?php echo $order_tracking; ?>" target="blanc"><b><?php echo $order_tracking; ?></b></a>
-					</div>
-					<?php endif ?>
-					<div>
-						Statut : <b><span id="case_status" class="link"><?php echo $order_status; ?></span></b>
-					</div>
+					<div> Nom du patient : <b><?php echo $order_patient_name; ?></b></div>
+					<div> Envoyé à : <b><?php echo $supplier_email; ?></b></div>
+					<div> Numero de suivi : <b>[<?php echo $order_id; ?>]</b></div>
+					<div> Date de soumission : <b><?php echo $order_arrival_date; ?></b></div>
+					<div> Retour souhaité le : <b><?php echo $order_return_date; ?></b></div>
+					<div> Lot# : <b><?php echo $order_lot; ?></b></div>
+					<div> Ref# : <b><?php echo $order_ref; ?></b></div>
 
 				</div>
-
-				<?php if (isset($order_update_status)){echo $order_update_status;} ?>
-
-				<?php if ($page_access=="DenTech911" OR $page_access=="admin" OR $page_access=="Fournisseur"): ?>
-
-					<span class="title"><h3>Renseignement de production</h3></span>
-					<div class="form">
-						<div id="next_status_wrap">
-							<form id="traceability" method="post">
-								<label for="lot">lot#</label><br/>
-								<input type="text" name="lot" id="lot" value="<?php echo $order_lot; ?>">
-								<br/>
-								<label for="ref">Ref#</label><br/>
-								<input type="text" name="ref" id="ref" value="<?php echo $order_ref; ?>">
-								<br/>
-								<label for="tracking">Numéro de suivi transporteur</label><br/>
-								<input type="text" name="tracking" id="tracking" value="<?php echo $order_tracking; ?>">
-								<br/>
-								<input type="submit" name="traceability" value="Renseigner">
-							</form>
-						</div>
+				<hr>
+				<span class="title"><h3>Renseignement de production</h3></span>
+				<div class="form">
+					<div id="next_status_wrap">
+						<form id="traceability" method="post">
+							<label for="lot">lot#</label><br/>
+							<input type="text" name="lot" id="lot" value="<?php echo $order_lot; ?>">
+							<br/>
+							<label for="ref">Ref#</label><br/>
+							<input type="text" name="ref" id="ref" value="<?php echo $order_ref; ?>">
+							<br/>
+							<label for="tracking">Numéro de suivi transporteur</label><br/>
+							<input type="text" name="tracking" id="tracking" value="<?php echo $order_tracking; ?>">
+							<br/>
+							<input type="submit" class="btn btn-secondary mt-2" name="traceability" value="Renseigner">
+						</form>
 					</div>
-
-				<?php endif ?>
+				</div>
+				<hr>
+				<div class="title"><h3>Changer de statut</h3></div>
+				<div> Statut actuel: <b><span id="case_status" class="link"><?php echo $order_status; ?></span></b></div>
+				
+				<form id="status" method="post">
+				<select name="status" class="mt-2 mb-2">
+					<option value="">Mettre à jour</option>
+					<? $status_list = array('Envoyée', 'Reçu par le destinataire', 'En cours de fabrication', 'Livraison', 'Reçu par le client');?>
+					<? foreach ($status_list as $key => $value) : ?>
+						<option value="<? echo $status_list[$key] ?>"> <? echo $status_list[$key] ?></option>
+					<? endforeach ?>
+				</select>
+				</br>
+				<input class="btn btn-secondary mt-2" type="submit" name="submit" value="mettre à jour le statut"></form>
 
 				<?php if (isset($order_update_prod)) { echo $order_update_prod; }?>
 
@@ -129,7 +114,7 @@ if (!empty($user_restricted_pages)) {
 					<fieldset class="fieldset  commandexfset">
 						<ul class="section section-1">
 								<input type="file" name="file" id="file" value="" class="text large" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj"></br></br>								
-								<input type="submit" name="add_file" value="Ajouter" class="submit">
+								<input type="submit" name="add_file" value="Ajouter" class="btn btn-secondary">
 						</ul>
 					</fieldset>
 					</form>
@@ -150,17 +135,14 @@ if (!empty($user_restricted_pages)) {
 
 					<a href="?page=message_board&id=<?php echo $order_id; ?>" class="center">
 						<button name="send_prod" type="submit" class="btn btn-secondary" value="send_prod">Ajouter un message</button></a>
-						<br/>
+					<br/>
 			</div><!-- cell -->
 		</div><!-- row -->
 	</div><!-- table -->
 </div><!-- tabs-wrapper -->
 <br>
 <table class="styled table-striped font-90 centered">
-	<tr>
-		<th>
-			Utilisateur
-		</th>			
+	<tr>		
 		<th>
 			Date
 		</th>
@@ -171,7 +153,15 @@ if (!empty($user_restricted_pages)) {
 			Localisation
 		</th>
 	</tr>
-	<?php if (isset($order_track)) {echo $order_track;} ?>
+	<?php if (isset($order_track)) : ?>
+		<? foreach ($order_track as $track_detail) : ?>
+			<tr>
+			<td><? echo $Convert_Dates->shortnames(date("l d F Y H:i", strtotime($track_detail['time']))) ;?></td>
+			<td><? echo $track_detail['status'] ;?></td>
+			<td><? echo $track_detail['localization'] ;?></td>
+			</tr>
+		<? endforeach ?>
+		<? endif ?>
 </table>
 
 <?php if ($page_access=="DenTech911" OR $page_access=="admin"): ?>

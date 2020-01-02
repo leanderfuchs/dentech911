@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="views/css/style.css"/>
 	<link rel="stylesheet" href="views/css/jquery-ui.css" />
 	<link rel="stylesheet" href="views/css/cupertino/jquery-ui-custom.css" />
-	<link rel="stylesheet" href="views/css/cupertino/jquery-ui-custom.css" />
+	<link rel="stylesheet" href="views/fontawesome/css/all.min.css" />
 	<script src="views/js/jquery.js"></script>
 	<script src="views/js/jquery-ui.js"></script>
 	<script src="views/js/datepicker.js"></script>

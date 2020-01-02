@@ -10,21 +10,18 @@
 
 class tracking extends db_connect{
 
-public function caselist($user_id){
+	public function caselist($user_id){
 
-		$pdostatement = $this->query('SELECT * FROM orders WHERE (user_ref_id='.$user_id.' OR supplier_ref_id='.$user_id.') ORDER BY id DESC;');
-		$pdostatement->execute();
-		return $pdostatement->fetchAll();
-} // end last_orders function
-
-
-
+			$pdostatement = $this->query('SELECT * FROM orders WHERE (user_ref_id='.$user_id.' OR supplier_ref_id='.$user_id.') ORDER BY id DESC;');
+			$pdostatement->execute();
+			return $pdostatement->fetchAll();
+	} // end last_orders function
 
 	public function edit ($all_products){
 
 		$msg = '';
 		foreach ($all_products as $key => $value) {
- 		
+
 			$lot='';
 			$ref='';
 			$tra='';
@@ -34,8 +31,8 @@ public function caselist($user_id){
 
 			//$result .= '<br/>'.$order_id.' '.$value;
 
-			if (strpos($key, "lot") !== false) {$lot=$value; 
-				
+			if (strpos($key, "lot") !== false) {
+				$lot=$value; 
 				$pdostatement = $this->query('SELECT id FROM orders WHERE id='.$order_id.' AND lot="'.$lot.'";');
 				$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 			
@@ -44,8 +41,8 @@ public function caselist($user_id){
 				}
 			}
 
-			if (strpos($key, "ref") !== false) {$ref=$value;
-				
+			if (strpos($key, "ref") !== false) {
+				$ref=$value;
 				$pdostatement = $this->query('SELECT id FROM orders WHERE id='.$order_id.' AND ref="'.$ref.'";');
 			
 				$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
@@ -55,8 +52,8 @@ public function caselist($user_id){
 				}
 			}
 
-			if (strpos($key, "tra") !== false) {$tra=$value;
-				
+			if (strpos($key, "tra") !== false) {
+				$tra=$value;
 				$pdostatement = $this->query('SELECT id FROM orders WHERE id='.$order_id.' AND tracking="'.$tra.'";');
 				$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
@@ -64,9 +61,6 @@ public function caselist($user_id){
 					$msg .= 'tracking updated';
 				}
 			}
-
-			//$result .= '<br/>lot:'.$lot.' - ref:'.$ref.' - tra:'.$tra.' - order ID:'.$order_id
-
 		}
 
 		$msg .= '<div class="valide">Mise à jours réussi.</div>';
@@ -75,32 +69,75 @@ public function caselist($user_id){
 
 	} // end of edit function
 
-	public function open_received_status ($order_id){
+	public function qr_update_status ($order_id){
 
 				//------------------------------------ Trouver le status actuelle
 
-		$pdostatement = $this->query('SELECT status FROM orders WHERE id="'.$order_id.'";');
+		$pdostatement = $this->query('SELECT status FROM case_track WHERE case_ref_id="'.$order_id.'" ORDER BY id DESC LIMIT 1;');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$current_status = $result['status'];
 
-				//------------------------------------ Verification du status actuel
-
-		if (!empty($current_status) AND ($current_status !== "Prète à être livrée" OR $current_status !== "En cours de livraison" OR $current_status !== "Livrée")) {
-				
-					//------------------------------------ Mise a jour du status
-
-			$pdostatement = $this->query('UPDATE orders SET status = "Prète à être livrée" WHERE id="' . $order_id . '";');
-			
-			$msg .= '<div class="valide"> Le status du cas [<b>' . $order_id . '</b>] a été changé pour "<b>Prète à être livrée</b>"</div>';
-			
-					//------------------------------------ Creer un evenement
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "DenTech911", NOW(), "DenTech911", "Prète à être livrée");');
-			
+		//------------------------------------ Update current status
+		switch ($current_status) {
+			case "Envoyée":
+				$new_status = "Reçu par le destinataire";
+				$localisation = "Prestataire";
+				break;
+			case "Reçu par le destinataire":
+				$new_status = "En cours de fabrication";
+				$localisation = "Prestataire";
+				break;
+			case "En cours de fabrication":
+				$new_status = "Livraison";
+				$localisation = "Transporteur";
+				break;
+			case "Livraison":
+				$new_status = "Reçu par le client";
+				$localisation = "Client";
+				break;
+			case "Reçu par le client":
+				$new_status = FALSE;
+				break;
 		}
 
-		return $msg;
+
+		if ($new_status == FALSE) {
+			return ;
+		} else {
+
+			//------------------------------------ Creer un evenement
+			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, time, localization, status) VALUES ("' . $order_id . '", NOW(), "'.$localisation.'", "' .$new_status. '");');
+		}
+	} // end add function
+
+	public function track ($order_id){
+
+		$pdostatement = $this->query('SELECT * FROM case_track WHERE case_ref_id=' . $order_id . ';');
+		$pdostatement->execute();
+		return $pdostatement->fetchAll();
 
 	} // end add function
+
+
+
+	public function traceability($order_id, $lot, $ref, $tracking){
+
+		$order_id = htmlspecialchars($order_id);
+		$lot = htmlspecialchars($lot);
+		$ref = htmlspecialchars($ref);
+		$tracking = htmlspecialchars($tracking);
+
+		//------------------------------------ Mise a jour de la tracabilite
+		
+		$pdostatement = $this->query('UPDATE orders SET lot="'.$lot.'", ref="'.$ref.'" WHERE id="'.$order_id.'";');
+
+		//------------------------------------ Creer un evenement
+
+		$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, time, localization, status) VALUES ("' . $order_id . '", NOW(), "Transporteur", "En retour de production");');
+
+		return TRUE;
+
+	} // end details_commande function
 
 }
 

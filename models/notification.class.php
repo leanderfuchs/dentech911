@@ -10,12 +10,6 @@
 
 class notification extends db_connect{
 
-	private	$mail;
-
-    public function __CONSTRUCT() {
-        $this->mail = new mail;
-    }
-
 	public function register ($email, $name){
 
 		$to_email = $email;
@@ -41,8 +35,8 @@ class notification extends db_connect{
 					Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message Telegram : https://t.me/dentech911.</br></br>
 					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidienement!</br>
 					Leander';
-
-		$this->mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+		$mail = new mail;
+		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
 	}
 	
 	public function newpasswrd($to_email, $newpasswrd) {
@@ -59,7 +53,8 @@ class notification extends db_connect{
 					Vous souhaitant une excellente journée</br>
 					Leander';
 
-		$this->mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+		$mail = new mail;
+		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
 	}
 
 	public function new_email($email, $generated_password){
@@ -83,8 +78,9 @@ class notification extends db_connect{
 					Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message sur Telegram : https://t.me/dentech911.</br></br>
 					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidienement!</br>
 					Leander';
-
-		$this->mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+		
+		$mail = new mail;
+		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
 	}
 
 	public function new_comment($from_user_name, $to_user_email, $comment, $order_id, $patient_id){
@@ -102,7 +98,8 @@ class notification extends db_connect{
 					<p><b>'. $comment.'</b></p></br></br>
 					Lien vers ce message: https://www.dentech911.com/?page=order_detail&id='.$order_id;
 
-		$this->mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+		$mail = new mail;
+		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
 	}
 
 	public function new_order(){
@@ -236,61 +233,6 @@ class notification extends db_connect{
 
 	} // end add function
 
-
-	public function supplier_new_order(){
-		$server_name = $_SERVER['SERVER_NAME'];
-
-		//------------------------------------ trouver le numero de la commande
-
-		$pdostatement = $this->query('SELECT * FROM orders ORDER BY id DESC LIMIT 1;');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-
-		$email = $user->user_query($result['id'],'email');
-		$order_id = $result['id'];
-		$patient_id = $result['patient_id']; 
-		$product = $result['product_name']; 
-		$teeth_nbr = $result['teeth_nbr']; 
-		$quantity = $result['quantity']; 
-		$vita_body = $result['vita_body']; 
-		$vita3d_body = $result['vita3d_body']; 
-		$return_date = $result['return_date'];
-
-		//------------------------------------ trouver les commantaires
-
-		$pdostatement = $this->query('SELECT comment FROM comment WHERE order_ref_id="'.$order_id.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$comment = $result['comment'];
-				
-		//------------------------------------ email a fournisseur
-
-		$to      = $email;
-		$subject = ' - Nouvelle commande ['.$order_id.']';
-		
-		$message = "";
-		$message .= 'Bonjour'."\r\n"."\r\n";
-		$message .= 'Une nouvelle commande, #['.$order_id.'], à été passée sur www.dentech911.com '."\r\n"."\r\n";
-		$message .= 'Patient: '.$patient_id."\r\n";
-		$message .= 'Produit: '.$product.', quantité:'.$quantity."\r\n";
-		$message .= 'Dents: '.$teeth_nbr."\r\n";
-		$message .= 'Teinte: ' .$vita_body.$vita3d_body. "\r\n";
-		$message .= 'Retour souhaité: '.$return_date."\r\n"."\r\n";
-		if (!empty($comment)) {
-			$message .= 'Commentaire: '.$comment."\r\n"."\r\n";
-		} 
-		
-
-		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
-
-		$message .= 'DenTech911.'."\r\n"."\r\n";
-		$message .= 'www.dentech911.com';
-		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
-		'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-		'X-Mailer: PHP/' . phpversion();
-
-		mail($to, $subject, $message, $headers);
-
-	} // end new order function
-
 	public function reminderEmail($order_id){
 		$server_name = $_SERVER['SERVER_NAME'];
 		$email = 'leanderfuchs@protonmail.com';
@@ -332,5 +274,40 @@ class notification extends db_connect{
 
 	} // end reminderEmail function
 
+	public function invite_email($user_id, $to_email){
+		$to_email = htmlentities($to_email);
+
+		// find who wants to send the invit
+		$pdostatement = $this->query('SELECT email FROM user WHERE id=' .$user_id. ';');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+
+		$sender_email = $result['email'];
+
+		// create message
+		$from = $sender_email;
+		$from_name = "DenTech911.com";
+
+		$main_title = "Invitation à rejoindre DenTech911";
+		$short_description = "DenTech911 est une plate-forme d'envoi de fichiers entre professionnelles du dentaire";
+
+		$subject = "Une invitation vous a été envoyé de ". $sender_email;
+		$body = '<p>Bonjour</p>
+
+		<p>Ceci est une invitation à vous inscrire sur la plate-forme d\'échange DenTech911 afin que vous puissiez envoyer ou recevoir des commandes en ligne, avec leurs fichiers attachés, avec votre contact dont l\'email est : ' .$sender_email.'.</p>
+
+		<p>Si vous souhaitez commencer à travailler en utilisant DenTech911 au lieu d\'emails, rendez-vous sur https://www.dentech911.com.</p>
+
+		<p>Si vous avez des questions, répondez simplement à cet e-mail ou envoyez moi un message Telegram : https://t.me/dentech911.</p>
+
+		<p>Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidiennement!</br>
+		Leander</p>';
+		
+		// send invite
+		$mail = new mail;
+		$mail_sent_email = $mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+		
+		// check error messages from google SMTP server
+		//return $mail_sent_email;
+	}
 
 } // end cart class

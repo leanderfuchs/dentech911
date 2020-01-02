@@ -44,8 +44,7 @@
 				<td width="100px"><? echo $order_caselist[$c][1][$i]['teeth_nbr']; ?></td>
 				<td width="200px"><? echo $order_caselist[$c][1][$i]['product_name']; ?></td>
 				<td width="50px"><? echo $order_caselist[$c][1][$i]['vita_body']. $order_caselist[$c][1][$i]['vita3d_body']; ?></td>
-				<td width="130px" <? echo $color; ?> > <b><? echo $order_caselist[$c][1][$i]['status']; ?></b></td>
-				<td width="120px"><? echo $order_caselist[$c][1][$i]['tracking']; ?></td>
+				<td width="130px"> <b><? echo $order_caselist[$c][1][$i]['status']; ?></b></td>
 				<td width="24px"><a href="?page=order_detail&id=<? echo $order_caselist[$c][1][$i]['id']; ?>">Voir</a></td>
 		</tr>
 		<? endfor ?>

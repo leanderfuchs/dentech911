@@ -54,7 +54,7 @@ class order extends db_connect{
 		$pdostatement = $this->query('INSERT INTO orders (
 			arrival_date,return_date,user_ref_id,patient_id,status,paiment_status,comment,teeth_nbr,product_name,quantity,vita_body,vita3d_body,implant_name,implant_diam,unique_order_key, supplier_ref_id) 
 		VALUES (
-			NOW(),"'.$return_date.'","'.$user_id.'","'.$patient.'","Commande envoyée","0","'.$comment .'","'.$teeth_nbr.'","'.$product.'","'.$quantity.'","'.$vita_body.'","'.$vita3d_body.'","'.$implant_name.'","'.$implant_diam.'","'. $unique_order_key .'", "'.$supplier_user_id.'");');
+			NOW(),"'.$return_date.'","'.$user_id.'","'.$patient.'","Envoyée","0","'.$comment .'","'.$teeth_nbr.'","'.$product.'","'.$quantity.'","'.$vita_body.'","'.$vita3d_body.'","'.$implant_name.'","'.$implant_diam.'","'. $unique_order_key .'", "'.$supplier_user_id.'");');
 
 
 		//------------------------------------ trouver le numero de la commande
@@ -65,7 +65,7 @@ class order extends db_connect{
 
 		//------------------------------------ Creer un evenement
 
-		$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("'.$order_id.'", "'.$user_name.'", NOW(), "Transporteur" , "Commande envoyée");');
+		$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, time, localization, status) VALUES ("'.$order_id.'", NOW(), "Serveurs DenTech911" , "Envoyée");');
 
 		//------------------------------------ Creer un commentaire
 		
@@ -246,16 +246,14 @@ class order extends db_connect{
 
 	public function status ($status, $unique_order_key){
 
+		$status = htmlspecialchars($status);
 		$msg = '';
 
-		if ($status == "Commande envoyée") $localization = "Transporteur";
-		if ($status == "Reçu chez DenTech911") $localization = "DenTech911";
-		if ($status == "Envoyée en production") $localization = "Centre de Fraisage";
-		if ($status == "En cours de production") $localization = "Centre de Fraisage";
-		if ($status == "En retour de production") $localization = "Transporteur";
-		if ($status == "Prète à être livrée") $localization = "DenTech911";
-		if ($status == "En cours de livraison") $localization = "Transporteur";
-		if ($status == "Livrée") $localization = "user";
+		if ($status == "Envoyée") $localization = "Serveurs DenTech911";
+		if ($status == "Reçu par le destinataire") $localization = "Prestataire";
+		if ($status == "En cours de fabrication") $localization = "Prestataire";
+		if ($status == "Livraison") $localization = "Transporteur";
+		if ($status == "Reçu par le client") $localization = "Client";
 
 				//------------------------------------ Trouver le status actuelle
 
@@ -267,7 +265,7 @@ class order extends db_connect{
 
 				//------------------------------------ Verification du status actuel
 
-		if ($current_status !== $status) {
+		if ($current_status !== $status AND !empty($status)) {
 				
 					//------------------------------------ Mise a jour du status
 
@@ -275,7 +273,7 @@ class order extends db_connect{
 
 					//------------------------------------ Creer un evenement
 
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "' . $username . '", NOW(), "'.$localization.'", "'.$status.'");');		
+			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, time, localization, status) VALUES ("' . $order_id . '", NOW(), "'.$localization.'", "'.$status.'");');		
 
 					//------------------------------------ Messages
 
@@ -285,216 +283,6 @@ class order extends db_connect{
 		return $msg;
 
 	} // end add function
-
-
-	public function track ($order_id){
-
-		$Convert_Dates = new Convert_Dates;
-
-		$result = '';
-		//------------------------------------ textraire les detailles de la commande
-
-		$query = 'SELECT * FROM case_track WHERE case_ref_id="' . $order_id . '";';
-
-		//------------------------------------ Retrouver les id des produits de la commande
-		foreach ($this->query($query) as $stack) {
-			$result.= '<tr>';
-			$result.= '<td>'.$stack['username'].'</td>';
-			$result.= '<td>'.$Convert_Dates->shortnames(date("l d F Y H:i", strtotime($stack['time']))).'</td>';
-			$result.= '<td>'.$stack['status'].'</td>';
-			$result.= '<td>'.$stack['localization'].'</td>';
-			$result.= '</tr>';
-		}
-
-		return $result;
-
-	} // end add function
-
-	public function update_status($user_name, $order_id){
-
-		$available = "";
-		$avalable_status = "";
-		//------------------------------------ find order status
-		
-		$pdostatement = $this->query('SELECT status FROM orders WHERE id="'.$order_id.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$current_status = $result['status'];
-
-		//------------------------------------ find user type
-
-		$pdostatement = $this->query('SELECT type FROM user WHERE name="'.$user_name.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);		
-		$user_type = $result['type'];
-		
-
-		//------------------------------------ Creation ses differents status
-
-		$status = array('Commande envoyée', 'Reçu chez DenTech911', 'Envoyée en production', 'En cours de production','En retour de production', 'Prète à être livrée', 'En cours de livraison', 'Livrée');
-
-		//------------------------------------ Trouver la clef qui correspond au status actuel
-	
-		foreach ($status as $key => $value) {
-
-			if ($value==$current_status) {
-				$available=$key;
-			}
-
-		}
-
-		//------------------------------------ To prevent from removing the Livrée status at the end. 
-		if ($available<7){
-			$available = $available+1;
-		}
-		
-		//------------------------------------ Formulaire - Option Disponible:
-
-
-		if ($user_type == 'admin'){
-
-			$avalable_status .= '<div class="title"><h3>Changer de statut</h3></div>
-				<form id="status" method="post">
-				<select name="status">
-				<option value="' . $status[$available] . '">' . $status[$available] . '</option>
-				</select>
-				<input type="submit" name="submit" value="mettre à jour le statut"></form>';
-				
-		} elseif ($user_type == 'user' AND ($current_status == $status['3'] OR $current_status == $status['6'])){
-
-			$avalable_status .= '<div class="title"><h3>Changer de statut</h3></div>
-				<form id="status" method="post">
-				<select name="status">
-				<option value="' . $status[$available] . '">' . $status[$available] . '</option>
-				</select>
-				<input type="submit" name="submit" value="mettre à jour le statut"></form>';
-		
-		} elseif ($user_type == 'Fournisseur' AND ($current_status == $status['2'] OR $current_status == $status['3'])){
-			
-			$avalable_status .= '<div class="title"><h3>Changer de statut</h3></div>
-				<form id="status" method="post">
-				<select name="status">
-				<option value="' . $status[$available] . '">' . $status[$available] . '</option>
-				</select> 
-				<input type="submit" name="submit" value="mettre à jour le statut">
-				</form>';	
-		
-		} 
-
-		return $avalable_status; 
-
-	} // end details_commande function
-
-
-
-	public function traceability($order_id, $lot, $ref, $tracking){
-
-
-		//------------------------------------ Mise a jour de la tracabilite
-		
-		$pdostatement = $this->query('UPDATE orders SET lot="'.$lot.'", ref="'.$ref.'", tracking="'.$tracking.'" WHERE id="'.$order_id.'";');
-
-		$msg = '<div class="valide"> Les informations de traçabilités ont bien été ajoutés, merci.</div>';
-
-		//------------------------------------ Trouver le status actuel
-
-		$pdostatement = $this->query('SELECT status FROM orders WHERE id="'.$order_id.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$current_status = $result['status'];
-
-		if (!empty($tracking) AND $current_status =="En cours de production") {
-		
-			//------------------------------------ Mise a jour du status
-
-			$pdostatement = $this->query('UPDATE orders SET status = "En retour de production" WHERE id="' . $order_id . '";');
-
-			//------------------------------------ Creer un evenement
-
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "Centre d\'usingage", NOW(), "Transporteur", "En retour de production");');
-		}
-
-		//------------------------------------ Add or update delivery table
-		
-		if (!empty($tracking)) {
-
-			$pdostatement = $this->query('SELECT supplier_tracking_nbr FROM delivery WHERE order_ref_id = "' . $order_id . '" ;');
-			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-			$supplier_tracking_nbr = $result['supplier_tracking_nbr'];
-
-			if (empty($supplier_tracking_nbr)) {
-				$pdostatement = $this->query('INSERT INTO delivery (order_ref_id, supplier_tracking_nbr) VALUES ('. $order_id .', "'.$tracking.'");');
-			} else {
-				$pdostatement = $this->query('UPDATE delivery SET supplier_tracking_nbr = "'.$tracking.'" WHERE order_ref_id="' . $order_id . '";');
-			}
-
-		}
-
-		return $msg;		
-
-	} // end details_commande function
-
-
-	public function send_prod ($order_id, $supplierID){
-
-		$message = '';
-		$msg = '';
-
-		$pdostatement = $this->query('SELECT email FROM user WHERE id = "' . $supplierID . '" ;');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$supplier_email = $result['email'];
-
-		$pdostatement = $this->query('SELECT * FROM orders WHERE id = "' . $order_id . '" ;');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$patient = $result['patient_id'];
-		//------------------------------------ email de notification pour le supplier
-		
-		$to     = $supplier_email;
-		$subject = 'DenTech911: Commande ['.$order_id.'] prête à être usinée.';
-
-		$message .= 'Patient: '.$patient."\r\n";
-
-		$message .= 'Bonjour,'."\r\n"."\r\n";
-		$message .= 'Une nouvelle commande est p prête pour l\'usinage:['.$order_id.']'."\r\n"."\r\n";
-		$message .= 'Pour acceder à la fiche, clicker sur le lien:';
-		$message .= ''. $_SERVER['SERVER_NAME'] .'/?page=order_detail&id='.$order_id.'"> Lien vers la fiche de la commande'."\r\n"."\r\n";
-
-		$message .= 'Merci,'."\r\n";
-		$message .= 'DenTech911.'."\r\n"."\r\n";
-		$message .= 'www.dentech911.com';
-
-		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" . 'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-		'X-Mailer: PHP/' . phpversion();
-
-		mail($to, $subject, $message, $headers);
-
-			//------------------------------------ Trouver le status actuel
-
-		$pdostatement = $this->query('SELECT status FROM orders WHERE id="'.$order_id.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$current_status = $result['status'];
-
-		if ($current_status =="Reçu chez DenTech911" OR $current_status =="Commande envoyée") {
-		
-			//------------------------------------ Mise a jour du status
-
-			$pdostatement = $this->query('UPDATE orders SET status = "Envoyée en production" WHERE id="' . $order_id . '";');
-
-			//------------------------------------ Mise a jours du fournisseur
-			$pdostatement = $this->query('UPDATE orders SET supplier_ref_id="'.$supplierID.'" WHERE id="' . $order_id . '";');
-
-			
-			//------------------------------------ Creer un evenement
-
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "DenTech911", NOW(), "Centre de Fraisage", "Envoyée en production");');
-		}
-
-
-		//------------------------------------ retourne le message 
-
-		$msg .= '<div class="valide"> Le cas à été envoyé au centre d\'usinage.</div>';
-
-		return $msg; 
-
-	} // end details_commande function
-
 
 	public function delete($order_id){
 		
@@ -507,50 +295,31 @@ class order extends db_connect{
 
 	} // end details_commande function
 
-	public function auto_update_status($unique_order_key, $user_id){
+	public function auto_update_status($order_id, $user_id){
 
-		//------------------------------------ find order status
+		//------------------------------------ find order current status
 		
-		$pdostatement = $this->query('SELECT status, file1 FROM orders WHERE unique_order_key="'.$unique_order_key.'";');
+		$pdostatement = $this->query('SELECT status FROM case_track WHERE case_ref_id="'.$order_id.'" ORDER BY id DESC LIMIT 1;');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$current_status = $result['status'];
-		$file = $result['file1'];
 
-		//------------------------------------ find user type
-
-		$pdostatement = $this->query('SELECT type FROM user WHERE id="'.$user_id.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);		
-		$user_type = $result['type'];
-		
-		//------------------------------------ find if a file has been submitted.
-
-		if (!empty($file)) {$havefile=1;}
-		
-		//------------------------------------ Formulaire - Option Disponible:
-		
-		if ($user_type == 'Fournisseur' AND $current_status == "Envoyée en production" ){
+		if(	$current_status == 'Envoyée' ){
+			//------------------------------------ find order current status
 			
-			//------------------------------------ Mise a jour du status
-
-			$pdostatement = $this->query('UPDATE orders SET status = "En cours de production" WHERE id="' . $order_id . '";');
-
-			//------------------------------------ Creer un evenement
-
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "Centre d\'usingage", NOW(), "Centre de Fraisage", "En cours de production");');
-		}
-
-		if ($user_type == 'DenTech911' AND $current_status == "Commande envoyée" AND $havefile==1){
+			$pdostatement = $this->query('SELECT * FROM orders WHERE id="'.$order_id.'";');
+			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+			$supplier_ref_id = $result['supplier_ref_id'];
 			
-			//------------------------------------ Mise a jour du status
-
-			$pdostatement = $this->query('UPDATE orders SET status = "Reçu chez DenTech911" WHERE id="' . $order_id . '";');
-
-			//------------------------------------ Creer un evenement
-
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "DenTech911", NOW(), "DenTech911", "Reçu chez DenTech911");');
+			//------------------------------------ Formulaire - Option Disponible:
+			
+			if ($user_id == $supplier_ref_id){
+			
+				$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, time, localization, status) VALUES ("' . $order_id . '", NOW(), "Prestataire", "Reçu par le destinataire");');
+			
+				return TRUE;
+			}
 		}
-
-	} // end auto_update_status function
+	} 
 
 	public function get_order_key_with_id($order_id) {
 		$pdostatement = $this->query('SELECT unique_order_key FROM orders WHERE id="'.$order_id.'";');
@@ -599,5 +368,14 @@ class order extends db_connect{
 		}
 	}
 
+	public function update_order($order_id, $column, $data) {
+
+		$data - htmlspecialchars($data);
+
+		$pdostatement = $this->query('UPDATE orders SET '.$column.'='.$data.' WHERE id='.$order_id.';');
+		if (!$pdostatement) {
+			return "\nPDO::errorInfo():\n";
+		}
+	}
 	
 } // end order class

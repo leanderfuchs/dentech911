@@ -83,17 +83,16 @@ class order extends db_admin{
 
 		if ($current_status != $status) {
 
-			if ($status == "Commande envoyée") $localization = "Transporteur";
-			if ($status == "Reçu chez DenTech911") $localization = "DenTech911";
-			if ($status == "Envoyée en production") $localization = "Centre de Fraisage";
-			if ($status == "En cours de production") $localization = "Centre de Fraisage";
-			if ($status == "En retour de production") $localization = "Transporteur";
-			if ($status == "Prète à être livrée") $localization = "DenTech911";
-			if ($status == "En cours de livraison") $localization = "Transporteur";
-			if ($status == "Livrée") $localization = "user";
+			
+		if ($status == "Envoyée") $localization = "Serveurs DenTech911";
+		if ($status == "Reçu par le destinataire") $localization = "Prestataire";
+		if ($status == "En cours de fabrication") $localization = "Prestataire";
+		if ($status == "Livraison") $localization = "Transporteur";
+		if ($status == "Reçu par le client") $localization = "Client";
+
 			//------------------------------------ Creer un evenement
 
-			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, username, time, localization, status) VALUES ("' . $order_id . '", "admin", NOW(), "'.$localization.'" , "'.$status.'");');
+			$pdostatement = $this->query('INSERT INTO case_track (case_ref_id, time, localization, status) VALUES ("' . $order_id . '", NOW(), "'.$localization.'" , "'.$status.'");');
 		}
 		
 		$msg = '';

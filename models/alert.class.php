@@ -1,7 +1,7 @@
 <?php 
 
 /**  
-* @desc    SELECT DISTINCT ct.case_ref_id FROM case_track ct, orders WHERE localization = "Centre de Fraisage" AND time >= CURRENT_DATE - INTERVAL "2" DAY AND lot = "" AND ref = "" AND tracking = "";
+* @desc
 * examples 
 * @author leander Fuchs leanderfuchs@gmail.com 
 * @required db_connect.class

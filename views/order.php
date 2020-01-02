@@ -18,8 +18,13 @@
  					 <?php echo $missing_product ?><!--  Error message  -->
  				</li>
 
-				<li class="item item-text right-half" id="email-order-to">
- 					<label for="email-order-to" class="desc">email du destinataire <span>*</span></label><input type="email" name="email-order-to" id="email-order-to" class="text large" value="
+				<li class="item item-text right-half">
+ 					<label for="email-order-to" class="desc" onclick="show_address_book()">Email du destinataire <span>*</span>
+					 <i class="fas fa-address-book" id="address-book"></i></label>
+
+					 <div id="addresses" style="display:none" class="float-left position-absolute floating-window"></div>
+					 
+					  <input type="email" name="email-order-to" id="email-order-to" class="text large" value="
 					 <?php if(!empty($_GET['email-order-to'])){ echo $_GET['email-order-to']; };
 						if(!empty($_POST['email-order-to'])){ echo $_POST['email-order-to']; }?>">
 					<? if(isset($missinemail)) echo $missinemail; ?>
@@ -223,3 +228,39 @@
  </fieldset>
 </form>
 </div>
+
+<input type="hidden" id="user-id" value="<? echo $_SESSION['user_id']; ?>"/>
+
+<script type='text/javascript'>
+
+function show_address_book() {
+	var user_id = document.getElementById("user-id").value;
+	var url = "views/js/address_book.php/?user_id=" + user_id;
+	
+	// Open an ajax request : type, url, async
+	var request = new XMLHttpRequest();
+	request.open('POST', url, false);
+	request.send();
+	
+	document.getElementById("addresses").innerHTML = request.responseText;
+
+	// TOGGLE HIDE SHOW ADDRESS BOOK
+	var addressbook = document.getElementById("addresses");
+	if (addressbook.style.display === "none") {
+    	addressbook.style.display = "block";
+  	} else {
+    	addressbook.style.display = "none";
+  	}
+
+}
+
+function get_email(email) {
+	var email_address = email.innerText || email.textContent;
+	//console.log(email_address);
+	document.getElementById("email-order-to").value = email_address;
+
+	var addressbook = document.getElementById("addresses");
+	addressbook.style.display = "none";
+}
+
+</script>

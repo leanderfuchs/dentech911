@@ -3,6 +3,7 @@ $ibdd = new db_connect;
 $order = new order;
 $user = new user;
 $Convert_Dates = new Convert_Dates;
+$tracking = new tracking;
 
 
 // inscrpition de donnés dans la session:
@@ -80,6 +81,21 @@ if (isset($_POST['add_file'])) {
 		}
 	}
 } //end add_file
+
+//------------------------------------ update status form
+
+if (isset($_POST['lot']) && isset($_POST['ref']) && isset($_POST['tracking'])) {
+	$order_update_ref = $order->update_order($_GET['id'], 'ref' ,$_POST['ref']);
+	$order_update_lot = $order->update_order($_GET['id'], 'lot' ,$_POST['lot']);
+	$order_update_tracking = $order->update_order($_GET['id'], 'tracking' ,$_POST['tracking']);
+}
+
+
+//------------------------------------ update status with QR Code
+
+if (isset($_GET['qr']) && $_GET['qr'] == TRUE) {
+	$tracking_qr_update_status = $tracking->qr_update_status($_GET['id']);
+}
 
 //------------------------------------ 
 //------------------------------------ affichages des elements de la page

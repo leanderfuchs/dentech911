@@ -3,15 +3,13 @@ $Convert_Dates = new Convert_Dates;
 $order = new order;
 $comment = new comment;
 $user = new user;
+$tracking = new tracking;
 
 $user_id = $_SESSION['user_id'];
 
 if(isset($_GET['id'])){
 	// Affiche les info donnee par le supplier
-	$order_track = $order->track($_GET['id']);
-
-	// Mise a jours des informations de tracking donnes par le supplier
-	$order_update_status = $order->update_status($_SESSION['Auth'], $_GET['id']);
+	$order_track = $tracking->track($_GET['id']);
 
 	// Affiche le premier commentaire
 	$comment_first_comment = $comment->first_comment($_GET['id']);
@@ -156,11 +154,6 @@ $order_files = $order->get_files($order_id);
 //------------------------------------ MISE A JOUR AUTOMATIQUE DES STATUS
 if (isset($order_id)){
 	$order->auto_update_status($order_id, $_SESSION['user_id']);
-}
-
-if (isset($_POST['traceability'])) {
-	$order_traceability = $order->traceability($order_id, $_POST['lot'], $_POST['ref'], $_POST['tracking']);
-	echo $order_traceability;
 }
 
 
