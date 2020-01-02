@@ -36,7 +36,7 @@ class user extends db_connect{
 					}
 //------------------------------------ Send welcome email
 					$notification = new notification;
-					$this->notification->register($email, $name);
+					$notification->register($email, $name);
 
 //------------------------------------ find user ID
 					$dbquery = $this->query('SELECT id FROM user ORDER BY ID DESC LIMIT 1;');
@@ -205,7 +205,7 @@ class user extends db_connect{
 
 				$to_email = $result['email'];
 				$notification = new notification;
-				$this->notification->newpasswrd($to_email, $newpasswrd);
+				$notification->newpasswrd($to_email, $newpasswrd);
 
 				$msg = '<div class="alert alert-success"> Merci, nous venons de vous envoyer votre nouveau mot de passe dons votre boite mail. (vérifiez les spams)</div>';
 
@@ -303,7 +303,7 @@ class user extends db_connect{
 
 			//------------------------------------ Send welcome email
 			$notification = new notification;
-			$this->notification->new_email($email, $generated_password);
+			$notification->new_email($email, $generated_password);
 
 			//------------------------------------ find user ID
 			$dbquery = $this->query('SELECT id FROM user ORDER BY ID DESC LIMIT 1;');
