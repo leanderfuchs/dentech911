@@ -36,4 +36,3 @@ address_book.php
 # !/folder/a/deeply/nested
 # /folder/a/deeply/nested/*
 # !/folder/a/deeply/nested/subfolder
-/vendor/
