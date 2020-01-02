@@ -209,6 +209,8 @@ class user extends db_connect{
 
 				$msg = '<div class="alert alert-success"> Merci, nous venons de vous envoyer votre nouveau mot de passe dons votre boite mail. (vérifiez les spams)</div>';
 
+				$msg .= $notification;
+
 			} else { // si existe pas dans la base
 
 				$msg = '<div class="alert alert-danger"> Cette email: ' . $email . ' est inconnu. Vérifiez son orthographe</div>';
