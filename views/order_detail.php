@@ -34,23 +34,23 @@ if (!empty($user_restricted_pages)) {
 					<div> Numero de suivi : <b>[<?php echo $order_id; ?>]</b></div>
 					<div> Date de soumission : <b><?php echo $order_arrival_date; ?></b></div>
 					<div> Retour souhaité le : <b><?php echo $order_return_date; ?></b></div>
-					<div> Lot# : <b><?php echo $order_lot; ?></b></div>
-					<div> Ref# : <b><?php echo $order_ref; ?></b></div>
-
+					<div> Lot # : <b><?php echo $order_lot; ?></b></div>
+					<div> Ref # : <b><?php echo $order_ref; ?></b></div>
+					<div> Suivi transporteur # : <b><?php echo $order_tracking; ?></b></div>
 				</div>
 				<hr>
 				<span class="title"><h3>Renseignement de production</h3></span>
 				<div class="form">
 					<div id="next_status_wrap">
-						<form id="traceability" method="post">
+						<form id="traceability" method="post" action="?page=order_detail&id=<?php echo $order_id; ?>">
 							<label for="lot">lot#</label><br/>
-							<input type="text" name="lot" id="lot" value="<?php echo $order_lot; ?>">
+							<input type="text" name="lot" id="lot" value="n° de lot du produit">
 							<br/>
 							<label for="ref">Ref#</label><br/>
-							<input type="text" name="ref" id="ref" value="<?php echo $order_ref; ?>">
+							<input type="text" name="ref" id="ref" value="n° de référence du produit">
 							<br/>
 							<label for="tracking">Numéro de suivi transporteur</label><br/>
-							<input type="text" name="tracking" id="tracking" value="<?php echo $order_tracking; ?>">
+							<input type="text" name="tracking" id="tracking" value="chronopost 123456789">
 							<br/>
 							<input type="submit" class="btn btn-secondary mt-2" name="traceability" value="Renseigner">
 						</form>
@@ -60,7 +60,7 @@ if (!empty($user_restricted_pages)) {
 				<div class="title"><h3>Changer de statut</h3></div>
 				<div> Statut actuel: <b><span id="case_status" class="link"><?php echo $order_status; ?></span></b></div>
 				
-				<form id="status" method="post">
+				<form id="status" method="post" action="?page=order_detail&id=<?php echo $order_id; ?>">
 				<select name="status" class="mt-2 mb-2">
 					<option value="">Mettre à jour</option>
 					<? $status_list = array('Envoyée', 'Reçu par le destinataire', 'En cours de fabrication', 'Livraison', 'Reçu par le client');?>

@@ -8,11 +8,6 @@ $tracking = new tracking;
 $user_id = $_SESSION['user_id'];
 
 if(isset($_GET['id'])){
-	// Affiche les info donnee par le supplier
-	$order_track = $tracking->track($_GET['id']);
-
-	// Affiche le premier commentaire
-	$comment_first_comment = $comment->first_comment($_GET['id']);
 
 	// Get the unique order key from the order ID	
 	$unique_order_key = $order->get_order_key_with_id($_GET['id']);
@@ -188,6 +183,11 @@ if(isset($unique_order_key)){
 	$supplier_ref_id = $order->order_query($unique_order_key, 'supplier_ref_id');
 	$order_return_date = $Convert_Dates->shortnames(date("l d F Y", strtotime($order->order_query($unique_order_key, 'return_date'))));
 	$order_arrival_date = $Convert_Dates->shortnames(date("l d F Y", strtotime($order->order_query($unique_order_key, 'arrival_date'))));
+	
+	// Affiche les info donnee par le supplier
+	$order_track = $tracking->track($order_id);
+	// Affiche le premier commentaire
+	$comment_first_comment = $comment->first_comment($order_id);
 }
 //------------------------------------ Get all user details
 $client_name = $user->name($order_client_id);
@@ -203,4 +203,13 @@ if (!empty($unique_order_key)){
 	$order_details = $order->details($_GET['id']);
 	$order_details = explode("|" , $order_details);
 	$unique_order_key = $order->get_order_key_with_id($_GET['id']) ;
+}
+
+if(isset($_GET['id'])){
+	// Affiche les info donnee par le supplier
+	$order_track = $tracking->track($_GET['id']);
+
+	// Affiche le premier commentaire
+	$comment_first_comment = $comment->first_comment($_GET['id']);
+
 }

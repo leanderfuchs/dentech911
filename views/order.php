@@ -186,14 +186,6 @@
  			<textarea name="comment" id="comment" class="textarea small"><?php if(!empty($_POST['comment'])){ echo $_POST['comment']; }?></textarea>
 		 </li>
 
-		 <? if($_SESSION['balance']>0 && $_SESSION['balance']<6){?>
-			 <div class="container mt-5">
-				 <div class="alert alert-info mt-5" role="alert">
-					 Vous avez encore <b><? echo $_SESSION['balance'];?> point(s)</b> de crédit. Si vous désirez envoyer plus de fichiers vous devez en acheter.<a href="?page=buy_points"><span class="btn btn-primary ml-3">acheter des points</span></a>
-				 </div>
-			 </div>
-		 <?}?>
-
  		<li class="item item-file-upload left-third" id="file1">
  			<input type="file" size="35" name="file1" id="file12" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
 		 </li>

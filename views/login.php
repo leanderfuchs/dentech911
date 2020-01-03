@@ -2,7 +2,7 @@
 	if (!empty ($msg)){echo $msg;}
 ?>
 <div class="visual-form-builder-container">
-	<form id="login" class="visual-form-builder" method="post" action="?page=order_list">
+	<form id="login" class="visual-form-builder" method="post" action="?page=order&welcome-back=true">
 
 		<fieldset class="fieldset  commandexfset">
 			<ul class="section section-1">
@@ -46,7 +46,7 @@
 		<h3>Pas encore enregistré ?</h3>
 		
 		<div class="visual-form-builder-container">
-	<form id="register" class="visual-form-builder" method="post" action="?page=order_list">
+	<form id="register" class="visual-form-builder" method="post" action="?page=order&welcome=true">
 		<fieldset class="fieldset  commandexfset">
 			<ul class="section section-1">
 				<li class="item item-text left-half">

@@ -12,14 +12,13 @@ class user extends db_connect{
 
 	public function register ($company, $name, $address, $zip, $city, $tel, $email, $password, $user_ip){
 
-		$msg='';
 //------------------------------------ check if pseudo is not empty
 		if(!empty($company) AND !empty($name) AND !empty($address) AND !empty($zip) AND !empty($city) AND !empty($tel) AND !empty($email) AND !empty($password)){
 //------------------------------------ check if pseudo is available
 			$pdostatement = $this->query('SELECT email FROM user WHERE email="' . $email . '";');
 			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 			if ($email == $result['email']) {	
-				$msg .= '<div class="error">Un compte à cette email: "'.$email.'" à déjà été crée</div>';
+				$msg = '<div class="error">Un compte à cette email: "'.$email.'" à déjà été crée</div>';
 			}else{
 //------------------------------------ check if password is valid
 				$check_password = preg_match("/^[a-z0-9_-]{3,40}$/i", $password);
@@ -48,21 +47,20 @@ class user extends db_connect{
 					$session = new session;
 					$session->Auth = TRUE;
 					$session->user_id = $user_id;
-					$session->balance = 0;
 					//setcookie('Auth', $user_id . '878544'. SHA1($user_id.$password), time()+3600*24*365);
 
 //------------------------------------ Mot de passe invalide
 
 				} else { // password invalid
 
-					$msg .= '<div class="error">votre mot de passe n\'est pas valide. Vous devez entrer un mot de passe d\'au moins 3 charactere et seul les chiffres, les lettres et les signes (._-) sont autorisés.</div>';
+					$msg = '<div class="error">votre mot de passe n\'est pas valide. Vous devez entrer un mot de passe d\'au moins 3 charactere et seul les chiffres, les lettres et les signes (._-) sont autorisés.</div>';
 				} //end check password
 
 			 } // valide: pas de compte a cette email deja cree
 							
 		}else { // il manque un champ
 
-			$msg .= '<div class="error">Tous les champs sont requis</div>';
+			$msg = '<div class="error">Tous les champs sont requis</div>';
 
 		}
 
@@ -134,10 +132,10 @@ class user extends db_connect{
 				}
 
 			} else { // incorrect password 
-				$error = '<div class="error">votre mot de passe n\'est pas correct.</div>';
+				$error = 'Votre mot de passe est incorrect';
 			}
 		} else { // password is empty
-			$error = "<div class=\"error\">Il y a une erreur dans l'adresse email.</div>";
+			$error = 'Il y a une erreur dans l\'adresse email '. $email;
 		}
 		return $error;
 	} // end of login function
@@ -249,12 +247,13 @@ class user extends db_connect{
 	public function remember_me ($user_id, $cookie_key){
 
 	//------------------------------------ trouver le mot de passe du membre
+		$user_id = htmlentities($user_id);
+		$cookie_key = htmlentities($cookie_key);
 
 		$pdostatement = $this->query('SELECT * FROM user WHERE id="'.$user_id.'" ;');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
 		$password = $result['password'];
-		$name = $result['name'];
 		$user_id = $result['id'];
 
 		$key = SHA1($user_id.$password);
@@ -263,11 +262,10 @@ class user extends db_connect{
 			$session = new Session;
 			$session->user_id = $user_id;
 			$session->Auth = TRUE;
-			$session->origin = 'Session Origin = Cookie';
-			
+			$session->origin = 'Session Origin=Cookie';
 		}
 
-		return 'user auto loggedin';
+		return TRUE;
 		
 	} // end of remember_me function
 

@@ -34,7 +34,7 @@
 					<div class="header_container">
 						<div id="misc-top">
 							<div id="sess-status">
-								<span class="badge badge-pill badge-dark"><?if (isset($_SESSION['user_id'])){?>Fichiers transferable: <?echo floor($_SESSION['balance']/$_SESSION['point_value']);}?></span>
+								<span class="badge badge-pill badge-dark"><?if (isset($_SESSION['balance'])){?>Fichiers transferable: <?echo floor($_SESSION['balance']/$_SESSION['point_value']);}?></span>
 							<button type="button" class="btn">
 								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1) {
 									echo '<a href="?page=user_profil">Mon Compte</a>';

@@ -37,7 +37,7 @@ class notification extends db_connect{
 					Leander';
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return $mail;
+		return '<div class="alert alert-info">'.$mail.'</div>';
 	}
 	
 	public function newpasswrd($to_email, $newpasswrd) {
@@ -83,7 +83,7 @@ class notification extends db_connect{
 		
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return $mail;
+		return '<div class="alert alert-info">'.$mail.'</div>';
 	}
 
 	public function new_comment($from_user_name, $to_user_email, $comment, $order_id, $patient_id){
@@ -103,7 +103,7 @@ class notification extends db_connect{
 
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return $mail;
+		return '<div class="alert alert-info">'.$mail.'</div>';
 	}
 
 	public function new_order(){
@@ -309,10 +309,7 @@ class notification extends db_connect{
 		// send invite
 		$mail = new mail;
 		$mail_sent_email = $mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return $mail;
-
-		// check error messages from google SMTP server
-		//return $mail_sent_email;
+		return '<div class="alert alert-info">'.$mail.'</div>';
 	}
 
 } // end cart class

@@ -41,6 +41,11 @@ text-align:right;
     height:100%;
 }
 
+input {
+    color: gray;
+}
+
+
 #misc-top {
 float:right;
 text-align:right;
