@@ -1,5 +1,6 @@
-<div class="info">
-  info: Remplire les cases rapidement en appuyant sur la touche ENTER ou TAB ou avec un <u>lecteur de codebar</u>.
+<div class="alert alert-info">
+Afin de faciliter la mise à jour des différents numéros de lots et références produits, cette page permet de facilement éditer ces informations en masse.</br>
+Remplire les cases rapidement en appuyant sur la touche ENTER ou TAB ou avec un <u>lecteur de codebar</u>.
 </div>
 
 <form method="post" action="">

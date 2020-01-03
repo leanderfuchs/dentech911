@@ -6,11 +6,6 @@ if (isset($_POST['point-input']) && $_POST['point-input']>0){
     echo $user_credit;
 }
 
-$point_error_message = '';
-$missing_first_name = '';
-$missing_last_name = '';
-$missing_email = '';
-
 // ERROR not enough points
 if (isset($_GET['low-amount']) && $_GET['low-amount']==1){
     $point_error_message = 'Le nombre de points doit être supérieur à '.$_SESSION['min_point'];

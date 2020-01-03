@@ -10,6 +10,7 @@ charge.php
 sendinvoice.php
 mail.class.php
 address_book.php
+charge.php
 
 # Whitelist files/folders in sub-directories
 
