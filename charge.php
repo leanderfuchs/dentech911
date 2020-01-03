@@ -97,10 +97,6 @@ echo 'POST<br><pre>';
   //print_r($invoice);
 echo '</pre>';
 
-$invoice = \Stripe\Invoice::retrieve($invoice['id']);
-$invoice->pay();
-$invoice->sendInvoice();
-
 
 // Add Transaction To DB
 if (isset($transData['status']) && $transData['status'] == 'succeeded'){
@@ -118,3 +114,5 @@ echo '</pre>';
 // Redirect to success
 $host = $_SERVER['HTTP_HOST'];
 header('Location: http://'.$host.'?page=success&tid='.$charge->id.'&product='.$charge->description);
+
+Test git ignore
