@@ -76,10 +76,7 @@
 	</div><!-- tabs-wrapper -->
 <br>
 <table class="styled table-striped font-90 centered">
-	<tr>
-		<th>
-			Utilisateur
-		</th>			
+	<tr>		
 		<th>
 			Date
 		</th>
@@ -90,7 +87,15 @@
 			Localisation
 		</th>
 	</tr>
-	<?php echo $order_track; ?>
+	<?php if (isset($order_track)) : ?>
+		<? foreach ($order_track as $track_detail) : ?>
+			<tr>
+			<td><? echo $Convert_Dates->shortnames(date("l d F Y H:i", strtotime($track_detail['time']))) ;?></td>
+			<td><? echo $track_detail['status'] ;?></td>
+			<td><? echo $track_detail['localization'] ;?></td>
+			</tr>
+		<? endforeach ?>
+	<? endif ?>
 </table>
 <script 
 type="text/javascript">print()
