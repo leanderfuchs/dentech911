@@ -198,9 +198,9 @@ class notification extends db_connect{
 		$main_title = "Nouvelle commande: ". $patient_id;
 		$short_description = 'Une nouvelle commande vous a été envoyée et vous attends sur DenTech911.';
 
-		$subject = 'Commande '.$order_id.' - Vous avez reçu une nouvelle commande.';
+		$subject = 'Vous avez reçu une nouvelle commande. ['.$order_id.']';
 		$body = '	<p>Félicitation !</p> 
-					'.$client_email.' vient de vous envoyer la commade pour : '.$patient_id.'</p>
+					'.$client_email.' vient de vous envoyer la commande pour : '.$patient_id.'</p>
 					<h3>Détails :</h3>
 					<p>Produit : <b>'.$product.'</b></p>
 					<p>Dents : <b>'.$teeth_nbr.'</b></p>
@@ -212,7 +212,8 @@ class notification extends db_connect{
 
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-
+		return $mail;
+		
 	} // end add function
 
 	public function client_notification_new_order($supplier_user_id, $client_user_id){
@@ -272,7 +273,6 @@ class notification extends db_connect{
 
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return $mail;
 
 	} // end add function	
 
