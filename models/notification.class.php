@@ -191,7 +191,7 @@ class notification extends db_connect{
 
 		//------------------------------------ email au user
 
-		$from = $client_email;
+		$from = 'admin@dentech911.com';
 		$to_email = $supplier_email;
 		$from_name = 'DenTech911';
 
@@ -286,7 +286,7 @@ class notification extends db_connect{
 		$sender_email = $result['email'];
 
 		// create message
-		$from = $sender_email;
+		$from = 'admin@dentech911.com';
 		$from_name = "DenTech911.com";
 
 		$main_title = "Invitation à rejoindre DenTech911";
