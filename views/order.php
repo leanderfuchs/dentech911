@@ -8,7 +8,7 @@
  				</li>
 
  				<li class="item item-text right-half" id="teeth_nbr">
- 					<label for="teeth_nbr" class="desc">N° des dents</label>
+ 					<label for="teeth_nbr" class="desc">N° de dent(s)</label>
 					 <input type="text" name="teeth_nbr" id="teeth_nbr" class="text large" value="<?php if(!empty($_POST['teeth_nbr'])){ echo $_POST['teeth_nbr']; }?>">
  				</li>
  				

@@ -21,7 +21,7 @@
 </head>
 <body>
 	<div class="alert alert-info mt-5" role="alert">
-		Site en cours de développement. Des mises à jour régulières sont faites et si vous voyez un bug ou désirez ajouter une fonction, envoyez moi un email sur <a href="mailto:admin@dentech911.com">admin@dentech911.com</a>. Merci !
+		Site en développement. Des mises à jour régulières sont effectuées et si vous voyez un bug ou souhaitez ajouter une fonction, envoyez-moi un email sur <a href="mailto:admin@dentech911.com">admin@dentech911.com</a>. Merci !
 	</div>
 	<div id="wrap">
 		<div id="main">

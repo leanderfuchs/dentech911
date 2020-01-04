@@ -61,6 +61,7 @@ class notification extends db_connect{
 
 	public function new_email($email, $generated_password){
 		
+		$server_name = $_SERVER['SERVER_NAME'];
 		$to_email = $email;
 		$from = "contact@dentech911.com";
 		$from_name = "DenTech911.com";
@@ -76,7 +77,8 @@ class notification extends db_connect{
 					<h3>Comme nous n\'avons pas trouvé votre email dans notre base de données, votre compte a été créé et vos identifiants sont :</h3>
 					Nom d\'utilisateur: <b>'. $email. '</b></br>
 					Niveau d\'adhésion: <b>Utilisateur</b></br>
-					Mot de passe : <b>'. $generated_password .'</b></br></br>
+					Mot de passe : <b>'. $generated_password .'</b></br>
+					Lien vers votre commande : <b>'.$server_name.'</b></br></br>
 					Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message sur Telegram : https://t.me/dentech911.</br></br>
 					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidienement!</br>
 					Leander';
@@ -133,7 +135,7 @@ class notification extends db_connect{
 		$supplier_email = $result['email'];
 
 		//------------------------------------ Find Admin email
-		$pdostatement = $this->query('SELECT email FROM user WHERE type=admin;');
+		$pdostatement = $this->query('SELECT email FROM user WHERE type="admin";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$admin_email = $result['email'];
 
@@ -141,7 +143,7 @@ class notification extends db_connect{
 		$to_email = $admin_email;
 		$from_name = 'dentech911.com';
 
-		$main_title = "Commande: ". $order_id;
+		$main_title = "New Order from ". $client_email;
 		$short_description = 'A new order has been initiated';
 
 		$subject = 'A new order has been initiated. Order ID='.$order_id.'</b>';
@@ -206,7 +208,7 @@ class notification extends db_connect{
 					<p>Teinte : <b>'.$vita_body.$vita3d_body.'</b></p>
 					<p>Date de retour souhaitée : <b>'.$return_date.'</b></p>
 					<p>Commentaire : '.$comment.'</p></br>
-					<p>Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id.'</p>';
+					<p>Lien vers cette commande: <a href="'. $server_name .'/?page=order_detail&id='.$order_id.'">'. $server_name .'/?page=order_detail&id='.$order_id.'</a></p>';
 
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
@@ -256,7 +258,7 @@ class notification extends db_connect{
 
 		$subject = 'Votre commande est bien arrivée et un email de notification a été envoyé à '.$supplier_email;
 		$body = '	<p>Ceci est un email de confirmation que votre commande a été envoyée.</p> 
-					<i>Les informations sur cette commande etant disponible en ligne, vous pouvez supprimer ce méssage</i> 
+					<i>Les informations sur cette commande étant disponibles en ligne, vous pouvez supprimer ce message</i> 
 
 					<h3>Détails :</h3>
 					<p>Déstinataire : <b>'.$supplier_email.'</b></p>
@@ -266,11 +268,11 @@ class notification extends db_connect{
 					<p>Teinte : <b>'.$vita_body.$vita3d_body.'</b></p>
 					<p>Date de retour souhaitée : <b>'.$return_date.'</b></p>
 					<p>Commentaire : '.$comment.'</p></br>
-					<p>Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id.'</p>';
+					<p>Lien vers cette commande: <a href="'. $server_name .'/?page=order_detail&id='.$order_id.'">'. $server_name .'/?page=order_detail&id='.$order_id.'</a></p>';
 
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return '<div class="alert alert-info">'.$mail.'</div>';
+		return $mail;
 
 	} // end add function	
 
