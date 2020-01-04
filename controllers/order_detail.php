@@ -63,8 +63,7 @@ if (isset($_POST['order']) && $_POST['order']=='Commander') {
 	$shade = clean_string($_POST['vita_body'].$_POST['vita3d_body']);
 	$date = date("m").'-'.date("d").'-'.date("Y");
 
-	// email notification to supplier
-	$session = new session();
+	// Check supplier email. If known, return existing $supplier_user_id. if email is new, create a new user and send new_email notification and return $supplier_user_id
 	$supplier_user_id = $user->new_email($_POST['email-order-to']);
 
 	// Ajout dans la base de donnee

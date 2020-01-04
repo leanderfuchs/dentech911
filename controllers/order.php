@@ -23,6 +23,7 @@ if (isset($_GET['missing_email']) && $_GET['missing_email']=='missingemail') {
 	echo '<div class="alert alert-danger">Vous devez entrer l\'email du destinataire</div>';
 }
 
+//------------------------------------ Welcome messages
 if (isset($_GET['welcome-back']) && $_GET['welcome-back']==TRUE){
 	echo '<div class="alert alert-success">Bon retour sur DenTech911. Nous nous réjouissons de recevoir votre prochaine commande</div>';
 }

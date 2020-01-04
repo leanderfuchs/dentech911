@@ -37,7 +37,7 @@ class notification extends db_connect{
 					Leander';
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return '<div class="alert alert-info">'.$mail.'</div>';
+		return $mail;
 	}
 	
 	public function newpasswrd($to_email, $newpasswrd) {
@@ -83,7 +83,7 @@ class notification extends db_connect{
 		
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return '<div class="alert alert-info">'.$mail.'</div>';
+		return $mail;
 	}
 
 	public function new_comment($from_user_name, $to_user_email, $comment, $order_id, $patient_id){
@@ -106,11 +106,9 @@ class notification extends db_connect{
 		return '<div class="alert alert-info">'.$mail.'</div>';
 	}
 
-	public function new_order(){
-		$server_name = $_SERVER['SERVER_NAME'];
+	public function admin_notification_new_order(){
 
-		//------------------------------------ trouver le numero de la commande
-
+		//------------------------------------ Find Order details
 		$pdostatement = $this->query('SELECT * FROM orders ORDER BY id DESC LIMIT 1;');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
@@ -125,79 +123,57 @@ class notification extends db_connect{
 		$client_id = $result['user_ref_id'];
 		$supplier_id = $result['supplier_ref_id'];
 
-		//------------------------------------ trouver le user
-		$pdostatement = $this->query('SELECT name FROM user WHERE id="'.$client_id.'";');
+		//------------------------------------ Find Client email
+		$pdostatement = $this->query('SELECT email FROM user WHERE id="'.$client_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$client_name = $result['name']; 
-		//------------------------------------ trouver le supplier
+		$client_email = $result['email']; 
+		//------------------------------------ Find Supplier email
 		$pdostatement = $this->query('SELECT email FROM user WHERE id="'.$supplier_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$email = $result['email'];
+		$supplier_email = $result['email'];
 
-		//------------------------------------ trouver les commantaires
-
-		$pdostatement = $this->query('SELECT comment FROM comment WHERE order_ref_id="'.$order_id.'";');
+		//------------------------------------ Find Admin email
+		$pdostatement = $this->query('SELECT email FROM user WHERE type=admin;');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$comment = $result['comment'];
-				
-		//------------------------------------ email a open
+		$admin_email = $result['email'];
 
-		$to      = $email;
-		$subject = 'www.dentech911.com - Nouvelle commande ['.$order_id.']';
+		$from = "donotreply@dentech911.com";
+		$to_email = $admin_email;
+		$from_name = 'dentech911.com';
+
+		$main_title = "Commande: ". $order_id;
+		$short_description = 'A new order has been initiated';
+
+		$subject = 'A new order has been initiated. Order ID='.$order_id.'</b>';
+		$body = '	Great !</br> 
+					New order on DenTech911 !!!</br>
+					From: '.$client_email.' to '.$supplier_email;
+
+		$mail = new mail;
+		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+
+	} 
+
+
+	public function supplier_notification_new_order($supplier_user_id, $client_user_id){
 		
-		$message = 'Bonjour,'."\r\n\r\n";
-		$message .= 'La commande #['.$order_id.'] à été passée sur www.dentech911.com'."\r\n\r\n";
-		$message .= 'De: '.$client_name."\r\n";
-		$message .= 'Patient: '.$patient_id."\r\n";
-		$message .= 'Produit: '.$product.', quantité:'.$quantity."\r\n";
-		$message .= 'Dents: '.$teeth_nbr."\r\n";
-		$message .= 'Teinte: ' .$vita_body.$vita3d_body. "\r\n";
-		$message .= 'Retour souhaité: '.$return_date."\r\n"."\r\n";
-		if (!empty($comment)) {
-			$message .= 'Commentaire: '.$comment."\r\n"."\r\n";
-		} 
-		
-		$message .= 'Lien vers ce message: https://www.dentech911.com/?page=order_detail&id='.$order_id."\r\n"."\r\n";
-
-		$message .= 'DenTech911.'."\r\n"."\r\n";
-		$message .= 'www.dentech911.com';
-		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
-		'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-		'X-Mailer: PHP/' . phpversion();
-
-		mail($to, $subject, $message, $headers);
-
-	} // end new order function
-
-
-
-	public function client_new_order($user_id){
 		$server_name = $_SERVER['SERVER_NAME'];
 
-		//------------------------------------ trouver les info de cette utilisateur
-
-		$pdostatement = $this->query('SELECT name, email FROM user WHERE id="'.$user_id.'";');
+		//------------------------------------ Find infos about this supplier
+		$pdostatement = $this->query('SELECT email FROM user WHERE id="'.$supplier_user_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$username = $result['name'];
-		$email = $result['email'];
+		$supplier_email = $result['email'];
 
-
-		//------------------------------------ trouver le numero de la commande
-
-		$pdostatement = $this->query('SELECT id FROM orders ORDER BY id DESC LIMIT 1;');
+		//------------------------------------ Find infos about the client
+		$pdostatement = $this->query('SELECT email FROM user WHERE id="'.$client_user_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$client_email = $result['email'];
+
+		//------------------------------------ Find this order id
+		$pdostatement = $this->query('SELECT * FROM orders ORDER BY id DESC LIMIT 1;');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+
 		$order_id = $result['id'];
-
-		//------------------------------------ trouver les commantaires
-
-		$pdostatement = $this->query('SELECT comment FROM comment WHERE order_ref_id="'.$order_id.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-		$comment = $result['comment'];
-
-		//------------------------------------ trouver les informations liees a cette commande
-
-		$pdostatement = $this->query('SELECT * FROM orders WHERE id="'.$order_id.'";');
-		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$patient_id = $result['patient_id']; 
 		$teeth_nbr = $result['teeth_nbr']; 
 		$quantity = $result['quantity']; 
@@ -206,77 +182,97 @@ class notification extends db_connect{
 		$return_date = $result['return_date']; 
 		$product = $result['product_name']; 
 
+		//------------------------------------ Find order comment
+		$pdostatement = $this->query('SELECT comment FROM comment WHERE order_ref_id="'.$order_id.'";');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$comment = $result['comment'];
+
 		//------------------------------------ email au user
 
-		$to      = $email;
-		$subject = ' - Nouvelle commande ['.$order_id.']';
-		
-		$message = "";
-		$message .= 'Bonjour '. $username .','."\r\n"."\r\n";
-		$message .= 'Nous avons bien pris note de votre commande #['.$order_id.'] sur www.dentech911.com et nous vous remercions de votre confiance.'."\r\n"."\r\n";
-		$message .= 'Patient: '.$patient_id."\r\n";
-		$message .= 'Dents: '.$teeth_nbr."\r\n";
-		$message .= 'Produit: '.$product.', quantité:'.$quantity."\r\n";		
-		$message .= 'Teinte: ' .$vita_body.$vita3d_body. "\r\n";
-		$message .= 'Retour souhaité: '.$return_date."\r\n"."\r\n";
-		if (!empty($comment)) {
-			$message .= 'Commentaire: '.$comment."\r\n"."\r\n";
-		} 
-		
+		$from = $client_email;
+		$to_email = $supplier_email;
+		$from_name = 'DenTech911';
 
-		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
+		$main_title = "Nouvelle commande: ". $patient_id;
+		$short_description = 'Une nouvelle commande vous a été envoyée et vous attends sur DenTech911.';
 
-		$message .= 'Cordialement,'."\r\n";
-		$message .= 'DenTech911.'."\r\n"."\r\n";
-		$message .= 'www.dentech911.com';
-		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
-		'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-		'X-Mailer: PHP/' . phpversion();
+		$subject = 'Commande '.$order_id.' - Vous avez reçu une nouvelle commande.';
+		$body = '	<p>Félicitation !</p> 
+					'.$client_email.' vient de vous envoyer la commade pour : '.$patient_id.'</p>
+					<h3>Détails :</h3>
+					<p>Produit : <b>'.$product.'</b></p>
+					<p>Dents : <b>'.$teeth_nbr.'</b></p>
+					<p>Quantité : <b>'.$quantity.'</b></p>
+					<p>Teinte : <b>'.$vita_body.$vita3d_body.'</b></p>
+					<p>Date de retour souhaitée : <b>'.$return_date.'</b></p>
+					<p>Commentaire : '.$comment.'</p></br>
+					<p>Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id.'</p>';
 
-		mail($to, $subject, $message, $headers);
+		$mail = new mail;
+		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
 
 	} // end add function
 
-	public function reminderEmail($order_id){
+	public function client_notification_new_order($supplier_user_id, $client_user_id){
+		
 		$server_name = $_SERVER['SERVER_NAME'];
-		$email = 'leanderfuchs@protonmail.com';
-				
-		//------------------------------------ email a fournisseur
 
-		$to      = $email;
-		$subject = ' - Demande d\'information suplémentaire. ['.$order_id.']';
-		
-		$message = 'Bonjour'."\r\n"."\r\n";
-		$message .= 'La commande #['.$order_id.'] nécessite l\'ajoute d\'informations complémentaires '."\r\n"."\r\n";
-		$message .= 'Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id."\r\n"."\r\n";
-		$message .= 'DenTech911.'."\r\n"."\r\n";
-		$message .= 'www.dentech911.com';
+		//------------------------------------ Find infos about this supplier
+		$pdostatement = $this->query('SELECT email FROM user WHERE id="'.$supplier_user_id.'";');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$supplier_email = $result['email'];
 
-		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
-		'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-		'X-Mailer: PHP/' . phpversion();
+		//------------------------------------ Find infos about the client
+		$pdostatement = $this->query('SELECT email FROM user WHERE id="'.$client_user_id.'";');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$client_email = $result['email'];
 
-		mail($to, $subject, $message, $headers);
+		//------------------------------------ Find this order id
+		$pdostatement = $this->query('SELECT * FROM orders ORDER BY id DESC LIMIT 1;');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
-	} // end reminderEmail function
+		$order_id = $result['id'];
+		$patient_id = $result['patient_id']; 
+		$teeth_nbr = $result['teeth_nbr']; 
+		$quantity = $result['quantity']; 
+		$vita_body = $result['vita_body']; 
+		$vita3d_body = $result['vita3d_body']; 
+		$return_date = $result['return_date']; 
+		$product = $result['product_name']; 
 
-	//------------------------------------ If user send points to an unknown email address
-	public function send_points_new_email($email){
-		$server_name = $_SERVER['SERVER_NAME'];
-		$to      = $email;
-		$subject = 'DenTech911 - Une nouvelle commande vous attend sur www.dentech911.com .';
-		
-		$message = 'Bonjour, '. "\r\n" .
-		$message .= 'Félicitations, une nouvelle commande vous a été envoyée sur DenTech911 !'."\r\n\r\n";
-		$message .= 'Aussi, comme nous n\'avons pas trouvé votre email dans notre base de données, votre compte a été créé et vos déifiants sont votre adresse email et ce mot de passe que nous avons généré pour vous : '. $generated_password;
-		
-		$headers = 'From: leanderfuchs@protonmail.com' . "\r\n" .
-		'Reply-To: leanderfuchs@protonmail.com' . "\r\n" .
-		'X-Mailer: PHP/' . phpversion();
+		//------------------------------------ Find order comment
+		$pdostatement = $this->query('SELECT comment FROM comment WHERE order_ref_id="'.$order_id.'";');
+		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+		$comment = $result['comment'];
 
-		mail($to, $subject, $message, $headers);
+		//------------------------------------ email au user
 
-	} // end reminderEmail function
+		$from = 'admin@dentech911.com';
+		$to_email = $client_email;
+		$from_name = 'DenTech911';
+
+		$main_title = 'Confirmation de votre commande: '. $patient_id;
+		$short_description = 'Merci de faire confiance a DenTech911 pour l\'envoie et le stockage de vos fichiers';
+
+		$subject = 'Votre commande est bien arrivée et un email de notification a été envoyé à '.$supplier_email;
+		$body = '	<p>Ceci est un email de confirmation que votre commande a été envoyée.</p> 
+					<i>Les informations sur cette commande etant disponible en ligne, vous pouvez supprimer ce méssage</i> 
+
+					<h3>Détails :</h3>
+					<p>Déstinataire : <b>'.$supplier_email.'</b></p>
+					<p>Produit : <b>'.$product.'</b></p>
+					<p>Dents : <b>'.$teeth_nbr.'</b></p>
+					<p>Quantité : <b>'.$quantity.'</b></p>
+					<p>Teinte : <b>'.$vita_body.$vita3d_body.'</b></p>
+					<p>Date de retour souhaitée : <b>'.$return_date.'</b></p>
+					<p>Commentaire : '.$comment.'</p></br>
+					<p>Lien vers cette commande: '. $server_name .'/?page=order_detail&id='.$order_id.'</p>';
+
+		$mail = new mail;
+		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
+		return '<div class="alert alert-info">'.$mail.'</div>';
+
+	} // end add function	
 
 	public function invite_email($user_id, $to_email){
 		$to_email = htmlentities($to_email);
@@ -309,7 +305,7 @@ class notification extends db_connect{
 		// send invite
 		$mail = new mail;
 		$mail_sent_email = $mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return '<div class="alert alert-info">'.$mail.'</div>';
+		return $mail;
 	}
 
 } // end cart class

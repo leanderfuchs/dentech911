@@ -78,8 +78,8 @@ class order extends db_connect{
 
 		//------------------------------------ Notifications
 		$notification = new notification;
-		$notification->client_new_order($_SESSION['user_id']);
-		$notification->new_order();
+		$notification->supplier_notification_new_order($supplier_user_id, $user_id);
+		$notification->admin_notification_new_order();
 		
 	} // end add function
 

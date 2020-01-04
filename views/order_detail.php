@@ -113,7 +113,8 @@ if (!empty($user_restricted_pages)) {
 					<form id="add_file" enctype="multipart/form-data" class="visual-form-builder" method="post" action="">
 					<fieldset class="fieldset  commandexfset">
 						<ul class="section section-1">
-								<input type="file" name="file" id="file" value="" class="text large" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj"></br></br>								
+								<input type="file" name="file" id="file" value="" class="text large" accept=".zip,.zipx.tar.gz,.tgz,.tar.Z,.tar.bz2,
+.tbz2,.tar.lzma,.tlz..tar.xz,.txz,.rar,.7z,.rar,.bz2,.gz,.tar,.doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj"></br></br>								
 								<input type="submit" name="add_file" value="Ajouter" class="btn btn-secondary">
 						</ul>
 					</fieldset>

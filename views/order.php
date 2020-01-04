@@ -187,22 +187,28 @@
 		 </li>
 
  		<li class="item item-file-upload left-third" id="file1">
- 			<input type="file" size="35" name="file1" id="file12" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
+ 			<input type="file" size="35" name="file1" id="file12" accept=".zip,.zipx.tar.gz,.tgz,.tar.Z,.tar.bz2,
+.tbz2,.tar.lzma,.tlz..tar.xz,.txz,.rar,.7z,.rar,.bz2,.gz,.tar,.doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj,image/*,video/*" class="text small">
 		 </li>
 		 <li class="item item-file-upload middle-third" id="file2">
- 			<input type="file" size="35" name="file2" id="file22" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
+ 			<input type="file" size="35" name="file2" id="file22" accept=".zip,.zipx.tar.gz,.tgz,.tar.Z,.tar.bz2,
+.tbz2,.tar.lzma,.tlz..tar.xz,.txz,.rar,.7z,.rar,.bz2,.gz,.tar,.doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj,image/*,video/*" class="text small">
 		 </li>
  		<li class="item item-file-upload right-third" id="file3">
- 			<input type="file" size="35" name="file3" id="file32" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
+ 			<input type="file" size="35" name="file3" id="file32" accept=".zip,.zipx.tar.gz,.tgz,.tar.Z,.tar.bz2,
+.tbz2,.tar.lzma,.tlz..tar.xz,.txz,.rar,.7z,.rar,.bz2,.gz,.tar,.doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj,image/*,video/*" class="text small">
  		</li>
  		<li class="item item-file-upload left-third" id="file4">
- 			<input type="file" size="35" name="file4" id="file42" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
+ 			<input type="file" size="35" name="file4" id="file42" accept=".zip,.zipx.tar.gz,.tgz,.tar.Z,.tar.bz2,
+.tbz2,.tar.lzma,.tlz..tar.xz,.txz,.rar,.7z,.rar,.bz2,.gz,.tar,.doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj,image/*,video/*" class="text small">
  		</li>
  		<li class="item item-file-upload middle-third" id="file5">
- 			<input type="file" size="35" name="file5" id="file52" accept=".doc,.docx,.pdf,.stl,.ply,.obj,image/*,video/*" class="text small">
+ 			<input type="file" size="35" name="file5" id="file52" accept=".zip,.zipx.tar.gz,.tgz,.tar.Z,.tar.bz2,
+.tbz2,.tar.lzma,.tlz..tar.xz,.txz,.rar,.7z,.rar,.bz2,.gz,.tar,.doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj,image/*,video/*,image/*,video/*" class="text small">
  		</li>
  		<li class="item item-file-upload right-third" id="file6">
- 			<input type="file" size="35" name="file6" id="file62" accept=".doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj" class="text small">
+ 			<input type="file" size="35" name="file6" id="file62" accept=".zip,.zipx.tar.gz,.tgz,.tar.Z,.tar.bz2,
+.tbz2,.tar.lzma,.tlz..tar.xz,.txz,.rar,.7z,.rar,.bz2,.gz,.tar,.doc,.docx,.pdf,.stl,.jpeg,.jpg,.png,.ply,.obj,image/*,video/*" class="text small">
  		</li>
 
  		<div class="center">

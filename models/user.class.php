@@ -12,13 +12,14 @@ class user extends db_connect{
 
 	public function register ($company, $name, $address, $zip, $city, $tel, $email, $password, $user_ip){
 
+		$msg ='';
 //------------------------------------ check if pseudo is not empty
 		if(!empty($company) AND !empty($name) AND !empty($address) AND !empty($zip) AND !empty($city) AND !empty($tel) AND !empty($email) AND !empty($password)){
 //------------------------------------ check if pseudo is available
 			$pdostatement = $this->query('SELECT email FROM user WHERE email="' . $email . '";');
 			$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 			if ($email == $result['email']) {	
-				$msg = '<div class="error">Un compte à cette email: "'.$email.'" à déjà été crée</div>';
+				$msg = '<div class="alert alert-danger mt-5">Un compte à cette email: "'.$email.'" à déjà été crée</div>';
 			}else{
 //------------------------------------ check if password is valid
 				$check_password = preg_match("/^[a-z0-9_-]{3,40}$/i", $password);
@@ -53,14 +54,14 @@ class user extends db_connect{
 
 				} else { // password invalid
 
-					$msg = '<div class="error">votre mot de passe n\'est pas valide. Vous devez entrer un mot de passe d\'au moins 3 charactere et seul les chiffres, les lettres et les signes (._-) sont autorisés.</div>';
+					$msg = '<div class="alert alert-danger mt-5">votre mot de passe n\'est pas valide. Vous devez entrer un mot de passe d\'au moins 3 charactere et seul les chiffres, les lettres et les signes (._-) sont autorisés.</div>';
 				} //end check password
 
 			 } // valide: pas de compte a cette email deja cree
 							
 		}else { // il manque un champ
 
-			$msg = '<div class="error">Tous les champs sont requis</div>';
+			$msg = '<div class="alert alert-danger mt-5">Tous les champs sont requis</div>';
 
 		}
 
