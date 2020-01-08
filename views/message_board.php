@@ -52,7 +52,7 @@
 						</br><hr>
 					<?php } ?>
 
-					<span class="label"><b>Envoyez un messages ou répondre</b></span>
+					<span class="label"><b>Envoyez un message ou répondre</b></span>
 					<form id="comment" action="" method="post">  
 						<textarea name="comment" rows="5"> </textarea>
 						<input type="submit" name="submit_comment" value="Envoyer">  

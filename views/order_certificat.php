@@ -95,7 +95,7 @@ function goBack(){
 		<span class="title"><h3>DECLARATION DE DISPOSITIF MEDICAL SUR MESURE (CLASSE IIa)</h3></span>
 	
 	</div>
-<p>Je soussignée, Mr. Fuchs Leander, gérant de Open Hongkong Co., Ltd., assure et déclare, sous ma seule responsabilité, que le dispositif médical sur mesure CAS No <?php echo $order_id; ?> , est mis sur le marché pour l'usage exclusif du patient identifié sous le numéro: <?php echo $order_patient_id; ?> suivant les caractéristiques spécifiques du produits indiquées par la prescription du user identifié par la référence <?php echo $order_ref; ?>.
+<p>Je soussigné, Mr. Fuchs Leander, gérant de Open Hongkong Co., Ltd., assure et déclare, sous ma seule responsabilité, que le dispositif médical sur mesure CAS No <?php echo $order_id; ?> , est mis sur le marché pour l'usage exclusif du patient identifié par la référence : <?php echo $order_patient_id; ?> suivant les caractéristiques spécifiques du produits indiquées par la prescription de l'utilisateur identifié par la référence <?php echo $order_ref; ?>.
 </p>
 
 <p>Je déclare que ce dispositif sur mesure est conforme aux exigences essentielles des articles R.5211-21 à R. 5211-24 et de l’arrêté du 15 mars 2010 fixant les conditions de mise en œuvre des exigences essentielles applicables aux dispositifs médicaux, pris en application de l'article R. 5211-24 du code de la santé publique.</p>
