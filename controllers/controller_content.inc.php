@@ -53,7 +53,7 @@ if (isset($_SESSION['user_id'])) {
 if (!isset($_SESSION['Auth']) && isset($_COOKIE['Auth'])){
 	$auth = explode('878544', $_COOKIE['Auth']);
 	$user_remember_me = $user->remember_me($auth['0'], $auth['1']);
-	echo '<div class="alert alert-success mt-5">Vous avez été connécté automatiquement via le cookie sauvegardé dans votre navigateur</div>';
+	echo '<div class="alert alert-success mt-5">Vous avez été connecté automatiquement via le cookie sauvegardé dans votre navigateur</div>';
 }
 
 //------------------------------------ 

@@ -43,12 +43,12 @@ class user extends db_connect{
 					$result_user_id = $dbquery->fetch(PDO::FETCH_ASSOC);
 					$user_id = $result_user_id['id'];
 
-//------------------------------------ Create session and Header Location
+//------------------------------------ Create session 
 
 					$session = new session;
 					$session->Auth = TRUE;
 					$session->user_id = $user_id;
-					//setcookie('Auth', $user_id . '878544'. SHA1($user_id.$password), time()+3600*24*365);
+					setcookie('Auth', $user_id . '878544'. SHA1($user_id.$password), time()+3600*24*365);
 
 //------------------------------------ Mot de passe invalide
 
@@ -102,6 +102,7 @@ class user extends db_connect{
 //------------------------------------ Prevent sql injections
 		$email = htmlspecialchars($email);
 		$password = htmlspecialchars($password);
+		$remember = htmlspecialchars($remember);
 
 //------------------------------------ check if pseudo exists
 										
@@ -206,11 +207,11 @@ class user extends db_connect{
 				$notification = new notification;
 				$notification->newpasswrd($to_email, $newpasswrd);
 
-				$msg = '<div class="alert alert-success"> Merci, nous venons de vous envoyer votre nouveau mot de passe dons votre boite mail. (vérifiez les spams)</div>';
+				$msg = '<div class="alert alert-success"> Merci, nous venons de vous envoyer votre nouveau mot de passe dons votre boîte mail. (vérifiez les spams)</div>';
 
 			} else { // si existe pas dans la base
 
-				$msg = '<div class="alert alert-danger"> Cette email: ' . $email . ' est inconnu. Vérifiez son orthographe</div>';
+				$msg = '<div class="alert alert-danger mt-5"> Cet email: ' . $email . ' est inconnu. Vérifiez son orthographe</div>';
 			}
 		}
 		return $msg;
@@ -264,6 +265,7 @@ class user extends db_connect{
 			$session->user_id = $user_id;
 			$session->Auth = TRUE;
 			$session->origin = 'Session Origin=Cookie';
+			header('location:?page=order&welcome-back=true');
 		}
 
 		return TRUE;

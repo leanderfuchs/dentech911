@@ -14,10 +14,10 @@
 				</ul>
 			</fieldset>
 	</form>
-</div>
-<div class="container"><div class="row"><div class="col text-center">
-	<a href="?page=login"><button type="button" class="btn btn-secondary">Retour à la page de connexion</button></a>
-</div>
-</div>
+	</div>
+		<div class="container"><div class="row"><div class="col text-center">
+			<a href="?page=login"><button type="button" class="btn btn-secondary">Retour à la page de connexion</button></a>
+		</div>
+	</div>
 </div>
 

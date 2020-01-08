@@ -66,7 +66,7 @@ class notification extends db_connect{
 		$from = "contact@dentech911.com";
 		$from_name = "DenTech911.com";
 
-		$main_title = "Félicitation, vous venez de recevoir une nouvvelle commande !";
+		$main_title = "Félicitation, vous venez de recevoir une nouvelle commande !";
 		$short_description = "Un membre de DenTech911 vient de vous envoyer une commande avec des scans 3D";
 
 		$subject = 'Bienvenue sur DenTech911, la platforme d\'échange de fichiers numérique entre proffessionels du dentaire';
