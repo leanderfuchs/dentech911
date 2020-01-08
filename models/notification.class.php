@@ -17,23 +17,23 @@ class notification extends db_connect{
 		$from_name = "DenTech911.com";
 
 		$main_title = "Votre compte a été créé";
-		$short_description = "Félicitation, votre compte est activé et vous pouvez dors et déjà l'utiliser";
+		$short_description = "Félicitations, votre compte est activé et vous pouvez d’ors et déjà l'utiliser";
 
 		$subject = "Bienvenue et merci d'être devenu membre de DenTech911!";
 		$body = '	Bonjour '.$name.',</br>
 					Je suis tellement heureux que vous ayez rejoint notre réseau.</br>
-					J\'ai inclus tous les détails de votre adhésion ci-dessous, ainsi qu\'une question que j\'ai à vous poser.</br></br>
-					Mais d\'abord, voici quelques excellents avantages que vous obtenez en temp que membre: <b>50 points de téléchargement</b> vous sont offerts en cadeau de bienvenue. De plus, vous aurez accès au système d\'échanges de fichiers le plus simple et intuitif possible et bien d\'autres choses encore à venir ... </br>
+					J’ai inclus tous les détails de votre adhésion ci-dessous, ainsi qu\'une question que j\'ai à vous poser.</br></br>
+					Mais d\'abord, voici quelques excellents avantages que vous obtenez en temp que membre : 50 points de téléchargement vous sont offerts en cadeau de bienvenue. De plus, vous aurez accès au système d\'échanges de fichiers le plus simple et intuitif possible et bien d\'autres choses encore à venir ... </br>
 					Maintenant, voici les détails importants de votre adhésion:</br></br>
-					Nom d\'utilisateur: <b>'.$email.'</b></br>
+					Nom d\'utilisateur:  <b>'.$email.'</b></br>
 					Niveau d\'adhésion: <b>Utilisateur</b></br>
 					Mot de passe : celui que vous avez créé</br></br>
-					<h3>Et voici ma question:</h3>
-					<b>Quelle est la première raison pour laquelle vous vous êtes inscrit?</b></br>
-					Si vous pouviez répondre à cet e-mail avec votre réponse, cela m\'aiderait à créer une application plus personnalié et à vous diriger vers le bon endroit.</br></br>
-					En attendant, si vous souhaitez commencer à accéder à certaines de nos ressources exclusives, visitez notre espace réservé aux membres ici https://www.dentech911.com.</br></br>
+					<h3>Et voici ma question :</h3>
+					<b>Quelle est la première raison pour laquelle vous vous êtes inscrit ?</b></br>
+					Si vous pouviez répondre à cet e-mail, cela m\'aidera à créer une application plus personnalisée et à vous diriger vers le bon endroit.</br></br>
+					En attendant, si vous souhaitez commencer à accéder à certaines de nos ressources exclusives, visitez notre espace réservé aux membres ici : https://www.dentech911.com.</br></br>
 					Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message Telegram : https://t.me/dentech911.</br></br>
-					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidienement!</br>
+					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidiennement !!</br>
 					Leander';
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
@@ -46,12 +46,12 @@ class notification extends db_connect{
 		$from_name = "DenTech911.com";
 
 		$main_title = "Votre nouveau mot de passe à été créé";
-		$short_description = "Afin de guarantir la securité de notre système, nous avons créé votre mot de passe";
+		$short_description = "Afin de garantir la securité de notre système, nous avons créé votre mot de passe";
 
 		$subject = "Ceci est votre nouveau mot de passe : <b>" . $newpasswrd . '</b>';
 		$body = '	Votre mot de passe sert à protéger les informations que vous laissez sur DenTech911.</br></br>
-					il est donc important pour vous de le garder, soit dans un carnet papier, soit dans la mémoire de votre navigateur favorit, soit dans un système de sauvgarde décentralisé tel <a href="https://lastpass.com/">lastpass</a> que nous recommandons fortemant</br></br>
-					Vous souhaitant une excellente journée</br>
+					Il est donc important pour vous de le garder, soit dans un carnet papier, soit dans la mémoire de votre navigateur favori, soit dans un système de sauvgarde décentralisé tel https://www.lastpass.com que nous recommandons fortement.</br></br>
+					Vous souhaitant une excellente journée,</br>
 					Leander';
 
 		$mail = new mail;
@@ -66,21 +66,21 @@ class notification extends db_connect{
 		$from = "contact@dentech911.com";
 		$from_name = "DenTech911.com";
 
-		$main_title = "Félicitation, vous venez de recevoir une nouvelle commande !";
+		$main_title = "Félicitations, vous venez de recevoir une nouvelle commande !";
 		$short_description = "Un membre de DenTech911 vient de vous envoyer une commande avec des scans 3D";
 
-		$subject = 'Bienvenue sur DenTech911, la platforme d\'échange de fichiers numérique entre proffessionels du dentaire';
+		$subject = 'Bienvenue sur DenTech911, la plateforme d\'échange de fichiers numériques entre professionnels du dentaire';
 		$body = '	Bonjour, </br>
 					Félicitations, une nouvelle commande vous a été envoyée sur DenTech911 !</br>
-					Voici quelques excellents avantages que vous obtenez en temp que membre: <b>50 points de téléchargement</b> vous sont offerts en cadeau de bienvenue. De plus, vous aurez accès au système d\'échanges de fichiers le plus simple et intuitif possible et bien d\'autres choses encore à venir ... </br>
-					Maintenant, voici les détails importants de votre adhésion:</br></br>
+					Voici quelques excellents avantages que vous obtenez en temp que membre : 50 points de téléchargement vous sont offerts en cadeau de bienvenue. De plus, vous aurez accès au système d\'échanges de fichiers le plus simple et intuitif possible et bien d\'autres choses encore à venir ... </br>
+					Maintenant, voici les détails importants de votre adhésion :</br></br>
 					<h3>Comme nous n\'avons pas trouvé votre email dans notre base de données, votre compte a été créé et vos identifiants sont :</h3>
 					Nom d\'utilisateur: <b>'. $email. '</b></br>
 					Niveau d\'adhésion: <b>Utilisateur</b></br>
-					Mot de passe : <b>'. $generated_password .'</b></br>
+					Mot de passe: <b>'. $generated_password .'</b></br>
 					Lien vers votre commande : <b>'.$server_name.'</b></br></br>
-					Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message sur Telegram : https://t.me/dentech911.</br></br>
-					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidienement!</br>
+					Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message sur Telegram : https://t.me/dentech911 .</br></br>
+					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidiennement !</br>
 					Leander';
 		
 		$mail = new mail;
@@ -94,14 +94,14 @@ class notification extends db_connect{
 		$from = "contact@dentech911.com";
 		$from_name = $from_user_name;
 
-		$main_title = "Commande: ". $patient_id;
-		$short_description = '	Notre messagerie est le plus simple système d\'échange pour les professionnels du dentaire car chaque message 						corréspond à un cas particulier.</br>
-								Vous n\'avez plus à rechercher dans votre boite mail le méssage correspondant à tel ou tel cas';
+		$main_title = "			Commande: ". $patient_id;
+		$short_description = '	Notre messagerie est le plus simple système d’échange pour les professionnels du dentaire car chaque message 						correspond à un cas particulier. </br>
+								Vous n\'avez plus à rechercher dans votre boîte- mail le message correspondant à tel ou tel cas.';
 
-		$subject = 'Nouveau message de <b>'.$from_user_name.'</b> concernant la commande : <b>'.$patient_id.'</b>';
-		$body = '	Message: </br></br>
-					<p><b>'. $comment.'</b></p></br></br>
-					Lien vers ce message: https://www.dentech911.com/?page=order_detail&id='.$order_id;
+		$subject = '			Nouveau message de <b>'.$from_user_name.'</b> concernant la commande : <b>'.$patient_id.'</b>';
+		$body = '				Message: </br></br>
+								<p><b>'. $comment.'</b></p></br></br>
+								Lien vers ce message: https://www.dentech911.com/?page=order_detail&id='.$order_id;
 
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
@@ -196,19 +196,19 @@ class notification extends db_connect{
 		$from_name = 'DenTech911';
 
 		$main_title = "Nouvelle commande: ". $patient_id;
-		$short_description = 'Une nouvelle commande vous a été envoyée et vous attends sur DenTech911.';
+		$short_description = 'Une nouvelle commande vous a été envoyée et vous attend sur DenTech911.';
 
 		$subject = 'Vous avez reçu une nouvelle commande. ['.$order_id.']';
-		$body = '	<p>Félicitation !</p> 
+		$body = '	<p>Félicitations !</p> 
 					'.$client_email.' vient de vous envoyer la commande pour : '.$patient_id.'</p>
 					<h3>Détails :</h3>
 					<p>Produit : <b>'.$product.'</b></p>
-					<p>Dents : <b>'.$teeth_nbr.'</b></p>
+					<p>Dent(s) : <b>'.$teeth_nbr.'</b></p>
 					<p>Quantité : <b>'.$quantity.'</b></p>
 					<p>Teinte : <b>'.$vita_body.$vita3d_body.'</b></p>
 					<p>Date de retour souhaitée : <b>'.$return_date.'</b></p>
 					<p>Commentaire : '.$comment.'</p></br>
-					<p>Lien vers cette commande: <a href="'. $server_name .'/?page=order_detail&id='.$order_id.'">'. $server_name .'/?page=order_detail&id='.$order_id.'</a></p>';
+					<p>Lien vers cette commande : <a href="'. $server_name .'/?page=order_detail&id='.$order_id.'">'. $server_name .'/?page=order_detail&id='.$order_id.'</a></p>';
 
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
@@ -255,7 +255,7 @@ class notification extends db_connect{
 		$from_name = 'DenTech911';
 
 		$main_title = 'Confirmation de votre commande: '. $patient_id;
-		$short_description = 'Merci de faire confiance a DenTech911 pour l\'envoie et le stockage de vos fichiers';
+		$short_description = 'Merci de faire confiance a DenTech911 pour l\'envoi et le stockage de vos fichiers';
 
 		$subject = 'Votre commande est bien arrivée et un email de notification a été envoyé à '.$supplier_email;
 		$body = '	<p>Ceci est un email de confirmation que votre commande a été envoyée.</p> 
@@ -264,12 +264,12 @@ class notification extends db_connect{
 					<h3>Détails :</h3>
 					<p>Déstinataire : <b>'.$supplier_email.'</b></p>
 					<p>Produit : <b>'.$product.'</b></p>
-					<p>Dents : <b>'.$teeth_nbr.'</b></p>
+					<p>Dent(s) : <b>'.$teeth_nbr.'</b></p>
 					<p>Quantité : <b>'.$quantity.'</b></p>
 					<p>Teinte : <b>'.$vita_body.$vita3d_body.'</b></p>
 					<p>Date de retour souhaitée : <b>'.$return_date.'</b></p>
 					<p>Commentaire : '.$comment.'</p></br>
-					<p>Lien vers cette commande: <a href="'. $server_name .'/?page=order_detail&id='.$order_id.'">'. $server_name .'/?page=order_detail&id='.$order_id.'</a></p>';
+					<p>Lien vers cette commande : <a href="'. $server_name .'/?page=order_detail&id='.$order_id.'">'. $server_name .'/?page=order_detail&id='.$order_id.'</a></p>';
 
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
@@ -290,18 +290,18 @@ class notification extends db_connect{
 		$from_name = "DenTech911.com";
 
 		$main_title = "Invitation à rejoindre DenTech911";
-		$short_description = "DenTech911 est une plate-forme d'envoi de fichiers entre professionnelles du dentaire";
+		$short_description = "DenTech911 est une plate-forme d'envoi de fichiers entre professionnels du dentaire";
 
-		$subject = "Une invitation vous a été envoyé de ". $sender_email;
+		$subject = "Une invitation vous a été envoyée de ". $sender_email;
 		$body = '<p>Bonjour</p>
 
-		<p>Ceci est une invitation à vous inscrire sur la plate-forme d\'échange DenTech911 afin que vous puissiez envoyer ou recevoir des commandes en ligne, avec leurs fichiers attachés, avec votre contact dont l\'email est : ' .$sender_email.'.</p>
+		<p>Ceci est une invitation à vous inscrire sur la plate-forme d’échange DenTech911 afin que vous puissiez envoyer ou recevoir des commandes en ligne, avec leurs fichiers attachés, et avec votre contact dont l\'email est :' .$sender_email.'.</p>
 
-		<p>Si vous souhaitez commencer à travailler en utilisant DenTech911 au lieu d\'emails, rendez-vous sur https://www.dentech911.com.</p>
+		<p>Si vous souhaitez commencer à travailler en utilisant DenTech911 au lieu d\'emails, rendez-vous sur https://www.dentech911.com .</p>
 
-		<p>Si vous avez des questions, répondez simplement à cet e-mail ou envoyez moi un message Telegram : https://t.me/dentech911.</p>
+		<p>Si vous avez des questions, répondez simplement à cet e-mail ou envoyez moi un message Telegram : https://t.me/dentech911 .</p>
 
-		<p>Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidiennement!</br>
+		<p>Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidiennement !</br>
 		Leander</p>';
 		
 		// send invite
