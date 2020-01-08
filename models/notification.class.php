@@ -106,7 +106,6 @@ class notification extends db_connect{
 
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);
-		return '<div class="alert alert-info">'.$mail.'</div>';
 	}
 
 	public function admin_notification_new_order(){
