@@ -33,7 +33,7 @@ $(document).ready(function(){
 				<div class="center">
 					<input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['user_id']; ?>">
 
-					Requet:
+					Requête:
 						<input type="text" name="query" id="query" value="<?php if(isset($_POST['query']))echo $_POST['query']; ?>" style="height:20px;width:200px;">
 	 				Entre le : 
 	 					<input type="text" name="from" id="from" value="<?php if(isset($_POST['from']))echo $_POST['from']; ?>" style="height:20px;width:200px;">

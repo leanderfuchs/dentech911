@@ -84,7 +84,7 @@ class order extends db_admin{
 		if ($current_status != $status) {
 
 			
-		if ($status == "Envoyée") $localization = "Serveurs DenTech911";
+		if ($status == "Envoyé") $localization = "Serveurs DenTech911";
 		if ($status == "Reçu par le destinataire") $localization = "Prestataire";
 		if ($status == "En cours de fabrication") $localization = "Prestataire";
 		if ($status == "Livraison") $localization = "Transporteur";

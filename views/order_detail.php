@@ -63,7 +63,7 @@ if (!empty($user_restricted_pages)) {
 				<form id="status" method="post" action="?page=order_detail&id=<?php echo $order_id; ?>">
 				<select name="status" class="mt-2 mb-2">
 					<option value="">Mettre à jour</option>
-					<? $status_list = array('Envoyée', 'Reçu par le destinataire', 'En cours de fabrication', 'Livraison', 'Reçu par le client');?>
+					<? $status_list = array('Envoyé', 'Reçu par le destinataire', 'En cours de fabrication', 'Livraison', 'Reçu par le client');?>
 					<? foreach ($status_list as $key => $value) : ?>
 						<option value="<? echo $status_list[$key] ?>"> <? echo $status_list[$key] ?></option>
 					<? endforeach ?>

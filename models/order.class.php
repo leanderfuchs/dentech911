@@ -250,7 +250,7 @@ class order extends db_connect{
 		$status = htmlspecialchars($status);
 		$msg = '';
 
-		if ($status == "Envoyée") $localization = "Serveurs DenTech911";
+		if ($status == "Envoyé") $localization = "Serveurs DenTech911";
 		if ($status == "Reçu par le destinataire") $localization = "Prestataire";
 		if ($status == "En cours de fabrication") $localization = "Prestataire";
 		if ($status == "Livraison") $localization = "Transporteur";

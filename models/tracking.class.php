@@ -79,7 +79,7 @@ class tracking extends db_connect{
 
 		//------------------------------------ Update current status
 		switch ($current_status) {
-			case "Envoyée":
+			case "Envoyé":
 				$new_status = "Reçu par le destinataire";
 				$localisation = "Prestataire";
 				break;
