@@ -13,6 +13,7 @@ address_book.php
 charge_stripe.php
 charge_stripe.js
 sendinvoices.php
+Vagrantfile
 
 # Whitelist files/folders in sub-directories
 

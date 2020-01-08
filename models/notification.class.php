@@ -13,7 +13,7 @@ class notification extends db_connect{
 	public function register ($email, $name){
 
 		$to_email = $email;
-		$from = "contact@dentech911.com";
+		$from = "admin@dentech911.com";
 		$from_name = "DenTech911.com";
 
 		$main_title = "Votre compte a été créé";
@@ -42,7 +42,7 @@ class notification extends db_connect{
 	
 	public function newpasswrd($to_email, $newpasswrd) {
 
-		$from = "contact@dentech911.com";
+		$from = "admin@dentech911.com";
 		$from_name = "DenTech911.com";
 
 		$main_title = "Votre nouveau mot de passe à été créé";
@@ -63,7 +63,7 @@ class notification extends db_connect{
 		
 		$server_name = $_SERVER['SERVER_NAME'];
 		$to_email = $email;
-		$from = "contact@dentech911.com";
+		$from = "admin@dentech911.com";
 		$from_name = "DenTech911.com";
 
 		$main_title = "Félicitations, vous venez de recevoir une nouvelle commande !";
@@ -92,7 +92,7 @@ class notification extends db_connect{
 	public function new_comment($from_user_name, $to_user_email, $comment, $order_id, $patient_id){
 
 		$to_email = $to_user_email;
-		$from = "contact@dentech911.com";
+		$from = "admin@dentech911.com";
 		$from_name = $from_user_name;
 
 		$main_title = "			Commande: ". $patient_id;
@@ -116,13 +116,6 @@ class notification extends db_connect{
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
 		$order_id = $result['id']; 		
-		$patient_id = $result['patient_id']; 
-		$product = $result['product_name']; 
-		$teeth_nbr = $result['teeth_nbr']; 
-		$quantity = $result['quantity']; 
-		$vita_body = $result['vita_body']; 
-		$vita3d_body = $result['vita3d_body']; 
-		$return_date = $result['return_date'];
 		$client_id = $result['user_ref_id'];
 		$supplier_id = $result['supplier_ref_id'];
 
@@ -140,7 +133,7 @@ class notification extends db_connect{
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 		$admin_email = $result['email'];
 
-		$from = "donotreply@dentech911.com";
+		$from = "admin@dentech911.com";
 		$to_email = $admin_email;
 		$from_name = 'dentech911.com';
 
