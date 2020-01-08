@@ -78,10 +78,11 @@ class notification extends db_connect{
 					Nom d\'utilisateur: <b>'. $email. '</b></br>
 					Niveau d\'adhésion: <b>Utilisateur</b></br>
 					Mot de passe: <b>'. $generated_password .'</b></br>
-					Lien vers votre commande : <b>'.$server_name.'</b></br></br>
+					Vous allez recevoir un deuxième email avec les détails de la commande.</br></br>
 					Si vous avez des questions, j\'aimerais avoir de vos nouvelles. Répondez simplement à cet e-mail ou envoyez moi un message sur Telegram : https://t.me/dentech911 .</br></br>
 					Meilleurs succès et j\'espère que vous utiliserez DenTech911 quotidiennement !</br>
-					Leander';
+					Leander</br>
+					https://dentech911.com/';
 		
 		$mail = new mail;
 		$mail->send_mail($from, $from_name, $to_email, $main_title, $short_description, $subject, $body);

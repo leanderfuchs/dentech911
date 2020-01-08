@@ -14,6 +14,7 @@ class order extends db_connect{
 		$msg = '';
 		$username = $_SESSION['Auth'];
 
+		$user_id = htmlspecialchars($user_id);
 		$patient = htmlspecialchars($patient);
 		$teeth_nbr = htmlspecialchars($teeth_nbr);
 		$product = htmlspecialchars($product);
@@ -23,6 +24,8 @@ class order extends db_connect{
 		$implant_diam = htmlspecialchars($implant_diam);
 		$comment = htmlspecialchars($comment);
 		$return_date = htmlspecialchars($return_date);
+		$unique_order_key = htmlspecialchars($unique_order_key);
+		$supplier_user_id = htmlspecialchars($supplier_user_id);
 
 				//------------------------------------ set return date
 

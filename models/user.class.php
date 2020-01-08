@@ -273,6 +273,9 @@ class user extends db_connect{
 	} // end of remember_me function
 
 	public function new_email($email){
+
+		$email = htmlspecialchars($email);
+		
 		// check if email doesn't exists
 		$pdostatement = $this->query('SELECT id FROM user WHERE email="'.$email.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
