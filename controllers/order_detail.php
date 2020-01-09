@@ -14,29 +14,15 @@ if(isset($_GET['id'])){
 }
 
 
-//------------------------------------ Error if missing patient or product
-if (isset($_POST['order']) && $_POST['order'] == "Commander") {
-	$missing_patient='';
-	$missing_product='';
-
-	if (empty($_POST['patient'])) {
-		header('location:?page=order&missing_patient=missingpatient');
-	}
-
-	if (empty($_POST['product'])) {
-		header('location:?page=order&missing_product=missingproduct');
-	}
-
-	if (empty($_POST['email-order-to'])) {
-		header('location:?page=order&missing_email=missingemail');
-	}
-}
-
 //------------------------------------ 
 //------------------------------------ NEW ORDER
 //------------------------------------ 
 
 if (isset($_POST['order']) && $_POST['order']=='Commander') {
+
+	if (empty($_POST['patient']) || empty($_POST['product']) || empty($_POST['email-order-to']) ){
+		exit;
+	}
 
 	//------------------------------------ create a unique key indentifier for this order
 	if (!empty($_SESSION['Auth']) AND !empty($_POST['patient'])) {
@@ -51,7 +37,7 @@ if (isset($_POST['order']) && $_POST['order']=='Commander') {
 	    $sans = Array("e", "e", "e", "e", "c", "a", "a","a", "a","a", "a", "i", "i", "i", "i", "u", "o", "o", "o", "o");
 	    $str = preg_replace($accents, $sans, $str);  
 	    $str = preg_replace('#[^A-Za-z0-9.]#', '', $str);
-		$unwanted = array(" ", ".", "-", "_", ",", "/", "+", "#", ";");
+		$unwanted = array(" ", "_", ",", "/", "+", "#", ";");
 		$str = str_replace($unwanted, "-", $str);
 	    return $str; 
 	}

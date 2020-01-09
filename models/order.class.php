@@ -106,7 +106,7 @@ class order extends db_connect{
 		$pdostatement = $this->query('SELECT name FROM user WHERE id="'.$client_id.'";');
 		$result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
-		$unwanted = array(" ", ".", "-", "_", ",", "/", "+", "#", ";");
+		$unwanted = array(" ", "_", ",", "/", "+", "#", ";");
 		$client_name = strtolower(str_replace($unwanted, "_", $result['name']));
 		$patient = strtolower(str_replace($unwanted, "_", $patient));
 		$teeth = strtolower(str_replace($unwanted, "_", $teeth));
@@ -115,10 +115,10 @@ class order extends db_connect{
 
 		$save_file = $client_name.'-'.$patient.'-'.$teeth.'_'.$product.'_'.$shade.'_'.$date_time.'-'.$file_clean_name;
 		$sha1_save_file = SHA1($save_file);
-		$file_path = 'orders/files/'.$client_name.'/'.$date.'/';
+		$file_path = 'orders/files/'.$client_name.'/'.$date.'/'.$sha1_save_file.'/';
 
 		if (!file_exists($file_path)) mkdir($file_path, 0777, TRUE);
-		$file_url = $file_path . $sha1_save_file;
+		$file_url = $file_path . $save_file;
 
 		move_uploaded_file($tmp_name, $file_url);
 

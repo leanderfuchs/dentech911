@@ -56,6 +56,29 @@ if (!isset($_SESSION['Auth']) && isset($_COOKIE['Auth'])){
 	echo '<div class="alert alert-success mt-5">Vous avez été connecté automatiquement via le cookie sauvegardé dans votre navigateur</div>';
 }
 
+
+//------------------------------------ 
+//------------------------------------ Check send new order form
+//------------------------------------ 
+
+if (isset($_POST['order']) && $_POST['order'] == "Commander") {
+	$missing_patient='';
+	$missing_product='';
+
+	if (empty($_POST['patient'])) {
+		header('location:?page=order&missing_patient=missingpatient');
+	}
+
+	if (empty($_POST['product'])) {
+		header('location:?page=order&missing_product=missingproduct');
+	}
+
+	if (empty($_POST['email-order-to'])) {
+		header('location:?page=order&missing_email=missingemail');
+	}
+}
+
+
 //------------------------------------ 
 //------------------------------------ Send Points beetween users
 //------------------------------------ 

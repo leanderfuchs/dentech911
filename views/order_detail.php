@@ -101,7 +101,7 @@ if (!empty($user_restricted_pages)) {
 
 				<? if (isset($_GET['file_hash'])) {
 					if ($_SESSION['balance']>0 || (isset($file_lock) && $file_lock == 1)){
-						echo '<a class="btn btn-success" href="'. $file_url .'">Téléchager :'. $file_name .'</a>';
+						echo '<a class="btn btn-success" href="'. $file_url .'" target="blanc">Téléchager :'. $file_name .'</a>';
 					} elseif( $insuficient_credit == TRUE ) {
 						echo '<div class="alert alert-danger">Vous n\'avez pas assez de crédits pour télécharger ce fichier.</div>';
 					}
