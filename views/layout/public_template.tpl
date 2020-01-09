@@ -21,7 +21,7 @@
 </head>
 <body>
 	<div class="alert alert-info mt-5" role="alert">
-		Site en développement. Des mises à jour régulières sont effectuées et si vous voyez un bug ou souhaitez ajouter une fonction, envoyez-moi un email sur <a href="mailto:admin@dentech911.com">admin@dentech911.com</a>. Merci !
+		<? if(isset($site_alert)){ echo $site_alert; }?>
 	</div>
 	<div id="wrap">
 		<div id="main">

@@ -95,7 +95,7 @@ class notification extends db_connect{
 		$from = "admin@dentech911.com";
 		$from_name = $from_user_name;
 
-		$main_title = "			Commande: ". $patient_id;
+		$main_title = "			Nouveau message";
 		$short_description = '	Notre messagerie est le plus simple système d’échange pour les professionnels du dentaire car chaque message 						correspond à un cas particulier. </br>
 								Vous n\'avez plus à rechercher dans votre boîte- mail le message correspondant à tel ou tel cas.';
 

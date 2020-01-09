@@ -154,6 +154,7 @@ $point_value = $ibdd->options_query('point_value');
 $min_point = $ibdd->options_query('min_point');
 $page_menu_header = $ibdd->page_menu('header');
 $page_menu_footer = $ibdd->page_menu('footer');
+$site_alert = $ibdd->options_query('site_alert');
 
 // add point value in the session
 $session->point_value = $point_value/100;
