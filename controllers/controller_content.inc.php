@@ -30,7 +30,8 @@ if (isset($_GET['logout']) AND $_GET['logout']=='log_me_out') {
 }
 
 //$user->logout(); // for debug 
-
+//unset( $_SESSION );
+//session_destroy();
 
 //------------------------------------ Login
 if (isset($_POST['login'])) {
@@ -53,7 +54,9 @@ if (isset($_SESSION['user_id'])) {
 if (!isset($_SESSION['Auth']) && isset($_COOKIE['Auth'])){
 	$auth = explode('878544', $_COOKIE['Auth']);
 	$user_remember_me = $user->remember_me($auth['0'], $auth['1']);
-	echo '<div class="alert alert-success mt-5">Vous avez été connecté automatiquement via le cookie sauvegardé dans votre navigateur</div>';
+	if( $user_remember_me == TRUE) {
+		echo '<div class="alert alert-success mt-5">Vous avez été connecté automatiquement via le cookie sauvegardé dans votre navigateur</div>';
+	}
 }
 
 
@@ -153,9 +156,6 @@ function affichage($page_controller_file, $page_view_file, $url){
 			$page_view_file = 'controllers/404.php';
 			$page_controller_file = 'views/404.php';
 		}
-	} elseif(isset($_COOKIE['Auth'])){ // Logged out users with cookie
-		$page_view_file = 'controllers/order.php';
-		$page_controller_file = 'views/order.php';
 	} elseif ($url == 'lost_password'){
 		$page_view_file = 'controllers/lost_password.php';
 		$page_controller_file = 'views/lost_password.php';
