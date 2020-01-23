@@ -370,4 +370,27 @@ class user extends db_connect{
 			return TRUE;
 		}
 	}
+
+	public function ads_source($source){
+		$source = htmlentities($source);
+		
+		$user_agent = $_SERVER['HTTP_USER_AGENT'];
+		$user_agent = htmlentities($user_agent);
+		$user_agent = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $user_agent );
+		$user_agent = str_replace(array('[\', \']'), '', $user_agent);
+		$user_agent = preg_replace('/\[.*\]/U', '', $user_agent);
+		$user_agent = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $user_agent);
+		$user_agent = htmlentities($user_agent, ENT_COMPAT, 'utf-8');
+		$user_agent = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $user_agent );
+		$user_agent = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , '-', $user_agent);
+
+		$user_ip = $_SERVER['REMOTE_ADDR'];
+		$pdostatement = $this->query('INSERT INTO visitor (user_agent, user_ip, user_source) VALUES ("'.$user_agent.'", "'.$user_ip.'", "'.$source.'");');
+		
+		if (!$pdostatement) {
+			$msg = "\nPDO::errorInfo():\n";
+			$msg = print_r($this->errorInfo());
+		}
+		return $msg;
+	}
 } // end of user class

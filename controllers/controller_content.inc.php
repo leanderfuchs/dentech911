@@ -29,6 +29,13 @@ if (isset($_GET['logout']) AND $_GET['logout']=='log_me_out') {
 	$user->logout();
 }
 
+//------------------------------------ Facebook ads
+if (isset($_GET['utm_source'])) {
+	$source = $_GET['utm_source'];
+	echo $user->ads_source($source);
+	//echo "facebook ads";
+}
+
 //$user->logout(); // for debug 
 //unset( $_SESSION );
 //session_destroy();
@@ -132,14 +139,17 @@ if (isset($_GET['qr']) && $_GET['qr'] == TRUE) {
 
 // recuperation des liens vers les fichiers de la page
 if (empty($this->page)) {
-	if(isset($_SESSION) ){
+	if(isset($_SESSION['Auth'])) {
 		//------------------------------------ if no $_GET['page'] and no session, then go to connexion
 		$page_controller_file = 'controllers/login.php';
 		$page_view_file = 'views/login.php';
+		$_GET['page'] = 'login';
+		
 	} else {
 		//------------------------------------ if no $_GET['page'] but session open, then go to case list
 		$page_controller_file = 'controllers/order.php';
 		$page_view_file = 'views/order.php';
+		$_GET['page'] = 'order';
 	}
 	
 } else {

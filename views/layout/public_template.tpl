@@ -35,21 +35,17 @@
 						<div id="misc-top">
 							<div id="sess-status">
 								<span class="btn btn-light"><?if (isset($_SESSION['balance'])){?>Fichiers transferables: <span class="badge badge-dark"> <?echo floor($_SESSION['balance']/$_SESSION['point_value']);}?></span></span>
-							<button type="button" class="btn">
-								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1) {
-									echo '<a href="?page=user_profil">Mon Compte</a>';
-								}?>
-							</button>
-							<button type="button" class="btn">
-								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1) {
-									echo '<a href="?page=user_contacts">Mes contacts</a>';
-								}?>
-							</button>
-							<button type="button" class="btn">
-								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1) {
-									echo '<a href="?logout=log_me_out">Déconnection</a>';
-								}?>
-							</button>
+								<?php if (isset($_SESSION['Auth']) AND $_SESSION['Auth']==1 AND !empty($_GET['page']) AND $_GET['page']!=='login') { ?>
+									<button type="button" class="btn">
+											echo '<a href="?page=user_profil">Mon Compte</a>';
+									</button>
+									<button type="button" class="btn">
+											echo '<a href="?page=user_contacts">Mes contacts</a>';
+									</button>
+									<button type="button" class="btn">
+											echo '<a href="?logout=log_me_out">Déconnection</a>';
+									</button>
+								<?}?>
 							</div> <!-- sess-status -->
 						</div> <!-- misc-top -->
 
