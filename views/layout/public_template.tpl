@@ -20,9 +20,11 @@
 	<title><?php if(isset($page_title)) echo $page_title;?> - DenTech911</title>
 </head>
 <body>
-	<div class="alert alert-info mt-5" role="alert">
-		<? if(isset($site_alert)){ echo $site_alert; }?>
-	</div>
+	<? if(!empty($site_alert)): ?>
+		<div class="alert alert-info mt-5" role="alert">
+			<? echo $site_alert;?>
+		</div>
+	<? endif ?>
 	<div id="wrap">
 		<div id="main">
 			<div class="framed frame-main">
